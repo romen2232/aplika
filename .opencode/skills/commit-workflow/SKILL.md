@@ -1,6 +1,6 @@
 ---
 name: commit-workflow
-description: "Trigger: commit, commit message, conventional commit, feature branch, branch naming, staging, TDD commit. Enforce Jobify commit types, one-type-per-commit, branch naming, and one commit per TDD step."
+description: "Trigger: commit, commit message, conventional commit, feature branch, branch naming, staging, TDD commit. Enforce Joblog commit types, one-type-per-commit, branch naming, and one commit per TDD step."
 license: Apache-2.0
 metadata:
   author: "romen2232"
@@ -11,7 +11,7 @@ metadata:
 
 ## Activation Contract
 
-Apply when creating a commit, writing a commit message, naming a branch, or splitting work into commits. Companion to the user-level `work-unit-commits` skill; this skill specializes it with the Jobify contract from ADR 004.
+Apply when creating a commit, writing a commit message, naming a branch, or splitting work into commits. Companion to the user-level `work-unit-commits` skill; this skill specializes it with the Joblog contract from ADR 004.
 
 ## Hard Rules
 
