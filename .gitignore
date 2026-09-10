@@ -1,2 +1,24 @@
 # Local AI runtime state
 .atl/
+
+# Dependencies
+/api/vendor/
+/frontend/node_modules/
+
+# Frontend build output and test artifacts
+/frontend/.next/
+/frontend/out/
+/frontend/build/
+/frontend/coverage/
+/frontend/playwright-report/
+/frontend/test-results/
+
+# Local environment overrides (no real secrets are committed)
+.env.local
+*.env.local
+
+# OS / editor noise
+.DS_Store
+.idea/
+.vscode/
+*.log
