@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-Jobify is a job-search management platform with a rich domain: jobs, applications, interviews, CVs, companies, contacts, timelines, and analytics. The business logic is not trivial — applications have lifecycles, statuses carry business meaning, interviews are part of an application (not standalone events), and CVs are versioned documents associated with specific applications.
+Joblog is a job-search management platform with a rich domain: jobs, applications, interviews, CVs, companies, contacts, timelines, and analytics. The business logic is not trivial — applications have lifecycles, statuses carry business meaning, interviews are part of an application (not standalone events), and CVs are versioned documents associated with specific applications.
 
 Without a clear architectural approach, business rules tend to scatter across controllers, services, and framework code. This makes the system hard to understand, difficult to test in isolation, and fragile to change.
 
@@ -59,7 +59,7 @@ The domain model protects its own invariants and can be tested independently fro
 ### Positive
 
 - Business rules are explicit, testable, and isolated from infrastructure.
-- The codebase communicates business capabilities — opening the repository reveals what Jobify does.
+- The codebase communicates business capabilities — opening the repository reveals what Joblog does.
 - Domain models can be tested with PHPSpec without booting Symfony or connecting to a database.
 - Framework changes (e.g., swapping Doctrine for another ORM) do not affect business logic.
 - New team members can understand the domain by reading the model, not by reverse-engineering controllers.
@@ -82,4 +82,4 @@ The domain model protects its own invariants and can be tested independently fro
 
 - Eric Evans — *Domain-Driven Design: Tackling Complexity in the Heart of Software*
 - Vaughn Vernon — *Implementing Domain-Driven Design*
-- [Jobify readme — Domain-Driven Design section](../readme.md#domain-driven-design)
+- [Joblog readme — Domain-Driven Design section](../readme.md#domain-driven-design)

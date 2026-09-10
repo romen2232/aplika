@@ -5,7 +5,7 @@
 
 ## Context
 
-Jobify is built by two developers, with AI agents contributing code and commits. Without an explicit contract, commit messages drift, history becomes hard to scan, and review and changelog automation lose their input. We also run a two-stage delivery flow — production and a pre-production testing branch — and we practice TDD, which changes how work is naturally split into commits.
+Joblog is built by two developers, with AI agents contributing code and commits. Without an explicit contract, commit messages drift, history becomes hard to scan, and review and changelog automation lose their input. We also run a two-stage delivery flow — production and a pre-production testing branch — and we practice TDD, which changes how work is naturally split into commits.
 
 We need a convention that is simple enough to follow without thinking, strict enough to be enforced by review (and later by tooling), and that keeps history meaningful for humans and machines.
 
@@ -49,7 +49,7 @@ ui(dashboard): align interview statistics cards
 | `docs` | Documentation only (readme, ADR, comments). |
 | `chore` | Maintenance that changes neither source nor tests. |
 
-`ui` is a Jobify extension, not part of the base Conventional Commits set. Commit tooling (e.g. `commitlint`) MUST be configured to accept it; until that exists, reviewers enforce it.
+`ui` is a Joblog extension, not part of the base Conventional Commits set. Commit tooling (e.g. `commitlint`) MUST be configured to accept it; until that exists, reviewers enforce it.
 
 Boundary between `feat`, `ui`, and `style`:
 
@@ -128,7 +128,7 @@ This keeps the Red commit separate from the implementation on purpose: the faili
 - Reviewers reject mixed-type commits; the dominant-type rule is the documented escape hatch.
 - Configure `commitlint` with `type-enum` including `ui` as soon as tooling is introduced.
 - Keep feature branches short-lived and merge them into `staging` frequently.
-- Follow `work-unit-commits` for reviewable units; this ADR specializes it for Jobify.
+- Follow `work-unit-commits` for reviewable units; this ADR specializes it for Joblog.
 
 ## Alternatives Considered
 
@@ -144,7 +144,7 @@ This keeps the Red commit separate from the implementation on purpose: the faili
 ## References
 
 - [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)
-- [Jobify readme — Development Workflow](../readme.md#development-workflow)
-- [Jobify readme — TDD](../readme.md#tdd)
+- [Joblog readme — Development Workflow](../readme.md#development-workflow)
+- [Joblog readme — TDD](../readme.md#tdd)
 - `work-unit-commits` skill — reviewable commit units
 - `commit-workflow` skill — operational contract for this ADR

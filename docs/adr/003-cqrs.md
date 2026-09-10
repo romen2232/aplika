@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-Jobify has two fundamentally different types of operations:
+Joblog has two fundamentally different types of operations:
 
 **Commands** — actions that change the system and must enforce business rules:
 - Create a job, import a job
@@ -142,5 +142,5 @@ Queries:
 
 - Greg Young — *CQRS, Task Based UIs, Event Sourcing* (https://www.youtube.com/watch?v=JHGkaShoyNs)
 - Martin Fowler — *CQRS* (https://martinfowler.com/bliki/CQRS.html)
-- [Jobify readme — CQRS section](../readme.md#cqrs)
-- [Jobify readme — Dashboard example](../readme.md#example-dashboard)
+- [Joblog readme — CQRS section](../readme.md#cqrs)
+- [Joblog readme — Dashboard example](../readme.md#example-dashboard)

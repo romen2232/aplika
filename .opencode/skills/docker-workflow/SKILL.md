@@ -1,6 +1,6 @@
 ---
 name: docker-workflow
-description: "Trigger: run tests, install dependencies, composer, npm, start environment, execute command, behat, playwright. All Jobify local commands run through Docker Compose, never on the host."
+description: "Trigger: run tests, install dependencies, composer, npm, start environment, execute command, behat, playwright. All Joblog local commands run through Docker Compose, never on the host."
 license: Apache-2.0
 metadata:
   author: "romen2232"
