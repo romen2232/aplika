@@ -1,0 +1,9 @@
+{
+  "common": {
+    "appName": "Joblog"
+  },
+  "home": {
+    "title": "Joblog",
+    "subtitle": "Your job-search operating system."
+  }
+}
