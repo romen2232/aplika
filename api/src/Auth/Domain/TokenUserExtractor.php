@@ -10,8 +10,8 @@ class TokenUserExtractor
 {
     public function extract(array $payload): array
     {
-        if (!isset($payload['sub'])) {
-            throw new InvalidTokenException('Token missing required claim: sub');
+        if (!isset($payload['subject'])) {
+            throw new InvalidTokenException('Token missing required claim: subject');
         }
 
         if (!isset($payload['email'])) {
@@ -19,7 +19,7 @@ class TokenUserExtractor
         }
 
         return [
-            'id' => $payload['sub'],
+            'id' => $payload['subject'],
             'email' => $payload['email'],
             'roles' => $payload['roles'] ?? [],
         ];

@@ -26,7 +26,7 @@ class TokenValidatorSpec extends ObjectBehavior
     function it_validates_a_valid_token_and_returns_payload(): void
     {
         $payload = [
-            'sub' => 'user-123',
+            'subject' => 'user-123',
             'email' => 'test@example.com',
             'exp' => time() + 3600,
         ];
@@ -35,14 +35,14 @@ class TokenValidatorSpec extends ObjectBehavior
 
         $result = $this->validate($token);
         $result->shouldBeArray();
-        $result['sub']->shouldBe('user-123');
+        $result['subject']->shouldBe('user-123');
         $result['email']->shouldBe('test@example.com');
     }
 
     function it_rejects_an_expired_token(): void
     {
         $payload = [
-            'sub' => 'user-123',
+            'subject' => 'user-123',
             'email' => 'test@example.com',
             'exp' => time() - 3600,
         ];
@@ -55,7 +55,7 @@ class TokenValidatorSpec extends ObjectBehavior
     function it_rejects_a_token_with_invalid_signature(): void
     {
         $payload = [
-            'sub' => 'user-123',
+            'subject' => 'user-123',
             'email' => 'test@example.com',
             'exp' => time() + 3600,
         ];
