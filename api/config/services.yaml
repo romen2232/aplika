@@ -22,6 +22,10 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    App\Auth\Domain\TokenValidator:
+        arguments:
+            $secretKey: '%env(JWT_SECRET_KEY)%'
+
 when@test:
     services:
         # Behat resolves acceptance contexts as Symfony services, so they can
