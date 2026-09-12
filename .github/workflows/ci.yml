@@ -1,0 +1,159 @@
+# =============================================================================
+# CI — Backend & Frontend Test Suites
+# =============================================================================
+#
+# Runs the complete test harness on every merge into staging or main:
+#
+#   Backend:  PhpSpec (domain/unit) → Behat (acceptance)
+#   Frontend: Vitest (unit)         → Playwright (e2e)
+#
+# ENVIRONMENT
+# -----------
+# The workflow reproduces the project's Docker Compose environment so tests
+# run in the same conditions as local development. The only CI-specific
+# adjustment is APP_UID / APP_GID, which are overridden to match the GitHub
+# Actions runner user (uid 1001) so that bind-mounted files remain writable
+# inside the containers without permission juggling.
+#
+# STARTUP SEQUENCE
+# ----------------
+# 1. Database is started first and we wait for its healthcheck — both Behat
+#    and the Symfony cache warmup need a live PostgreSQL connection.
+# 2. The API container is started and Composer dependencies are installed.
+# 3. Frontend dependencies are installed via a one-shot `docker compose run`
+#    because the service's default command (`npm run dev`) would fail without
+#    node_modules.
+# 4. The frontend (and its dependency, nginx) are started and we wait for the
+#    dev server to respond before launching Playwright.
+#
+# SECRETS / ENV VARS
+# ------------------
+# No secrets are required. All database credentials use the committed defaults
+# from the root .env file (POSTGRES_DB / POSTGRES_USER / POSTGRES_PASSWORD).
+# =============================================================================
+
+name: CI
+
+on:
+  push:
+    branches:
+      - staging
+      - main
+
+# Cancel in-flight runs when a new push hits the same branch.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # GitHub Actions Ubuntu runners use uid/gid 1001 for the `runner` user.
+  # Overriding these ensures bind-mounted project files are writable inside
+  # the containers (the Dockerfiles remap www-data / node to these ids).
+  APP_UID: "1001"
+  APP_GID: "1001"
+
+jobs:
+  test:
+    name: Backend & Frontend Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      # -------------------------------------------------------------------
+      # Checkout
+      # -------------------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # -------------------------------------------------------------------
+      # Build & start infrastructure
+      # -------------------------------------------------------------------
+      - name: Build Docker images
+        run: docker compose build
+
+      - name: Start database
+        run: docker compose up -d database
+
+      - name: Wait for database to accept connections
+        run: |
+          timeout 60 bash -c '
+            until docker compose exec -T database \
+              pg_isready -U joblog -d joblog >/dev/null 2>&1
+            do
+              sleep 2
+            done
+          '
+
+      - name: Start API service
+        run: docker compose up -d api
+
+      # -------------------------------------------------------------------
+      # Backend — install dependencies
+      # -------------------------------------------------------------------
+      - name: Install backend dependencies
+        run: docker compose exec -T api composer install --no-interaction --prefer-dist
+
+      # -------------------------------------------------------------------
+      # Frontend — install dependencies
+      # -------------------------------------------------------------------
+      # We use `docker compose run --rm --no-deps` because the frontend
+      # service's default command is `npm run dev`, which would crash without
+      # node_modules.  This one-shot container installs deps into the
+      # bind-mounted directory and exits; the files persist on the host.
+      - name: Install frontend dependencies
+        run: docker compose run --rm --no-deps -T frontend npm install
+
+      # -------------------------------------------------------------------
+      # Start frontend & wait for the dev server
+      # -------------------------------------------------------------------
+      - name: Start frontend and web services
+        run: docker compose up -d frontend
+
+      - name: Wait for frontend dev server
+        run: timeout 120 bash -c 'until curl -sf http://localhost:3000 >/dev/null 2>&1; do sleep 3; done'
+
+      # -------------------------------------------------------------------
+      # Playwright — install browsers (requires root for system deps)
+      # -------------------------------------------------------------------
+      - name: Install Playwright browsers
+        run: docker compose exec -T -u root frontend npx playwright install --with-deps chromium
+
+      # ===================================================================
+      # TEST SUITES
+      # Each suite runs in its own step so a failure is immediately
+      # identifiable in the GitHub Actions UI.
+      # ===================================================================
+
+      # -------------------------------------------------------------------
+      # Backend: PhpSpec — domain and unit specifications
+      # -------------------------------------------------------------------
+      - name: Run PhpSpec
+        run: docker compose exec -T api vendor/bin/phpspec run --format=pretty
+
+      # -------------------------------------------------------------------
+      # Backend: Behat — acceptance tests
+      # The FriendsOfBehat/SymfonyExtension boots the kernel in the `test`
+      # environment; DATABASE_URL is provided by the compose service config.
+      # -------------------------------------------------------------------
+      - name: Run Behat
+        run: docker compose exec -T api vendor/bin/behat --format=pretty
+
+      # -------------------------------------------------------------------
+      # Frontend: Vitest — unit tests (jsdom)
+      # -------------------------------------------------------------------
+      - name: Run Vitest
+        run: docker compose exec -T frontend npm run test
+
+      # -------------------------------------------------------------------
+      # Frontend: Playwright — end-to-end tests
+      # The dev server is already running on port 3000 inside the container;
+      # Playwright connects to it via the default baseURL in playwright.config.ts.
+      # -------------------------------------------------------------------
+      - name: Run Playwright
+        run: docker compose exec -T frontend npm run test:e2e
+
+      # -------------------------------------------------------------------
+      # Cleanup — always runs, even if a test step above fails.
+      # -------------------------------------------------------------------
+      - name: Tear down
+        if: always()
+        run: docker compose down --volumes --remove-orphans
