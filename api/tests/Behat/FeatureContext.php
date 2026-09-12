@@ -11,6 +11,7 @@ use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 /**
  * Shared HTTP context for making requests and asserting responses.
@@ -44,7 +45,7 @@ final class FeatureContext implements Context
         $headers = [];
         $token = $this->state->getCurrentToken();
         if (null !== $token) {
-            $headers['HTTP_AUTHORIZATION'] = 'Bearer '.$token;
+            $headers['HTTP_AUTHORIZATION'] = 'Bearer ' . $token;
         }
 
         $client->request($method, $path, [], [], $headers);
