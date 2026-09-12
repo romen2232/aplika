@@ -11,7 +11,12 @@ use PhpSpec\ObjectBehavior;
 
 class TokenValidatorSpec extends ObjectBehavior
 {
-    private const SECRET_KEY = 'test-secret-key-for-validation';
+    private const SECRET_KEY = 'test-secret-key-for-validation-that-is-long-enough-for-hs256';
+
+    function let(): void
+    {
+        $this->beConstructedWith(self::SECRET_KEY);
+    }
 
     function it_is_initializable(): void
     {
@@ -55,7 +60,7 @@ class TokenValidatorSpec extends ObjectBehavior
             'exp' => time() + 3600,
         ];
 
-        $token = JWT::encode($payload, 'wrong-secret', 'HS256');
+        $token = JWT::encode($payload, 'wrong-secret-key-that-is-long-enough-for-hs256', 'HS256');
 
         $this->shouldThrow(InvalidTokenException::class)->during('validate', [$token]);
     }
