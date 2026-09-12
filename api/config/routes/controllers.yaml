@@ -2,3 +2,8 @@ api_profile:
     path: /api/profile
     controller: App\Auth\Infrastructure\Controller\ProfileController
     methods: [GET]
+
+api_me:
+    path: /api/me
+    controller: App\Auth\Infrastructure\Controller\MeController
+    methods: [GET]
