@@ -1,4 +1,5 @@
-type ThemeColor = "primary" | "secondary" | "tertiary" | "neutral";
+import { colorToHex } from "@/lib/colors";
+import type { ThemeColor } from "./types";
 
 interface Gradient {
   from: ThemeColor;
@@ -13,13 +14,6 @@ interface ButtonProps {
   borderColor?: ThemeColor;
   borderSize?: 0 | 2 | 4 | 8;
 }
-
-const colorToHex: Record<ThemeColor, string> = {
-  primary: "#F0A500",
-  secondary: "#E45826",
-  tertiary: "#E6D5B8",
-  neutral: "#1B1A17",
-};
 
 export function Button({ text, onClick, color, gradient, borderColor, borderSize }: ButtonProps) {
   const baseClasses = "rounded-md text-center justify-center px-4 py-2 font-medium cursor-pointer";
