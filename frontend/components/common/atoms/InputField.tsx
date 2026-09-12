@@ -1,5 +1,5 @@
 import { getBgClass, getTextClass, getBorderClass } from "@/lib/colors";
-import type { ThemeColor } from "./types";
+import type { ThemeColor } from "../types";
 
 interface InputFieldProps {
   label: string;

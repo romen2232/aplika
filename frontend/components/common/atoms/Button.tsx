@@ -1,5 +1,5 @@
 import { colorToHex } from "@/lib/colors";
-import type { ThemeColor } from "./types";
+import type { ThemeColor } from "../types";
 
 interface Gradient {
   from: ThemeColor;
