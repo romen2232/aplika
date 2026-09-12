@@ -18,7 +18,7 @@ class TokenUserExtractorSpec extends ObjectBehavior
     function it_extracts_user_identity_from_valid_payload(): void
     {
         $payload = [
-            'sub' => 'user-123',
+            'subject' => 'user-123',
             'email' => 'test@example.com',
             'roles' => ['ROLE_USER'],
             'exp' => time() + 3600,
@@ -44,7 +44,7 @@ class TokenUserExtractorSpec extends ObjectBehavior
     function it_rejects_payload_without_email(): void
     {
         $payload = [
-            'sub' => 'user-123',
+            'subject' => 'user-123',
             'roles' => ['ROLE_USER'],
         ];
 
@@ -54,7 +54,7 @@ class TokenUserExtractorSpec extends ObjectBehavior
     function it_defaults_to_empty_roles_when_missing(): void
     {
         $payload = [
-            'sub' => 'user-123',
+            'subject' => 'user-123',
             'email' => 'test@example.com',
         ];
 
