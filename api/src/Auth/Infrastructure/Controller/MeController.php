@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-class ProfileController extends AbstractController
+class MeController extends AbstractController
 {
-    #[Route('/api/profile', name: 'api_profile', methods: ['GET'])]
+    #[Route('/api/me', name: 'api_me', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
     public function __invoke(User $user): JsonResponse
     {
