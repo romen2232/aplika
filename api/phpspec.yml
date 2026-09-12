@@ -7,4 +7,5 @@ suites:
         namespace: App
         psr4_prefix: App
         src_path: src
-        spec_path: spec
+        spec_path: .
+        spec_namespace: spec\App
