@@ -1,0 +1,18 @@
+services:
+    App\Tests\Behat\BehatState:
+        public: true
+
+    App\Tests\Behat\Auth\AuthContext:
+        public: true
+        arguments:
+            $state: '@App\Tests\Behat\BehatState'
+        tags:
+            - { name: fob.context_service }
+
+    App\Tests\Behat\FeatureContext:
+        public: true
+        arguments:
+            $kernel: '@kernel'
+            $state: '@App\Tests\Behat\BehatState'
+        tags:
+            - { name: fob.context_service }
