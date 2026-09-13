@@ -179,5 +179,17 @@ migrate-diff: ## Generate a migration from entity changes
 	$(API) php bin/console doctrine:migrations:diff
 
 .PHONY: migrate-status
-migrate-status: ## Show migration status
+migrate-status: ## Show database migration status
 	$(API) php bin/console doctrine:migrations:status
+
+# -----------------------------------------------------------------------------
+# Debugging
+# -----------------------------------------------------------------------------
+
+.PHONY: xdebug-on
+xdebug-on: ## Enable Xdebug step debugging (restarts the api container)
+	XDEBUG_MODE=debug $(DOCKER_COMPOSE) up -d api
+
+.PHONY: xdebug-off
+xdebug-off: ## Disable Xdebug (restarts the api container)
+	XDEBUG_MODE=off $(DOCKER_COMPOSE) up -d api
