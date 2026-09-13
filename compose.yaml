@@ -40,6 +40,25 @@ services:
       database:
         condition: service_healthy
 
+  worker:
+    build:
+      context: ./docker/api
+      args:
+        APP_UID: ${APP_UID:-1000}
+        APP_GID: ${APP_GID:-1000}
+    user: "${APP_UID:-1000}:${APP_GID:-1000}"
+    working_dir: /app
+    command: php bin/console messenger:consume async --time-limit=3600 --memory-limit=128M
+    environment:
+      HOME: /tmp
+      DATABASE_URL: "postgresql://${POSTGRES_USER:-joblog}:${POSTGRES_PASSWORD:-joblog}@database:5432/${POSTGRES_DB:-joblog}?serverVersion=16&charset=utf8"
+    volumes:
+      - ./api:/app
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: unless-stopped
+
   web:
     image: nginx:1.27-alpine
     ports:
