@@ -34,3 +34,9 @@ when@test:
             public: true
             autowire: true
 
+        App\Tests\Behat\AsyncContext:
+            public: true
+            autowire: true
+            arguments:
+                $asyncTransport: '@messenger.transport.async'
+
