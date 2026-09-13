@@ -11,8 +11,8 @@ framework:
                 dsn: 'doctrine://default?queue_name=failed'
 
         routing:
+            'App\Job\Application\Command\AnalyzeJobDescription\AnalyzeJobDescription': async
             # Routing will be enabled when message classes are created (tasks 4-5)
-            # 'App\Job\Application\Command\AnalyzeJobDescription\AnalyzeJobDescription': async
             # 'App\Shared\Application\Command\SendEmail\SendEmail': async
 
         failure_transport: failed
