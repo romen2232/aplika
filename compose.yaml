@@ -31,6 +31,9 @@ services:
       COMPOSER_ALLOW_SUPERUSER: "1"
       COMPOSER_HOME: /tmp/composer
       DATABASE_URL: "postgresql://${POSTGRES_USER:-joblog}:${POSTGRES_PASSWORD:-joblog}@database:5432/${POSTGRES_DB:-joblog}?serverVersion=16&charset=utf8"
+      XDEBUG_MODE: ${XDEBUG_MODE:-off}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - ./api:/app
     depends_on:

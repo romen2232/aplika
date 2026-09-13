@@ -12,6 +12,8 @@ RUN apt-get update \
         libpq-dev \
         libzip-dev \
     && docker-php-ext-install -j"$(nproc)" intl pdo_pgsql zip opcache \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
