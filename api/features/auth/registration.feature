@@ -1,34 +1,33 @@
 Feature: User registration
 
   Scenario: Successful registration with valid data
-    When I register with email "newuser@example.com" and password "SecurePass123"
+    When I register with email "newuser@example.com" and password "password123"
     Then the response status code should be 201
     And the response should contain JSON:
       """
       {
-        "id": "@string@",
-        "email": "newuser@example.com"
+      "id": "@string@",
+      "email": "newuser@example.com"
       }
       """
 
   Scenario: Registration fails with duplicate email
-    Given there is a user with email "existing@example.com" and password "SecurePass123"
-    When I register with email "existing@example.com" and password "AnotherPass456"
+    When I register with email "test@joblog.com" and password "AnotherPass456"
     Then the response status code should be 409
     And the response should contain JSON:
       """
       {
-        "error": "Email already registered"
+      "error": "Email already registered"
       }
       """
 
   Scenario: Registration fails with invalid email format
-    When I register with email "not-an-email" and password "SecurePass123"
+    When I register with email "not-an-email" and password "password123"
     Then the response status code should be 400
     And the response should contain JSON:
       """
       {
-        "error": "Invalid email format"
+      "error": "Invalid email format"
       }
       """
 
@@ -38,16 +37,16 @@ Feature: User registration
     And the response should contain JSON:
       """
       {
-        "error": "Password must be at least 8 characters"
+      "error": "Password must be at least 8 characters"
       }
       """
 
   Scenario: Registration fails with missing email
-    When I register with email "" and password "SecurePass123"
+    When I register with email "" and password "password123"
     Then the response status code should be 400
     And the response should contain JSON:
       """
       {
-        "error": "Email is required"
+      "error": "Email is required"
       }
       """
