@@ -1,30 +1,24 @@
 # =============================================================================
-# CI — Backend & Frontend Test Suites
+# CI — Quality Checks & Test Suites
 # =============================================================================
 #
-# Runs the complete test harness on every merge into staging or main:
+# Runs on every merge into staging or main:
 #
-#   Backend:  PhpSpec (domain/unit) → Behat (acceptance)
-#   Frontend: Vitest (unit)         → Playwright (e2e)
+#   quality:  PHPStan + PHP-CS-Fixer (backend)
+#             ESLint + Prettier (frontend)
+#   test:     Backend:  PhpSpec (domain/unit) → Behat (acceptance)
+#             Frontend: Vitest (unit)         → Playwright (e2e)
+#
+# Both jobs run in parallel. The quality job is lightweight — no database
+# needed — while the test job boots the full Docker Compose stack.
 #
 # ENVIRONMENT
 # -----------
-# The workflow reproduces the project's Docker Compose environment so tests
+# The workflow reproduces the project's Docker Compose environment so checks
 # run in the same conditions as local development. The only CI-specific
 # adjustment is APP_UID / APP_GID, which are overridden to match the GitHub
 # Actions runner user (uid 1001) so that bind-mounted files remain writable
 # inside the containers without permission juggling.
-#
-# STARTUP SEQUENCE
-# ----------------
-# 1. Database is started first and we wait for its healthcheck — both Behat
-#    and the Symfony cache warmup need a live PostgreSQL connection.
-# 2. The API container is started and Composer dependencies are installed.
-# 3. Frontend dependencies are installed via a one-shot `docker compose run`
-#    because the service's default command (`npm run dev`) would fail without
-#    node_modules.
-# 4. The frontend (and its dependency, nginx) are started and we wait for the
-#    dev server to respond before launching Playwright.
 #
 # SECRETS / ENV VARS
 # ------------------
@@ -53,6 +47,51 @@ env:
   APP_GID: "1001"
 
 jobs:
+  # ===========================================================================
+  # Quality — static analysis and code style (no database required)
+  # ===========================================================================
+  quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker images
+        run: docker compose build
+
+      # --- Backend quality ---------------------------------------------------
+      - name: Start API service
+        run: docker compose up -d api
+
+      - name: Install backend dependencies
+        run: docker compose exec -T api composer install --no-interaction --prefer-dist
+
+      - name: Run PHPStan
+        run: docker compose exec -T api vendor/bin/phpstan analyse --no-progress
+
+      - name: Run PHP-CS-Fixer
+        run: docker compose exec -T api vendor/bin/php-cs-fixer check --diff --allow-risky=yes
+
+      # --- Frontend quality --------------------------------------------------
+      - name: Install frontend dependencies
+        run: docker compose run --rm --no-deps -T frontend npm install
+
+      - name: Run ESLint
+        run: docker compose run --rm --no-deps -T frontend npm run lint
+
+      - name: Run Prettier
+        run: docker compose run --rm --no-deps -T frontend npm run format:check
+
+      # --- Cleanup -----------------------------------------------------------
+      - name: Tear down
+        if: always()
+        run: docker compose down --volumes --remove-orphans
+
+  # ===========================================================================
+  # Tests — full test harness (requires database)
+  # ===========================================================================
   test:
     name: Backend & Frontend Tests
     runs-on: ubuntu-latest
