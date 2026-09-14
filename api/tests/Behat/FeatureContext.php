@@ -50,24 +50,26 @@ final class FeatureContext implements Context
     #[Then('the response status code should be :statusCode')]
     public function theResponseStatusCodeShouldBe(int $statusCode): void
     {
-        if (null === $this->response) {
+        $response = $this->state->getResponse();
+        if (null === $response) {
             throw new RuntimeException('No response available. Make a request first.');
         }
 
         $actual = $response->getStatusCode();
         if ($actual !== $statusCode) {
-            throw new RuntimeException(\sprintf('Expected status code %d, got %d. Response: %s', $statusCode, $actual, $this->response->getContent()));
+            throw new RuntimeException(\sprintf('Expected status code %d, got %d. Response: %s', $statusCode, $actual, $response->getContent()));
         }
     }
 
     #[Then('the response should contain JSON:')]
     public function theResponseShouldContainJson(string $json): void
     {
-        if (null === $this->response) {
+        $response = $this->state->getResponse();
+        if (null === $response) {
             throw new RuntimeException('No response available. Make a request first.');
         }
 
-        $actual = json_decode($this->response->getContent(), true);
+        $actual = json_decode($response->getContent(), true);
         if (null === $actual) {
             throw new RuntimeException('Response is not valid JSON.');
         }
@@ -94,10 +96,12 @@ final class FeatureContext implements Context
 
     private function getClient(): KernelBrowser
     {
-        if (null === $this->client) {
-            $this->client = $this->kernel->getContainer()->get('test.client');
+        $client = $this->state->getClient();
+        if (null === $client) {
+            $client = $this->kernel->getContainer()->get('test.client');
+            $this->state->setClient($client);
         }
 
-        return $this->client;
+        return $client;
     }
 }
