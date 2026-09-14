@@ -6,16 +6,12 @@
     "title": "Aplika",
     "subtitle": "Tu sistema operativo para la búsqueda de empleo."
   },
-  "header": {
-    "slogan": "| Tu espacio personal para buscar trabajo",
-    "nav": {
-      "features": "Características",
-      "howItWorks": "Cómo funciona",
-      "pricing": "Precios",
-      "support": "Soporte"
-    },
-    "login": "Iniciar sesión",
-    "signup": "Registrarse gratis"
+  "nav": {
+    "features": "Características",
+    "howItWorks": "Cómo funciona",
+    "pricing": "Precios",
+    "support": "Soporte",
+    "findAJob": "- Encuentra un empleo -"
   },
   "auth": {
     "welcomeBack": "Bienvenido de nuevo",

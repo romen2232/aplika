@@ -8,9 +8,9 @@ interface LogoProps {
 
 export function Logo({ jobColor, logColor }: LogoProps) {
   return (
-    <span className="text-2xl font-bold">
+    <span className="text-3xl font-bold">
       <span className={getTextClass(jobColor)}>Job</span>
-      <span className={getTextClass(logColor)}>log</span>
+      <span className={getTextClass(logColor)}>log.</span>
     </span>
   );
 }
