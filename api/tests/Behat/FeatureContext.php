@@ -9,7 +9,6 @@ use Behat\Step\Then;
 use Behat\Step\When;
 use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**

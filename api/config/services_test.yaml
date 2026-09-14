@@ -5,11 +5,8 @@ services:
     App\Tests\Behat\DatabaseSnapshot:
         public: true
         arguments:
-            $snapshotPath: '%kernel.project_dir%/var/test-snapshot.dump'
-            $databaseName: 'joblog_test'
-            $databaseHost: 'database'
-            $databasePort: '5432'
-            $databaseUser: 'joblog'
+            $snapshotPath: '%kernel.project_dir%/var/snapshot.dump'
+            $databaseUrl: '%env(DATABASE_URL)%'
 
     App\Tests\Behat\Auth\AuthContext:
         public: true
