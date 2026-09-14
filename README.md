@@ -68,7 +68,7 @@ For example, when looking at a particular position, Joblog should help answer:
 Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone git@github.com:romen2232/joblog.git
 cd joblog
 ```
 
