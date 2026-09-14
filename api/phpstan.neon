@@ -1,0 +1,7 @@
+parameters:
+    level: 2
+    paths:
+        - src
+    excludePaths:
+        - src/Kernel.php
+    tmpDir: var/phpstan

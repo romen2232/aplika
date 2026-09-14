@@ -100,8 +100,31 @@ test-e2e: ## Run Playwright end-to-end tests
 # -----------------------------------------------------------------------------
 
 .PHONY: lint
-lint: ## Lint the frontend
+lint: lint-backend lint-frontend ## Lint backend and frontend sources
+
+.PHONY: lint-backend
+lint-backend: phpstan php-cs-fixer-check ## Run PHPStan and PHP-CS-Fixer (dry-run)
+
+.PHONY: lint-frontend
+lint-frontend: ## Run ESLint and Prettier checks on the frontend
 	$(FRONTEND) npm run lint
+	$(FRONTEND) npm run format:check
+
+.PHONY: phpstan
+phpstan: ## Run PHPStan static analysis
+	$(API) vendor/bin/phpstan analyse --no-progress
+
+.PHONY: php-cs-fixer-check
+php-cs-fixer-check: ## Check PHP code style (dry-run)
+	$(API) vendor/bin/php-cs-fixer check --diff --allow-risky=yes
+
+.PHONY: php-cs-fixer-fix
+php-cs-fixer-fix: ## Fix PHP code style issues in-place
+	$(API) vendor/bin/php-cs-fixer fix --diff --allow-risky=yes
+
+.PHONY: format
+format: php-cs-fixer-fix ## Auto-format all sources
+	$(FRONTEND) npm run format
 
 .PHONY: typecheck
 typecheck: ## Type-check the frontend
