@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useContext, useMemo } from 'react';
 
 type Dictionary = Record<string, unknown>;
 
@@ -11,14 +11,14 @@ interface TranslationContextValue {
 const TranslationContext = createContext<TranslationContextValue | null>(null);
 
 function resolve(dictionary: Dictionary, path: string): string {
-  const value = path.split(".").reduce<unknown>((current, key) => {
-    if (current && typeof current === "object") {
+  const value = path.split('.').reduce<unknown>((current, key) => {
+    if (current && typeof current === 'object') {
       return (current as Record<string, unknown>)[key];
     }
     return undefined;
   }, dictionary);
 
-  return typeof value === "string" ? value : path;
+  return typeof value === 'string' ? value : path;
 }
 
 export function DictionaryProvider({
@@ -33,17 +33,13 @@ export function DictionaryProvider({
     [dictionary],
   );
 
-  return (
-    <TranslationContext.Provider value={value}>
-      {children}
-    </TranslationContext.Provider>
-  );
+  return <TranslationContext.Provider value={value}>{children}</TranslationContext.Provider>;
 }
 
 export function useTranslation(): TranslationContextValue {
   const context = useContext(TranslationContext);
   if (!context) {
-    throw new Error("useTranslation must be used within a DictionaryProvider");
+    throw new Error('useTranslation must be used within a DictionaryProvider');
   }
   return context;
 }
