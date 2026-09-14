@@ -116,7 +116,11 @@ lint-frontend: ## Run ESLint and Prettier checks on the frontend
 
 .PHONY: phpstan
 phpstan: ## Run PHPStan static analysis
-	$(API) vendor/bin/phpstan analyse --no-progress
+	@if [ -z "$$(docker compose exec -T api find src -name '*.php' -not -name 'Kernel.php' 2>/dev/null)" ]; then \
+		echo "No PHP files to analyse (skipping PHPStan)"; \
+	else \
+		$(API) vendor/bin/phpstan analyse --no-progress; \
+	fi
 
 .PHONY: php-cs-fixer-check
 php-cs-fixer-check: ## Check PHP code style (dry-run)
