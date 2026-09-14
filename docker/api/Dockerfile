@@ -11,6 +11,7 @@ RUN apt-get update \
         libicu-dev \
         libpq-dev \
         libzip-dev \
+        postgresql-client \
     && docker-php-ext-install -j"$(nproc)" intl pdo_pgsql zip opcache \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
