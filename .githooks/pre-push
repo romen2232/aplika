@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+set -e
+
+echo "🔍 Running pre-push checks..."
+echo ""
+
+# Backend checks
+echo "📦 Backend: Linting..."
+make lint-backend || { echo "❌ Backend lint failed"; exit 1; }
+
+echo "📦 Backend: Running unit tests..."
+make test-phpspec || { echo "❌ Backend unit tests failed"; exit 1; }
+
+# Frontend checks
+echo "🎨 Frontend: Linting..."
+make lint-frontend || { echo "❌ Frontend lint failed"; exit 1; }
+
+echo "🎨 Frontend: Type checking..."
+make typecheck || { echo "❌ Frontend type check failed"; exit 1; }
+
+echo "🎨 Frontend: Running unit tests..."
+make test-frontend || { echo "❌ Frontend unit tests failed"; exit 1; }
+
+echo ""
+echo "✅ All pre-push checks passed"
