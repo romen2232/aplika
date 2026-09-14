@@ -132,6 +132,19 @@ jobs:
         run: docker compose exec -T api composer install --no-interaction --prefer-dist
 
       # -------------------------------------------------------------------
+      # Backend — database setup
+      # Create the database schema and load fixtures. The fixtures feature
+      # loads reference data and takes a snapshot for scenario isolation.
+      # -------------------------------------------------------------------
+      - name: Set up database
+        run: |
+          docker compose exec -T api php bin/console doctrine:database:drop --if-exists --force --no-interaction
+          docker compose exec -T api php bin/console doctrine:database:create --no-interaction
+          docker compose exec -T api php bin/console doctrine:migrations:migrate --no-interaction
+          docker compose exec -T api rm -f var/snapshot.dump
+          docker compose exec -T api vendor/bin/behat --tags=fixtures
+
+      # -------------------------------------------------------------------
       # Frontend — install dependencies
       # -------------------------------------------------------------------
       # We use `docker compose run --rm --no-deps` because the frontend
@@ -152,9 +165,13 @@ jobs:
 
       # -------------------------------------------------------------------
       # Playwright — install browsers (requires root for system deps)
+      # Browsers are installed to a shared location (/ms-playwright) so both
+      # root (installation) and the node user (test execution) can access them.
       # -------------------------------------------------------------------
       - name: Install Playwright browsers
-        run: docker compose exec -T -u root frontend npx playwright install --with-deps chromium
+        run: |
+          docker compose exec -T -u root frontend sh -c 'mkdir -p /ms-playwright && chown node:node /ms-playwright'
+          docker compose exec -T -u root frontend env PLAYWRIGHT_BROWSERS_PATH=/ms-playwright npx playwright install --with-deps chromium
 
       # ===================================================================
       # TEST SUITES
@@ -172,9 +189,11 @@ jobs:
       # Backend: Behat — acceptance tests
       # The FriendsOfBehat/SymfonyExtension boots the kernel in the `test`
       # environment; DATABASE_URL is provided by the compose service config.
+      # The @fixtures tag is excluded because fixtures are loaded separately
+      # during database setup (make db), not during test runs.
       # -------------------------------------------------------------------
       - name: Run Behat
-        run: docker compose exec -T api vendor/bin/behat --format=pretty
+        run: docker compose exec -T api vendor/bin/behat --tags='~@fixtures' --format=pretty
 
       # -------------------------------------------------------------------
       # Frontend: Vitest — unit tests (jsdom)
@@ -188,7 +207,7 @@ jobs:
       # Playwright connects to it via the default baseURL in playwright.config.ts.
       # -------------------------------------------------------------------
       - name: Run Playwright
-        run: docker compose exec -T frontend npm run test:e2e
+        run: docker compose exec -T frontend env PLAYWRIGHT_BROWSERS_PATH=/ms-playwright npm run test:e2e
 
       # -------------------------------------------------------------------
       # Cleanup — always runs, even if a test step above fails.
