@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Auth\Application\Command\AuthenticateUser;
 
 use App\Auth\Application\PasswordHasherAdapter;
-use App\Auth\Domain\Exception\InvalidCredentialsException;
 use App\Auth\Application\TokenGeneratorInterface;
+use App\Auth\Domain\Exception\InvalidCredentialsException;
 use App\Auth\Domain\UserRepository;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
