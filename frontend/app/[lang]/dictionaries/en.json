@@ -11,7 +11,8 @@
     "howItWorks": "How it works",
     "pricing": "Pricing",
     "support": "Support",
-    "findAJob": "- Find a job -"
+    "findAJob": "- Find a job -",
+    "signIn": "Sign in"
   },
   "auth": {
     "welcomeBack": "Welcome back",

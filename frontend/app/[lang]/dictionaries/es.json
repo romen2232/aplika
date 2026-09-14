@@ -11,7 +11,8 @@
     "howItWorks": "Cómo funciona",
     "pricing": "Precios",
     "support": "Soporte",
-    "findAJob": "- Encuentra un empleo -"
+    "findAJob": "- Encuentra un empleo -",
+    "signIn": "Iniciar sesión"
   },
   "auth": {
     "welcomeBack": "Bienvenido de nuevo",
