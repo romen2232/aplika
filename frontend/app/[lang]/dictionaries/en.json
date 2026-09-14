@@ -6,16 +6,12 @@
     "title": "Aplika",
     "subtitle": "Your job-search operating system."
   },
-  "header": {
-    "slogan": "| Your personal job searching workplace",
-    "nav": {
-      "features": "Features",
-      "howItWorks": "How it works",
-      "pricing": "Pricing",
-      "support": "Support"
-    },
-    "login": "Log in",
-    "signup": "Sign up free"
+  "nav": {
+    "features": "Features",
+    "howItWorks": "How it works",
+    "pricing": "Pricing",
+    "support": "Support",
+    "findAJob": "- Find a job -"
   },
   "auth": {
     "welcomeBack": "Welcome back",

@@ -1,42 +1,36 @@
+'use client';
+
 import { Logo } from '@/components/common/atoms/Logo';
-import { getDictionary } from '@/app/[lang]/dictionaries';
-import Link from 'next/link';
+import { useTranslation } from '@/i18n/DictionaryProvider';
 
-export async function Header() {
-  const dict = await getDictionary();
+export function Header() {
+  const { t } = useTranslation();
 
-  const navLinks = [
-    { label: dict.header.nav.features, href: '#features' },
-    { label: dict.header.nav.howItWorks, href: '#how-it-works' },
-    { label: dict.header.nav.pricing, href: '#pricing' },
-    { label: dict.header.nav.support, href: '#support' },
-  ];
+  const linkClasses = 'text-sm text-gray-300 hover:text-white';
 
   return (
-    <header className="hidden min-[1400px]:flex items-center justify-between h-[10vh] px-15 bg-neutral text-tertiary/80">
-      <div className="flex items-center gap-25">
-        <Logo jobColor="tertiary" logColor="primary" />
-        <span className="text-sm font-normal text-tertiary/80">{dict.header.slogan}</span>
+    <header className="hidden min-[1400px]:flex items-center gap-12 bg-neutral p-3">
+      <div className="flex-1 flex justify-end gap-8">
+        <a href="#features" className={linkClasses}>
+          {t('nav.features')}
+        </a>
+        <a href="#how-it-works" className={linkClasses}>
+          {t('nav.howItWorks')}
+        </a>
       </div>
 
-      <nav className="flex gap-4">
-        {navLinks.map((link) => (
-          <a key={link.href} href={link.href} className="hover:text-primary">
-            {link.label}
-          </a>
-        ))}
-      </nav>
+      <div className="flex flex-col items-center justify-center text-center">
+        <Logo jobColor="tertiary" logColor="primary" />
+        <span className="mt-1 text-xs text-gray-500">{t('nav.findAJob')}</span>
+      </div>
 
-      <div className="flex items-center gap-4">
-        <Link href="/login" className="text-lg text-tertiary hover:text-primary">
-          {dict.header.login}
-        </Link>
-        <Link
-          href="/signup"
-          className="bg-primary text-neutral px-4 py-2 rounded hover:bg-primary/90 font-semibold"
-        >
-          {dict.header.signup}
-        </Link>
+      <div className="flex-1 flex justify-start gap-8">
+        <a href="#pricing" className={linkClasses}>
+          {t('nav.pricing')}
+        </a>
+        <a href="#support" className={linkClasses}>
+          {t('nav.support')}
+        </a>
       </div>
     </header>
   );
