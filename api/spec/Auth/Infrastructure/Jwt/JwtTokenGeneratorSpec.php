@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace spec\App\Auth\Domain;
+namespace spec\App\Auth\Infrastructure\Jwt;
 
-use App\Auth\Domain\TokenGenerator;
 use App\Auth\Domain\User;
+use App\Auth\Infrastructure\Jwt\JwtTokenGenerator;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use PhpSpec\ObjectBehavior;
 
-class TokenGeneratorSpec extends ObjectBehavior
+class JwtTokenGeneratorSpec extends ObjectBehavior
 {
     private const SECRET_KEY = 'test-secret-key-for-generation-that-is-long-enough-for-hs256';
     private const USER_ID = '550e8400-e29b-41d4-a716-446655440000';
@@ -24,7 +24,7 @@ class TokenGeneratorSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType(TokenGenerator::class);
+        $this->shouldHaveType(JwtTokenGenerator::class);
     }
 
     function it_generates_jwt_token_for_user()

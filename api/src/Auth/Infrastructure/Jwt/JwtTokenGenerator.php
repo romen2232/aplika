@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Domain;
+namespace App\Auth\Infrastructure\Jwt;
 
+use App\Auth\Application\TokenGeneratorInterface;
+use App\Auth\Domain\User;
 use Firebase\JWT\JWT;
 
-class TokenGenerator
+class JwtTokenGenerator implements TokenGeneratorInterface
 {
     private const TOKEN_TTL = 3600; // 1 hour in seconds
 

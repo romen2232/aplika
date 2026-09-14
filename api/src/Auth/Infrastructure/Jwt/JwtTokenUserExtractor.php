@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Domain;
+namespace App\Auth\Infrastructure\Jwt;
 
 use App\Auth\Domain\Exception\InvalidTokenException;
 
-class TokenUserExtractor
+class JwtTokenUserExtractor
 {
     public function extract(array $payload): array
     {
