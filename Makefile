@@ -139,6 +139,11 @@ lint-frontend: ## Run ESLint and Prettier checks on the frontend
 	$(FRONTEND) npm run lint
 	$(FRONTEND) npm run format:check
 
+.PHONY: lint-frontend-fix
+lint-frontend-fix: ## Auto-fix frontend lint and format issues
+	$(FRONTEND) npx eslint . --fix
+	$(FRONTEND) npm run format
+
 .PHONY: phpstan
 phpstan: ## Run PHPStan static analysis
 	@if [ -z "$$(docker compose exec -T api find src -name '*.php' -not -name 'Kernel.php' 2>/dev/null)" ]; then \
