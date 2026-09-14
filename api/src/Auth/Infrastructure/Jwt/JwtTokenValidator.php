@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Domain;
+namespace App\Auth\Infrastructure\Jwt;
 
 use App\Auth\Domain\Exception\InvalidTokenException;
 use Exception;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-class TokenValidator
+class JwtTokenValidator
 {
     public function __construct(
         private readonly string $secretKey,

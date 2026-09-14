@@ -8,7 +8,7 @@ use App\Auth\Application\Command\AuthenticateUser\AuthenticateUserCommand;
 use App\Auth\Application\Command\AuthenticateUser\AuthenticateUserHandler;
 use App\Auth\Application\PasswordHasherAdapter;
 use App\Auth\Domain\Exception\InvalidCredentialsException;
-use App\Auth\Domain\TokenGenerator;
+use App\Auth\Application\TokenGeneratorInterface;
 use App\Auth\Domain\User;
 use App\Auth\Domain\UserRepository;
 use PhpSpec\ObjectBehavior;
@@ -19,7 +19,7 @@ class AuthenticateUserHandlerSpec extends ObjectBehavior
     function let(
         UserRepository $repository,
         UserPasswordHasherInterface $passwordHasher,
-        TokenGenerator $tokenGenerator
+        TokenGeneratorInterface $tokenGenerator
     ) {
         $this->beConstructedWith($repository, $passwordHasher, $tokenGenerator);
     }
@@ -32,7 +32,7 @@ class AuthenticateUserHandlerSpec extends ObjectBehavior
     function it_authenticates_user_with_valid_credentials(
         UserRepository $repository,
         UserPasswordHasherInterface $passwordHasher,
-        TokenGenerator $tokenGenerator
+        TokenGeneratorInterface $tokenGenerator
     ) {
         $command = new AuthenticateUserCommand('user@example.com', 'SecurePass123');
         
@@ -53,7 +53,7 @@ class AuthenticateUserHandlerSpec extends ObjectBehavior
     function it_rejects_invalid_password(
         UserRepository $repository,
         UserPasswordHasherInterface $passwordHasher,
-        TokenGenerator $tokenGenerator
+        TokenGeneratorInterface $tokenGenerator
     ) {
         $command = new AuthenticateUserCommand('user@example.com', 'WrongPass');
         
@@ -72,7 +72,7 @@ class AuthenticateUserHandlerSpec extends ObjectBehavior
     function it_rejects_non_existent_user(
         UserRepository $repository,
         UserPasswordHasherInterface $passwordHasher,
-        TokenGenerator $tokenGenerator
+        TokenGeneratorInterface $tokenGenerator
     ) {
         $command = new AuthenticateUserCommand('missing@example.com', 'AnyPass123');
         
