@@ -24,6 +24,9 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 final class FixtureContext implements Context
 {
+    private const COMMON_PASSWORD = '12345';
+    private const COMMON_PASSWORD_HASH = '$2y$13$lbPpssXYmBJ.t4yc2aF8x.x6.pOsDcNrpyB8xwd94KTPS2W.WRVS.';
+
     public function __construct(
         private readonly BehatState $state,
         private readonly DatabaseSnapshot $snapshot,
@@ -63,6 +66,10 @@ final class FixtureContext implements Context
         $pdo = $this->getPdo();
 
         foreach ($table->getHash() as $row) {
+            if (!isset($row['password'])) {
+                $row['password'] = self::COMMON_PASSWORD_HASH;
+            }
+
             $columns = array_keys($row);
             $placeholders = array_map(fn ($col) => ':'.$col, $columns);
 
@@ -97,6 +104,10 @@ final class FixtureContext implements Context
         $client = $this->getClient();
 
         foreach ($table->getHash() as $row) {
+            if (!isset($row['password'])) {
+                $row['password'] = self::COMMON_PASSWORD;
+            }
+
             $client->request('POST', $endpoint, [], [], [
                 'CONTENT_TYPE' => 'application/json',
             ], json_encode($row));
