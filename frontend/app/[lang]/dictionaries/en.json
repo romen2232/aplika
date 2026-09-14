@@ -38,5 +38,75 @@
     "privacyPolicy": "Privacy Policy",
     "tabSignIn": "Sign in",
     "tabSignUp": "Sign up"
+  },
+  "hero": {
+    "titleMain": "Your entire job search,",
+    "titleHighlight": "organized",
+    "titleSuffix": "in one place.",
+    "subtitle": "Track every application, interview, and offer in one calm, focused workspace."
+  },
+  "dashboard": {
+    "pipeline": {
+      "title": "Active pipeline",
+      "subtitle": "Your applications in progress"
+    },
+    "stats": {
+      "applications": "Applications",
+      "interviews": "Interviews",
+      "offers": "Offers",
+      "response": "Response rate"
+    },
+    "jobs": {
+      "row1": {
+        "title": "Senior Product Designer",
+        "company": "Linear · Remote",
+        "status": "Applied 2d ago",
+        "badge": "Interviewing"
+      },
+      "row2": {
+        "title": "Frontend Engineer",
+        "company": "Stripe · London",
+        "status": "Applied 5d ago",
+        "badge": "Applied"
+      },
+      "row3": {
+        "title": "Design Lead",
+        "company": "Notion · New York",
+        "status": "Applied 1w ago",
+        "badge": "Offer"
+      }
+    }
+  },
+  "steps": {
+    "header": {
+      "left": "How it works",
+      "right": "Get started free"
+    },
+    "card1": {
+      "label": "Capture",
+      "title": "Save every role",
+      "desc": "Add jobs in one click from anywhere."
+    },
+    "card2": {
+      "label": "Track",
+      "title": "Follow your pipeline",
+      "desc": "See every application status at a glance."
+    },
+    "card3": {
+      "label": "Prepare",
+      "title": "Ace the interview",
+      "desc": "Keep notes, contacts and prep in one place."
+    },
+    "card4": {
+      "label": "Offer",
+      "title": "Land the offer",
+      "desc": "Compare offers and choose your next move."
+    }
+  },
+  "footer": {
+    "leftText": "© 2026 Joblog. All rights reserved.",
+    "privacy": "Privacy",
+    "encrypted": "Encrypted",
+    "help": "Help"
   }
 }

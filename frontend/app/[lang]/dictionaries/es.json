@@ -38,5 +38,75 @@
     "privacyPolicy": "Política de privacidad",
     "tabSignIn": "Iniciar sesión",
     "tabSignUp": "Registrarse"
+  },
+  "hero": {
+    "titleMain": "Toda tu búsqueda de empleo,",
+    "titleHighlight": "organizada",
+    "titleSuffix": "en un solo lugar.",
+    "subtitle": "Controla cada candidatura, entrevista y oferta en un espacio tranquilo y enfocado."
+  },
+  "dashboard": {
+    "pipeline": {
+      "title": "Pipeline activo",
+      "subtitle": "Tus candidaturas en curso"
+    },
+    "stats": {
+      "applications": "Candidaturas",
+      "interviews": "Entrevistas",
+      "offers": "Ofertas",
+      "response": "Tasa de respuesta"
+    },
+    "jobs": {
+      "row1": {
+        "title": "Diseñador de producto sénior",
+        "company": "Linear · Remoto",
+        "status": "Enviada hace 2d",
+        "badge": "Entrevistando"
+      },
+      "row2": {
+        "title": "Ingeniero frontend",
+        "company": "Stripe · Londres",
+        "status": "Enviada hace 5d",
+        "badge": "Enviada"
+      },
+      "row3": {
+        "title": "Líder de diseño",
+        "company": "Notion · Nueva York",
+        "status": "Enviada hace 1sem",
+        "badge": "Oferta"
+      }
+    }
+  },
+  "steps": {
+    "header": {
+      "left": "Cómo funciona",
+      "right": "Empieza gratis"
+    },
+    "card1": {
+      "label": "Captura",
+      "title": "Guarda cada oferta",
+      "desc": "Añade empleos con un clic desde cualquier lugar."
+    },
+    "card2": {
+      "label": "Sigue",
+      "title": "Controla tu pipeline",
+      "desc": "Consulta el estado de cada candidatura de un vistazo."
+    },
+    "card3": {
+      "label": "Prepara",
+      "title": "Supera la entrevista",
+      "desc": "Guarda notas, contactos y preparación en un solo lugar."
+    },
+    "card4": {
+      "label": "Oferta",
+      "title": "Consigue la oferta",
+      "desc": "Compara ofertas y elige tu siguiente paso."
+    }
+  },
+  "footer": {
+    "leftText": "© 2026 Joblog. Todos los derechos reservados.",
+    "privacy": "Privacidad",
+    "encrypted": "Cifrado",
+    "help": "Ayuda"
   }
 }

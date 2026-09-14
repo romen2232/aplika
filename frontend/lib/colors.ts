@@ -1,10 +1,11 @@
 import type { ThemeColor } from '@/components/common/types';
 
 export const colorToHex: Record<ThemeColor, string> = {
-  primary: '#F0A500',
-  secondary: '#E45826',
-  tertiary: '#E6D5B8',
-  neutral: '#1B1A17',
+  primary: "#f0a500",
+  secondary: "#e45826",
+  tertiary: "#e6d5b8",
+  neutral: "#1b1a17",
+  success: "#22c55e",
 };
 
 export function getBgClass(color?: ThemeColor): string {
