@@ -9,7 +9,7 @@
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^3.3",
         "doctrine/doctrine-migrations-bundle": "^3.7",
-        "doctrine/orm": "^3.7",
+        "doctrine/orm": "^3.7.1",
         "firebase/php-jwt": "^7.1",
         "nelmio/cors-bundle": "^2.6",
         "phpdocumentor/reflection-docblock": "^6.0",
@@ -86,6 +86,6 @@
         "phpstan/phpstan": "^2.2",
         "symfony/browser-kit": "8.*",
         "symfony/css-selector": "8.*",
-        "symfony/maker-bundle": "^1.67"
+        "symfony/maker-bundle": "^1.68"
     }
 }
