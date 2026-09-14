@@ -72,6 +72,9 @@ services:
   frontend:
     build:
       context: ./docker/frontend
+      args:
+        APP_UID: ${APP_UID:-1000}
+        APP_GID: ${APP_GID:-1000}
     user: "${APP_UID:-1000}:${APP_GID:-1000}"
     working_dir: /app
     command: npm run ${FRONTEND_SCRIPT:-dev}
