@@ -16,5 +16,23 @@
     },
     "login": "Log in",
     "signup": "Sign up free"
+  },
+  "auth": {
+    "signUpPlaceholder": "Sign up form coming soon.",
+    "welcomeBack": "Welcome back",
+    "enterCredentials": "Enter your credentials to continue",
+    "google": "Continue with Google",
+    "linkedin": "Continue with LinkedIn",
+    "orWithEmail": "or with email",
+    "email": "Email",
+    "password": "Password",
+    "forgot": "Forgot?",
+    "rememberMe": "Remember me",
+    "submitSignIn": "Sign in",
+    "termsAgreement": "By continuing, you agree to our",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "tabSignIn": "Sign in",
+    "tabSignUp": "Sign up"
   }
 }

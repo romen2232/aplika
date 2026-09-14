@@ -16,5 +16,23 @@
     },
     "login": "Iniciar sesión",
     "signup": "Registrarse gratis"
+  },
+  "auth": {
+    "signUpPlaceholder": "El formulario de registro estará disponible pronto.",
+    "welcomeBack": "Bienvenido de nuevo",
+    "enterCredentials": "Introduce tus credenciales para continuar",
+    "google": "Continuar con Google",
+    "linkedin": "Continuar con LinkedIn",
+    "orWithEmail": "o con correo",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "forgot": "¿Olvidaste tu contraseña?",
+    "rememberMe": "Recordarme",
+    "submitSignIn": "Iniciar sesión",
+    "termsAgreement": "Al continuar, aceptas nuestros",
+    "termsOfService": "Términos de servicio",
+    "privacyPolicy": "Política de privacidad",
+    "tabSignIn": "Iniciar sesión",
+    "tabSignUp": "Registrarse"
   }
 }

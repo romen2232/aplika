@@ -15,6 +15,8 @@ interface TabsSelectorProps {
   activeTextColor?: ThemeColor;
   inactiveTextColor?: ThemeColor;
   borderColor?: ThemeColor;
+  activeClassName?: string;
+  inactiveClassName?: string;
   className?: string;
 }
 
@@ -27,6 +29,8 @@ export function TabsSelector({
   activeTextColor,
   inactiveTextColor,
   borderColor,
+  activeClassName = '',
+  inactiveClassName = '',
   className = '',
 }: TabsSelectorProps) {
   return (
@@ -34,10 +38,11 @@ export function TabsSelector({
       {options.map((option) => {
         const isActive = option.value === currentValue;
         const tabClasses = [
-          'px-4 py-2 rounded-md cursor-pointer border',
+          'px-4 py-2 rounded cursor-pointer border',
           isActive ? getBgClass(activeBgColor) : getBgClass(inactiveBgColor),
           isActive ? getTextClass(activeTextColor) : getTextClass(inactiveTextColor),
           getBorderClass(borderColor),
+          isActive ? activeClassName : inactiveClassName,
           className,
         ]
           .filter(Boolean)

@@ -6,6 +6,7 @@ interface InputFieldProps {
   type?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
   actionRight?: React.ReactNode;
   bgColor?: ThemeColor;
   textColor?: ThemeColor;
@@ -18,6 +19,7 @@ export function InputField({
   type = 'text',
   value,
   onChange,
+  placeholder,
   actionRight,
   bgColor,
   textColor,
@@ -37,19 +39,20 @@ export function InputField({
 
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={inputId} className="font-medium">
-        {label}
-      </label>
-      <div className="flex items-center gap-2">
-        <input
-          id={inputId}
-          type={type}
-          value={value}
-          onChange={onChange}
-          className={inputClasses}
-        />
+      <div className="flex items-center justify-between">
+        <label htmlFor={inputId} className="font-medium">
+          {label}
+        </label>
         {actionRight && <div>{actionRight}</div>}
       </div>
+      <input
+        id={inputId}
+        type={type}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className={inputClasses}
+      />
     </div>
   );
 }
