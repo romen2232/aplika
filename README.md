@@ -56,6 +56,70 @@ For example, when looking at a particular position, Joblog should help answer:
 
 ---
 
+# Getting Started
+
+## Requirements
+
+* Docker
+* Docker Compose
+* Git
+* Make
+
+Clone the repository:
+
+```bash
+git clone <repository-url>
+cd joblog
+```
+
+Add the local domains to your hosts file (one-time setup):
+
+```bash
+make hosts
+```
+
+Or manually add this line to `/etc/hosts`:
+
+```text
+127.0.0.1 joblog.dev api.joblog.dev
+```
+
+Start the development environment:
+
+```bash
+make init
+```
+
+This will:
+
+1. Start all Docker containers (API, frontend, database, nginx)
+2. Install backend and frontend dependencies
+3. Configure git hooks
+4. Run database migrations
+
+Once finished, the application is available at:
+
+| Service  | URL                          |
+| -------- | ---------------------------- |
+| Frontend | <http://joblog.dev:3000>     |
+| API      | <http://api.joblog.dev>      |
+
+## Common commands
+
+```bash
+make help            # Show all available commands
+make up              # Start containers
+make down            # Stop containers
+make test            # Run all test suites
+make lint            # Run linters
+make check           # Run tests, lint, and type-check
+make logs            # Tail service logs
+make shell-api       # Open a shell in the API container
+make shell-frontend  # Open a shell in the frontend container
+```
+
+---
+
 # Core Features
 
 ## Job Management
@@ -1123,57 +1187,6 @@ Iteration
 ```
 
 That feedback loop is at the heart of the project.
-
----
-
-# Getting Started
-
-## Requirements
-
-* Docker
-* Docker Compose
-* Git
-
-Clone the repository:
-
-```bash
-git clone <repository-url>
-cd joblog
-```
-
-Start the development environment:
-
-```bash
-docker compose up -d
-```
-
-Install backend dependencies:
-
-```bash
-docker compose exec api composer install
-```
-
-Install frontend dependencies:
-
-```bash
-docker compose exec frontend npm install
-```
-
-Run the test suites:
-
-```bash
-# Backend
-docker compose exec api vendor/bin/phpspec run
-docker compose exec api vendor/bin/behat
-
-# Frontend
-docker compose exec frontend npm run test
-
-# End-to-end
-docker compose exec frontend npx playwright test
-```
-
-The exact commands may evolve as the infrastructure develops.
 
 ---
 
