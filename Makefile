@@ -34,6 +34,10 @@ restart: ## Restart all services
 build: ## Build the Docker images
 	$(DOCKER_COMPOSE) build
 
+.PHONY: hooks
+hooks: ## Install git hooks for pre-push checks
+	git config core.hooksPath .githooks
+
 .PHONY: ps
 ps: ## List running services and their status
 	$(DOCKER_COMPOSE) ps
