@@ -1,10 +1,10 @@
-import { lang } from "next/root-params";
-import { notFound } from "next/navigation";
-import { locales, type Locale } from "@/i18n/config";
+import { lang } from 'next/root-params';
+import { notFound } from 'next/navigation';
+import { locales, type Locale } from '@/i18n/config';
 
 const dictionaries = {
-  en: () => import("./dictionaries/en.json").then((module) => module.default),
-  es: () => import("./dictionaries/es.json").then((module) => module.default),
+  en: () => import('./dictionaries/en.json').then((module) => module.default),
+  es: () => import('./dictionaries/es.json').then((module) => module.default),
 };
 
 export const hasLocale = (locale: string): locale is Locale =>
