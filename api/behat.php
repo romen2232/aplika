@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Tests\Behat\AsyncContext;
 use App\Tests\Behat\Auth\AuthContext;
 use App\Tests\Behat\FeatureContext;
 use App\Tests\Behat\FixtureContext;
@@ -25,6 +26,7 @@ return (new Config())
             ->withSuite(
                 (new Suite('default'))
                     ->withContexts(
+                        AsyncContext::class,
                         AuthContext::class,
                         FeatureContext::class,
                         FixtureContext::class
