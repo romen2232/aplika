@@ -39,7 +39,7 @@ init: up install hooks db ## First-time project setup: start containers, install
 	@echo ""
 	@echo "✅ Joblog is ready!"
 	@echo ""
-	@echo "  Frontend → http://joblog.dev:3000"
+	@echo "  Frontend → http://joblog.dev"
 	@echo "  API      → http://api.joblog.dev"
 	@echo ""
 	@if ! grep -q "joblog.dev" /etc/hosts 2>/dev/null; then \
