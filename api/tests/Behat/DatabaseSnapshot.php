@@ -14,13 +14,26 @@ use RuntimeException;
  */
 final class DatabaseSnapshot
 {
+    private readonly string $databaseName;
+    private readonly string $databaseHost;
+    private readonly string $databasePort;
+    private readonly string $databaseUser;
+    private readonly string $databasePassword;
+
     public function __construct(
         private readonly string $snapshotPath,
-        private readonly string $databaseName,
-        private readonly string $databaseHost,
-        private readonly string $databasePort,
-        private readonly string $databaseUser,
+        private readonly string $databaseUrl,
     ) {
+        $parsed = parse_url($databaseUrl);
+        if (!$parsed || !isset($parsed['host'], $parsed['path'])) {
+            throw new RuntimeException('Invalid DATABASE_URL format.');
+        }
+
+        $this->databaseName = ltrim($parsed['path'], '/');
+        $this->databaseHost = $parsed['host'];
+        $this->databasePort = (string) ($parsed['port'] ?? 5432);
+        $this->databaseUser = $parsed['user'] ?? 'joblog';
+        $this->databasePassword = $parsed['pass'] ?? 'joblog';
     }
 
     /**
@@ -33,11 +46,12 @@ final class DatabaseSnapshot
     public function restore(): void
     {
         if (!$this->exists()) {
-            throw new RuntimeException(\sprintf('Snapshot file "%s" does not exist. Run "make db-test" first.', $this->snapshotPath));
+            throw new RuntimeException(\sprintf('Snapshot file "%s" does not exist. Run "make db" first.', $this->snapshotPath));
         }
 
         $command = \sprintf(
-            'PGPASSWORD=joblog pg_restore --host=%s --port=%s --username=%s --clean --if-exists --dbname=%s %s 2>&1',
+            'PGPASSWORD=%s pg_restore --host=%s --port=%s --username=%s --clean --if-exists --dbname=%s %s 2>&1',
+            escapeshellarg($this->databasePassword),
             escapeshellarg($this->databaseHost),
             escapeshellarg($this->databasePort),
             escapeshellarg($this->databaseUser),
@@ -64,7 +78,8 @@ final class DatabaseSnapshot
     public function dump(): void
     {
         $command = \sprintf(
-            'pg_dump --host=%s --port=%s --username=%s --format=custom --file=%s %s 2>&1',
+            'PGPASSWORD=%s pg_dump --host=%s --port=%s --username=%s --format=custom --file=%s %s 2>&1',
+            escapeshellarg($this->databasePassword),
             escapeshellarg($this->databaseHost),
             escapeshellarg($this->databasePort),
             escapeshellarg($this->databaseUser),

@@ -35,7 +35,7 @@ build: ## Build the Docker images
 	$(DOCKER_COMPOSE) build
 
 .PHONY: init
-init: up install hooks migrate ## First-time project setup: start containers, install deps, configure git hooks, run migrations
+init: up install hooks db ## First-time project setup: start containers, install deps, configure git hooks, run migrations
 	@echo ""
 	@echo "✅ Joblog is ready!"
 	@echo ""
@@ -176,22 +176,12 @@ check: test lint typecheck ## Run tests, lint and type-check
 # -----------------------------------------------------------------------------
 
 .PHONY: db
-db: db-dev db-test ## Set up both dev and test databases with fixtures
-
-.PHONY: db-dev
-db-dev: ## Drop, create, and migrate the dev database
+db: ## Drop, create, migrate the database, load fixtures, and take snapshot
 	$(API) php bin/console doctrine:database:drop --if-exists --force --no-interaction
 	$(API) php bin/console doctrine:database:create --no-interaction
 	$(API) php bin/console doctrine:migrations:migrate --no-interaction
-
-.PHONY: db-test
-db-test: ## Drop, create, migrate the test database, load fixtures, and take snapshot
-	$(API) sh -c "APP_ENV=test php bin/console doctrine:database:drop --if-exists --force --no-interaction"
-	$(API) sh -c "APP_ENV=test php bin/console doctrine:database:create --no-interaction"
-	$(API) sh -c "APP_ENV=test php bin/console doctrine:migrations:migrate --no-interaction"
-	$(API) rm -f var/test-snapshot.dump
+	$(API) rm -f var/snapshot.dump
 	$(API) vendor/bin/behat --tags=fixtures
-	$(API) sh -c "PGPASSWORD=joblog pg_dump --host=database --port=5432 --username=joblog --format=custom --file=var/test-snapshot.dump joblog_test"
 
 .PHONY: migrate
 migrate: ## Apply database migrations

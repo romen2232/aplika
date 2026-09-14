@@ -8,7 +8,9 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Gherkin\Node\TableNode;
 use Behat\Hook\BeforeScenario;
+use Behat\Hook\AfterSuite;
 use Behat\Step\Given;
+use Behat\Testwork\Hook\Scope\AfterSuiteScope;
 use PDO;
 use PDOException;
 use RuntimeException;
@@ -24,14 +26,17 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 final class FixtureContext implements Context
 {
-    private const COMMON_PASSWORD = '12345';
-    private const COMMON_PASSWORD_HASH = '$2y$13$lbPpssXYmBJ.t4yc2aF8x.x6.pOsDcNrpyB8xwd94KTPS2W.WRVS.';
+    private const COMMON_PASSWORD = 'password123';
+    private const COMMON_PASSWORD_HASH = '$2y$13$fnpWyvembtzArWk7dRCSMOWnkAEcOb83sy5/mVm5zxJC0u491LDIC';
+
+    private static ?DatabaseSnapshot $staticSnapshot = null;
 
     public function __construct(
         private readonly BehatState $state,
         private readonly DatabaseSnapshot $snapshot,
         private readonly KernelInterface $kernel,
     ) {
+        self::$staticSnapshot = $snapshot;
     }
 
     /**
@@ -52,6 +57,21 @@ final class FixtureContext implements Context
 
         $this->state->reset();
         $this->snapshot->restore();
+    }
+
+    /**
+     * Take a snapshot after all fixture scenarios complete.
+     *
+     * This ensures subsequent test runs can restore to the fixture state.
+     */
+    #[AfterSuite]
+    public static function takeSnapshot(AfterSuiteScope $scope): void
+    {
+        if (null === self::$staticSnapshot) {
+            return;
+        }
+
+        self::$staticSnapshot->dump();
     }
 
     /**
@@ -161,15 +181,13 @@ final class FixtureContext implements Context
                 throw new RuntimeException('Invalid DATABASE_URL format.');
             }
 
-            // Replace database name with test database
             $dbName = ltrim($parsed['path'], '/');
-            $testDbName = 'joblog_test';
 
             $dsn = \sprintf(
                 'pgsql:host=%s;port=%d;dbname=%s',
                 $parsed['host'],
                 $parsed['port'] ?? 5432,
-                $testDbName
+                $dbName
             );
 
             $user = $parsed['user'] ?? 'joblog';
