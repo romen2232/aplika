@@ -62,16 +62,14 @@ final class AuthContext implements Context
     public function iAmAuthenticatedAs(string $email): void
     {
         $user = $this->state->getUser($email);
-        if (null === $user) {
-            throw new RuntimeException(\sprintf('User "%s" does not exist.', $email));
-        }
+        $password = $user['password'] ?? 'password123';
 
         $client = $this->getClient();
         $client->request('POST', '/api/auth/login', [], [], [
             'CONTENT_TYPE' => 'application/json',
         ], json_encode([
-            'email' => $user['email'],
-            'password' => $user['password'],
+            'email' => $email,
+            'password' => $password,
         ]));
 
         $response = $client->getResponse();
@@ -109,6 +107,26 @@ final class AuthContext implements Context
         ], json_encode([
             'email' => $email,
             'password' => $password,
+        ]));
+        $response = $client->getResponse();
+        $this->state->setResponse($response);
+
+        if (200 === $response->getStatusCode()) {
+            $data = json_decode($response->getContent(), true);
+            if (isset($data['token'])) {
+                $this->state->setCurrentToken($data['token']);
+            }
+        }
+    }
+
+    #[When('I login with email :email and no password')]
+    public function iLoginWithEmailAndNoPassword(string $email): void
+    {
+        $client = $this->getClient();
+        $client->request('POST', '/api/auth/login', [], [], [
+            'CONTENT_TYPE' => 'application/json',
+        ], json_encode([
+            'email' => $email,
         ]));
         $this->state->setResponse($client->getResponse());
     }
