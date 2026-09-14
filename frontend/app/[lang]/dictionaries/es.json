@@ -6,43 +6,15 @@
     "title": "Aplika",
     "subtitle": "Tu sistema operativo para la búsqueda de empleo."
   },
-  "auth": {
-    "login": {
-      "title": "Iniciar sesión",
-      "email": "Correo electrónico",
-      "password": "Contraseña",
-      "submit": "Iniciar sesión",
-      "submitting": "Iniciando sesión...",
-      "noAccount": "¿No tienes una cuenta?",
-      "registerLink": "Crea una"
+  "header": {
+    "slogan": "| Tu espacio personal para buscar trabajo",
+    "nav": {
+      "features": "Características",
+      "howItWorks": "Cómo funciona",
+      "pricing": "Precios",
+      "support": "Soporte"
     },
-    "register": {
-      "title": "Crea tu cuenta",
-      "email": "Correo electrónico",
-      "password": "Contraseña",
-      "confirmPassword": "Confirmar contraseña",
-      "submit": "Crear cuenta",
-      "submitting": "Creando cuenta...",
-      "passwordMismatch": "Las contraseñas no coinciden",
-      "haveAccount": "¿Ya tienes una cuenta?",
-      "loginLink": "Inicia sesión"
-    },
-    "validation": {
-      "emailRequired": "El correo electrónico es obligatorio",
-      "emailInvalid": "El formato del correo electrónico no es válido",
-      "passwordRequired": "La contraseña es obligatoria",
-      "passwordMin": "La contraseña debe tener al menos 8 caracteres"
-    },
-    "dashboard": {
-      "title": "Panel",
-      "welcome": "Sesión iniciada como",
-      "logout": "Cerrar sesión",
-      "loading": "Cargando..."
-    },
-    "errors": {
-      "network": "No se pudo contactar con el servidor. Inténtalo de nuevo.",
-      "generic": "Algo salió mal. Inténtalo de nuevo.",
-      "sessionExpired": "Tu sesión ha caducado. Inicia sesión de nuevo."
-    }
+    "login": "Iniciar sesión",
+    "signup": "Registrarse gratis"
   }
 }
