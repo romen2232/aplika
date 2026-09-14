@@ -31,3 +31,10 @@ services:
             $kernel: '@kernel'
         tags:
             - { name: fob.context_service }
+
+    App\Tests\Behat\AsyncContext:
+        public: true
+        arguments:
+            $asyncTransport: '@messenger.transport.async'
+        tags:
+            - { name: fob.context_service }
