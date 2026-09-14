@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace spec\App\Auth\Domain;
+namespace spec\App\Auth\Infrastructure\Jwt;
 
 use App\Auth\Domain\Exception\InvalidTokenException;
-use App\Auth\Domain\TokenValidator;
+use App\Auth\Infrastructure\Jwt\JwtTokenValidator;
 use Firebase\JWT\JWT;
 use PhpSpec\ObjectBehavior;
 
-class TokenValidatorSpec extends ObjectBehavior
+class JwtTokenValidatorSpec extends ObjectBehavior
 {
     private const SECRET_KEY = 'test-secret-key-for-validation-that-is-long-enough-for-hs256';
 
@@ -20,7 +20,7 @@ class TokenValidatorSpec extends ObjectBehavior
 
     function it_is_initializable(): void
     {
-        $this->shouldHaveType(TokenValidator::class);
+        $this->shouldHaveType(JwtTokenValidator::class);
     }
 
     function it_validates_a_valid_token_and_returns_payload(): void

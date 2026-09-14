@@ -10,13 +10,16 @@ services:
     App\:
         resource: '../src/'
 
-    App\Auth\Domain\TokenValidator:
+    App\Auth\Infrastructure\Jwt\JwtTokenValidator:
         arguments:
             $secretKey: '%env(JWT_SECRET_KEY)%'
 
-    App\Auth\Domain\TokenGenerator:
+    App\Auth\Infrastructure\Jwt\JwtTokenGenerator:
         arguments:
             $secretKey: '%env(JWT_SECRET_KEY)%'
+
+    App\Auth\Application\TokenGeneratorInterface:
+        alias: App\Auth\Infrastructure\Jwt\JwtTokenGenerator
 
     App\Auth\Domain\UserRepository:
         alias: App\Auth\Infrastructure\Persistence\DoctrineUserRepository

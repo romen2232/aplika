@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Auth\Infrastructure\Security;
 
 use App\Auth\Domain\Exception\InvalidTokenException;
-use App\Auth\Domain\TokenUserExtractor;
-use App\Auth\Domain\TokenValidator;
+use App\Auth\Infrastructure\Jwt\JwtTokenUserExtractor;
+use App\Auth\Infrastructure\Jwt\JwtTokenValidator;
 use App\Auth\Domain\UserRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,8 +22,8 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 class JwtAuthenticator extends AbstractAuthenticator
 {
     public function __construct(
-        private readonly TokenValidator $tokenValidator,
-        private readonly TokenUserExtractor $userExtractor,
+        private readonly JwtTokenValidator $tokenValidator,
+        private readonly JwtTokenUserExtractor $userExtractor,
         private readonly UserRepository $userRepository,
     ) {
     }

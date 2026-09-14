@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace spec\App\Auth\Domain;
+namespace spec\App\Auth\Infrastructure\Jwt;
 
 use App\Auth\Domain\Exception\InvalidTokenException;
-use App\Auth\Domain\TokenUserExtractor;
+use App\Auth\Infrastructure\Jwt\JwtTokenUserExtractor;
 use PhpSpec\ObjectBehavior;
 
-class TokenUserExtractorSpec extends ObjectBehavior
+class JwtTokenUserExtractorSpec extends ObjectBehavior
 {
     function it_is_initializable(): void
     {
-        $this->shouldHaveType(TokenUserExtractor::class);
+        $this->shouldHaveType(JwtTokenUserExtractor::class);
     }
 
     function it_extracts_user_identity_from_valid_payload(): void
