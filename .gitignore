@@ -1,5 +1,7 @@
 # Local AI runtime state
 .atl/
+openspec/
+sdd/
 
 # Dependencies
 /api/vendor/
