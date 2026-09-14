@@ -14,8 +14,11 @@ class MeController extends AbstractController
 {
     #[Route('/api/me', name: 'api_me', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
-    public function __invoke(User $user): JsonResponse
+    public function __invoke(): JsonResponse
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
         return $this->json([
             'id' => $user->getId(),
             'email' => $user->getEmail(),
