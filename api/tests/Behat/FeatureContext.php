@@ -9,9 +9,8 @@ use Behat\Step\Then;
 use Behat\Step\When;
 use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Shared HTTP context for making requests and asserting responses.
@@ -20,9 +19,6 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
  */
 final class FeatureContext implements Context
 {
-    private ?Response $response = null;
-    private ?KernelBrowser $client = null;
-
     public function __construct(
         private readonly KernelInterface $kernel,
         private readonly BehatState $state,
@@ -45,11 +41,11 @@ final class FeatureContext implements Context
         $headers = [];
         $token = $this->state->getCurrentToken();
         if (null !== $token) {
-            $headers['HTTP_AUTHORIZATION'] = 'Bearer ' . $token;
+            $headers['HTTP_AUTHORIZATION'] = 'Bearer '.$token;
         }
 
         $client->request($method, $path, [], [], $headers);
-        $this->response = $client->getResponse();
+        $this->state->setResponse($client->getResponse());
     }
 
     #[Then('the response status code should be :statusCode')]
@@ -59,7 +55,7 @@ final class FeatureContext implements Context
             throw new RuntimeException('No response available. Make a request first.');
         }
 
-        $actual = $this->response->getStatusCode();
+        $actual = $response->getStatusCode();
         if ($actual !== $statusCode) {
             throw new RuntimeException(\sprintf('Expected status code %d, got %d. Response: %s', $statusCode, $actual, $this->response->getContent()));
         }

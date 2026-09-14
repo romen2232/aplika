@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Tests\Behat\Auth\AuthContext;
 use App\Tests\Behat\FeatureContext;
+use App\Tests\Behat\FixtureContext;
 use Behat\Config\Config;
 use Behat\Config\Extension;
 use Behat\Config\Profile;
@@ -25,7 +26,8 @@ return (new Config())
                 (new Suite('default'))
                     ->withContexts(
                         AuthContext::class,
-                        FeatureContext::class
+                        FeatureContext::class,
+                        FixtureContext::class
                     )
             )
     );
