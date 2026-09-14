@@ -16,7 +16,7 @@ export function AuthPanel() {
   ];
 
   return (
-    <section className="flex w-[30vw] min-h-[90vh] flex-col justify-center gap-6 bg-neutral p-6 text-tertiary">
+    <section className="flex w-[30vw] min-h-[90vh] flex-col gap-6 bg-neutral/99 p-10 text-tertiary">
       <div className="flex justify-center">
         <TabsSelector
           options={options}
@@ -30,7 +30,9 @@ export function AuthPanel() {
           inactiveClassName="border-0"
         />
       </div>
-      {activeTab === 'signin' ? <SignInForm /> : <SignUpForm />}
+      <div className="flex flex-1 flex-col justify-center">
+        {activeTab === 'signin' ? <SignInForm /> : <SignUpForm />}
+      </div>
     </section>
   );
 }
