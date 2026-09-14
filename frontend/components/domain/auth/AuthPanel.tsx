@@ -16,7 +16,7 @@ export function AuthPanel() {
   ];
 
   return (
-    <section className="flex w-[30vw] min-h-[90vh] flex-col gap-6 bg-neutral/99 p-10 text-tertiary">
+    <section className="flex h-full w-full flex-col gap-6 bg-neutral/97 p-10 text-tertiary">
       <div className="flex justify-center">
         <TabsSelector
           options={options}
