@@ -22,7 +22,7 @@ class JwtAuthenticator extends AbstractAuthenticator
 {
     public function __construct(
         private readonly TokenValidator $tokenValidator,
-        private readonly TokenUserExtractor $userExtractor
+        private readonly TokenUserExtractor $userExtractor,
     ) {
     }
 

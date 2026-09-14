@@ -11,7 +11,7 @@ class User implements UserInterface
     public function __construct(
         private readonly string $id,
         private readonly string $email,
-        private readonly array $roles = []
+        private readonly array $roles = [],
     ) {
     }
 
