@@ -31,9 +31,12 @@ if [ "$lint_failed" -eq 1 ]; then
     echo "📝 Committing lint fixes..."
     git add -A
     git commit -m "style: pre-push lint changes"
+    echo ""
+    echo "⚠️  Lint fixes committed. Run 'git push' again to include them."
+    exit 1
   fi
 
-  # Re-run lint to verify fixes resolved the issues
+  # Re-run lint to verify fixes resolved the issues (no commit needed)
   echo ""
   echo "🔄 Re-running lint checks..."
   make lint-backend || { echo "❌ Backend lint still failing after fix"; exit 1; }
