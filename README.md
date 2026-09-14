@@ -101,7 +101,7 @@ Once finished, the application is available at:
 
 | Service  | URL                          |
 | -------- | ---------------------------- |
-| Frontend | <http://joblog.dev:3000>     |
+| Frontend | <http://joblog.dev>          |
 | API      | <http://api.joblog.dev>      |
 
 ## Common commands
