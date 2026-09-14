@@ -1,5 +1,5 @@
-import { getBgClass, getTextClass, getBorderClass } from "@/lib/colors";
-import type { ThemeColor } from "../types";
+import { getBgClass, getTextClass, getBorderClass } from '@/lib/colors';
+import type { ThemeColor } from '../types';
 
 interface CheckboxFieldProps {
   label: string;
@@ -18,21 +18,19 @@ export function CheckboxField({
   bgColor,
   textColor,
   borderColor,
-  className = "",
+  className = '',
 }: CheckboxFieldProps) {
-  const inputId = `checkbox-${label.toLowerCase().replace(/\s+/g, "-")}`;
+  const inputId = `checkbox-${label.toLowerCase().replace(/\s+/g, '-')}`;
   const checkboxClasses = [
-    "w-4 h-4 rounded border cursor-pointer",
+    'w-4 h-4 rounded border cursor-pointer',
     getBgClass(bgColor),
     getBorderClass(borderColor),
     className,
   ]
     .filter(Boolean)
-    .join(" ");
+    .join(' ');
 
-  const labelClasses = ["cursor-pointer", getTextClass(textColor)]
-    .filter(Boolean)
-    .join(" ");
+  const labelClasses = ['cursor-pointer', getTextClass(textColor)].filter(Boolean).join(' ');
 
   return (
     <label htmlFor={inputId} className="flex items-center gap-2 cursor-pointer">

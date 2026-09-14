@@ -1,5 +1,5 @@
-import { getBgClass, getTextClass, getBorderClass } from "@/lib/colors";
-import type { ThemeColor } from "../types";
+import { getBgClass, getTextClass, getBorderClass } from '@/lib/colors';
+import type { ThemeColor } from '../types';
 
 interface DataCardProps {
   children: React.ReactNode;
@@ -14,17 +14,17 @@ export function DataCard({
   bgColor,
   textColor,
   borderColor,
-  className = "",
+  className = '',
 }: DataCardProps) {
   const cardClasses = [
-    "rounded-lg p-4 border",
-    bgColor ? getBgClass(bgColor) : "bg-neutral",
+    'rounded-lg p-4 border',
+    bgColor ? getBgClass(bgColor) : 'bg-neutral',
     getTextClass(textColor),
-    borderColor ? getBorderClass(borderColor) : "border-tertiary",
+    borderColor ? getBorderClass(borderColor) : 'border-tertiary',
     className,
   ]
     .filter(Boolean)
-    .join(" ");
+    .join(' ');
 
   return <div className={cardClasses}>{children}</div>;
 }

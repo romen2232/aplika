@@ -1,5 +1,5 @@
-import { getTextClass } from "@/lib/colors";
-import type { ThemeColor } from "../types";
+import { getTextClass } from '@/lib/colors';
+import type { ThemeColor } from '../types';
 
 interface LogoProps {
   jobColor: ThemeColor;

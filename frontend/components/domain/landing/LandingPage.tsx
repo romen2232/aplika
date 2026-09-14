@@ -1,6 +1,6 @@
-import { Header } from "./Header";
-import { InfoPanel } from "./InfoPanel";
-import { AuthPanel } from "./AuthPanel";
+import { Header } from './Header';
+import { InfoPanel } from './InfoPanel';
+import { AuthPanel } from './AuthPanel';
 
 export function LandingPage() {
   return (

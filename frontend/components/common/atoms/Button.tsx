@@ -1,5 +1,5 @@
-import { colorToHex } from "@/lib/colors";
-import type { ThemeColor } from "../types";
+import { colorToHex } from '@/lib/colors';
+import type { ThemeColor } from '../types';
 
 interface Gradient {
   from: ThemeColor;
@@ -16,7 +16,7 @@ interface ButtonProps {
 }
 
 export function Button({ text, onClick, color, gradient, borderColor, borderSize }: ButtonProps) {
-  const baseClasses = "rounded-md text-center justify-center px-4 py-2 font-medium cursor-pointer";
+  const baseClasses = 'rounded-md text-center justify-center px-4 py-2 font-medium cursor-pointer';
 
   const style: React.CSSProperties = gradient
     ? {
@@ -24,9 +24,9 @@ export function Button({ text, onClick, color, gradient, borderColor, borderSize
       }
     : {};
 
-  const colorClass = color ? `bg-${color}` : "";
-  const borderClass = borderColor ? `border-${borderColor}` : "";
-  const borderSizeClass = borderSize !== undefined ? `border-${borderSize}` : "";
+  const colorClass = color ? `bg-${color}` : '';
+  const borderClass = borderColor ? `border-${borderColor}` : '';
+  const borderSizeClass = borderSize !== undefined ? `border-${borderSize}` : '';
 
   return (
     <button

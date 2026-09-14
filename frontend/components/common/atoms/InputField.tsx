@@ -1,5 +1,5 @@
-import { getBgClass, getTextClass, getBorderClass } from "@/lib/colors";
-import type { ThemeColor } from "../types";
+import { getBgClass, getTextClass, getBorderClass } from '@/lib/colors';
+import type { ThemeColor } from '../types';
 
 interface InputFieldProps {
   label: string;
@@ -15,25 +15,25 @@ interface InputFieldProps {
 
 export function InputField({
   label,
-  type = "text",
+  type = 'text',
   value,
   onChange,
   actionRight,
   bgColor,
   textColor,
   borderColor,
-  className = "",
+  className = '',
 }: InputFieldProps) {
-  const inputId = `input-${label.toLowerCase().replace(/\s+/g, "-")}`;
+  const inputId = `input-${label.toLowerCase().replace(/\s+/g, '-')}`;
   const inputClasses = [
-    "w-full px-4 py-2 rounded-md border",
+    'w-full px-4 py-2 rounded-md border',
     getBgClass(bgColor),
     getTextClass(textColor),
     getBorderClass(borderColor),
     className,
   ]
     .filter(Boolean)
-    .join(" ");
+    .join(' ');
 
   return (
     <div className="flex flex-col gap-2">
