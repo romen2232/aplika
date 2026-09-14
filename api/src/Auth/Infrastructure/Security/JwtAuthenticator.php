@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Auth\Infrastructure\Security;
 
 use App\Auth\Domain\Exception\InvalidTokenException;
+use App\Auth\Domain\UserRepository;
 use App\Auth\Infrastructure\Jwt\JwtTokenUserExtractor;
 use App\Auth\Infrastructure\Jwt\JwtTokenValidator;
-use App\Auth\Domain\UserRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
