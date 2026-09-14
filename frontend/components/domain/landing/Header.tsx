@@ -1,24 +1,22 @@
-import { Logo } from "@/components/common/atoms/Logo";
-import { getDictionary } from "@/app/[lang]/dictionaries";
-import Link from "next/link";
+import { Logo } from '@/components/common/atoms/Logo';
+import { getDictionary } from '@/app/[lang]/dictionaries';
+import Link from 'next/link';
 
 export async function Header() {
   const dict = await getDictionary();
 
   const navLinks = [
-    { label: dict.header.nav.features, href: "#features" },
-    { label: dict.header.nav.howItWorks, href: "#how-it-works" },
-    { label: dict.header.nav.pricing, href: "#pricing" },
-    { label: dict.header.nav.support, href: "#support" },
+    { label: dict.header.nav.features, href: '#features' },
+    { label: dict.header.nav.howItWorks, href: '#how-it-works' },
+    { label: dict.header.nav.pricing, href: '#pricing' },
+    { label: dict.header.nav.support, href: '#support' },
   ];
 
   return (
     <header className="hidden min-[1400px]:flex items-center justify-between h-[10vh] px-15 bg-neutral text-tertiary/80">
       <div className="flex items-center gap-25">
         <Logo jobColor="tertiary" logColor="primary" />
-        <span className="text-sm font-normal text-tertiary/80">
-          {dict.header.slogan}
-        </span>
+        <span className="text-sm font-normal text-tertiary/80">{dict.header.slogan}</span>
       </div>
 
       <nav className="flex gap-4">

@@ -1,5 +1,5 @@
-import { getBgClass, getTextClass, getBorderClass } from "@/lib/colors";
-import type { ThemeColor } from "../types";
+import { getBgClass, getTextClass, getBorderClass } from '@/lib/colors';
+import type { ThemeColor } from '../types';
 
 interface TabOption {
   label: string;
@@ -27,21 +27,21 @@ export function TabsSelector({
   activeTextColor,
   inactiveTextColor,
   borderColor,
-  className = "",
+  className = '',
 }: TabsSelectorProps) {
   return (
     <div className="flex gap-2">
       {options.map((option) => {
         const isActive = option.value === currentValue;
         const tabClasses = [
-          "px-4 py-2 rounded-md cursor-pointer border",
+          'px-4 py-2 rounded-md cursor-pointer border',
           isActive ? getBgClass(activeBgColor) : getBgClass(inactiveBgColor),
           isActive ? getTextClass(activeTextColor) : getTextClass(inactiveTextColor),
           getBorderClass(borderColor),
           className,
         ]
           .filter(Boolean)
-          .join(" ");
+          .join(' ');
 
         return (
           <button
