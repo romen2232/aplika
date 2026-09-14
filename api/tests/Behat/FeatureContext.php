@@ -25,11 +25,7 @@ final class FeatureContext implements Context
     public function theApplicationIsRunningInTheEnvironment(string $environment): void
     {
         if ($this->kernel->getEnvironment() !== $environment) {
-            throw new RuntimeException(sprintf(
-                'Expected the "%s" environment, got "%s".',
-                $environment,
-                $this->kernel->getEnvironment(),
-            ));
+            throw new RuntimeException(\sprintf('Expected the "%s" environment, got "%s".', $environment, $this->kernel->getEnvironment()));
         }
     }
 }
