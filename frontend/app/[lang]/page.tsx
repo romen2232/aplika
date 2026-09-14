@@ -1,7 +1,8 @@
 import { getDictionary } from './dictionaries';
 
-export default async function Home() {
-  const dict = await getDictionary();
+export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  const dict = await getDictionary(lang);
 
   return (
     <main>

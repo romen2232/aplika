@@ -1,4 +1,3 @@
-import { lang } from 'next/root-params';
 import { notFound } from 'next/navigation';
 import { locales, type Locale } from '@/i18n/config';
 
@@ -10,8 +9,7 @@ const dictionaries = {
 export const hasLocale = (locale: string): locale is Locale =>
   (locales as readonly string[]).includes(locale);
 
-export const getDictionary = async () => {
-  const locale = await lang();
+export const getDictionary = async (locale: string) => {
   if (!hasLocale(locale)) notFound();
   return dictionaries[locale]();
 };
