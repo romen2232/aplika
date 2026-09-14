@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { locales, defaultLocale } from '@/i18n/config';
 import { AuthProvider } from '@/src/contexts/AuthContext';
+import { DictionaryProvider } from '@/i18n/DictionaryProvider';
+import { getDictionary } from './dictionaries';
 import '../globals.css';
 
 export async function generateStaticParams() {
@@ -17,14 +19,14 @@ export default async function RootLayout({
   params,
 }: LayoutProps<"/[lang]">) {
   const { lang } = await params;
-  const htmlLang = locales.includes(lang as typeof locales[number])
-    ? lang
-    : defaultLocale;
+  const htmlLang = locales.includes(lang as (typeof locales)[number]) ? lang : defaultLocale;
+  const dictionary = await getDictionary();
 
   return (
     <html lang={htmlLang}>
       <body>
         <AuthProvider>{children}</AuthProvider>
+        <DictionaryProvider dictionary={dictionary}>{children}</DictionaryProvider>
       </body>
     </html>
   );

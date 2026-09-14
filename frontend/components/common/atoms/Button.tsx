@@ -13,9 +13,20 @@ interface ButtonProps {
   gradient?: Gradient;
   borderColor?: ThemeColor;
   borderSize?: 0 | 2 | 4 | 8;
+  type?: 'button' | 'submit';
+  className?: string;
 }
 
-export function Button({ text, onClick, color, gradient, borderColor, borderSize }: ButtonProps) {
+export function Button({
+  text,
+  onClick,
+  color,
+  gradient,
+  borderColor,
+  borderSize,
+  type = 'button',
+  className = '',
+}: ButtonProps) {
   const baseClasses = 'rounded-md text-center justify-center px-4 py-2 font-medium cursor-pointer';
 
   const style: React.CSSProperties = gradient
@@ -30,7 +41,8 @@ export function Button({ text, onClick, color, gradient, borderColor, borderSize
 
   return (
     <button
-      className={`${baseClasses} ${colorClass} ${borderClass} ${borderSizeClass}`}
+      type={type}
+      className={`${baseClasses} ${colorClass} ${borderClass} ${borderSizeClass} ${className}`}
       style={style}
       onClick={onClick}
     >

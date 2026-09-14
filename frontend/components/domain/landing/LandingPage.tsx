@@ -1,6 +1,6 @@
 import { Header } from './Header';
 import { InfoPanel } from './InfoPanel';
-import { AuthPanel } from './AuthPanel';
+import { AuthPanel } from '@/components/domain/auth/AuthPanel';
 
 export function LandingPage() {
   return (
