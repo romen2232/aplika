@@ -113,8 +113,8 @@ test-phpspec: ## Run PHPSpec domain/unit tests
 	$(API) vendor/bin/phpspec run
 
 .PHONY: test-behat
-test-behat: ## Run Behat acceptance tests
-	$(API) vendor/bin/behat
+test-behat: ## Run Behat acceptance tests (excluding fixtures)
+	$(API) vendor/bin/behat --tags='~@fixtures'
 
 .PHONY: test-frontend
 test-frontend: ## Run frontend unit tests
@@ -174,6 +174,24 @@ check: test lint typecheck ## Run tests, lint and type-check
 # -----------------------------------------------------------------------------
 # Database
 # -----------------------------------------------------------------------------
+
+.PHONY: db
+db: db-dev db-test ## Set up both dev and test databases with fixtures
+
+.PHONY: db-dev
+db-dev: ## Drop, create, and migrate the dev database
+	$(API) php bin/console doctrine:database:drop --if-exists --force --no-interaction
+	$(API) php bin/console doctrine:database:create --no-interaction
+	$(API) php bin/console doctrine:migrations:migrate --no-interaction
+
+.PHONY: db-test
+db-test: ## Drop, create, migrate the test database, load fixtures, and take snapshot
+	$(API) sh -c "APP_ENV=test php bin/console doctrine:database:drop --if-exists --force --no-interaction"
+	$(API) sh -c "APP_ENV=test php bin/console doctrine:database:create --no-interaction"
+	$(API) sh -c "APP_ENV=test php bin/console doctrine:migrations:migrate --no-interaction"
+	$(API) rm -f var/test-snapshot.dump
+	$(API) vendor/bin/behat --tags=fixtures
+	$(API) sh -c "PGPASSWORD=joblog pg_dump --host=database --port=5432 --username=joblog --format=custom --file=var/test-snapshot.dump joblog_test"
 
 .PHONY: migrate
 migrate: ## Apply database migrations
