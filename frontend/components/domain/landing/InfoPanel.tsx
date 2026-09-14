@@ -84,8 +84,7 @@ export function InfoPanel() {
     <section className="h-full flex flex-col justify-between bg-neutral/99 p-12">
       <div className="mx-auto flex w-full max-w-4xl flex-col">
         <h1 className="text-5xl font-bold text-white">
-          {t('hero.titleMain')}{' '}
-          <span className="text-primary">{t('hero.titleHighlight')}</span>{' '}
+          {t('hero.titleMain')} <span className="text-primary">{t('hero.titleHighlight')}</span>{' '}
           {t('hero.titleSuffix')}
         </h1>
 
