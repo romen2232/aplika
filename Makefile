@@ -193,3 +193,10 @@ xdebug-on: ## Enable Xdebug step debugging (restarts the api container)
 .PHONY: xdebug-off
 xdebug-off: ## Disable Xdebug (restarts the api container)
 	XDEBUG_MODE=off $(DOCKER_COMPOSE) up -d api
+
+.PHONY: debug-frontend
+debug-frontend: ## Start frontend with Node.js inspector on port 9229
+	FRONTEND_SCRIPT=debug $(DOCKER_COMPOSE) up -d frontend
+
+.PHONY: debug-on
+debug-on: xdebug-on debug-frontend ## Enable both backend and frontend debugging
