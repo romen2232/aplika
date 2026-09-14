@@ -34,6 +34,31 @@ restart: ## Restart all services
 build: ## Build the Docker images
 	$(DOCKER_COMPOSE) build
 
+.PHONY: init
+init: up install hooks migrate ## First-time project setup: start containers, install deps, configure git hooks, run migrations
+	@echo ""
+	@echo "✅ Joblog is ready!"
+	@echo ""
+	@echo "  Frontend → http://joblog.dev:3000"
+	@echo "  API      → http://api.joblog.dev"
+	@echo ""
+	@if ! grep -q "joblog.dev" /etc/hosts 2>/dev/null; then \
+		echo "⚠️  Add the following line to /etc/hosts:"; \
+		echo ""; \
+		echo "  127.0.0.1 joblog.dev api.joblog.dev"; \
+		echo ""; \
+		echo "  Run: sudo sh -c 'echo \"127.0.0.1 joblog.dev api.joblog.dev\" >> /etc/hosts'"; \
+	fi
+
+.PHONY: hosts
+hosts: ## Add joblog.dev domains to /etc/hosts (requires sudo)
+	@if grep -q "joblog.dev" /etc/hosts 2>/dev/null; then \
+		echo "✅ joblog.dev already in /etc/hosts"; \
+	else \
+		sudo sh -c 'echo "127.0.0.1 joblog.dev api.joblog.dev" >> /etc/hosts'; \
+		echo "✅ Added joblog.dev and api.joblog.dev to /etc/hosts"; \
+	fi
+
 .PHONY: hooks
 hooks: ## Install git hooks for pre-push checks
 	git config core.hooksPath .githooks
