@@ -6,7 +6,7 @@ namespace App\Tests\Behat;
 
 /**
  * Shared state container for Behat contexts.
- * 
+ *
  * Allows domain-specific contexts (e.g., AuthContext) to share state
  * with the shared HTTP context (FeatureContext).
  */
