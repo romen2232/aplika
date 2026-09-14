@@ -55,12 +55,13 @@ services:
       context: ./docker/frontend
     user: "${APP_UID:-1000}:${APP_GID:-1000}"
     working_dir: /app
-    command: npm run dev
+    command: npm run ${FRONTEND_SCRIPT:-dev}
     environment:
       NODE_ENV: development
       NEXT_PUBLIC_API_URL: "http://localhost:${API_PORT:-8000}"
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
+      - "${FRONTEND_DEBUG_PORT:-9229}:9229"
     volumes:
       - ./frontend:/app
     depends_on:
