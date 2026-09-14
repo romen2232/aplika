@@ -11,3 +11,12 @@
 
 # Generated reference of the Symfony config (rebuilt by cache:clear)
 /config/reference.php
+
+# Static analysis and code style caches
+/var/phpstan/
+/var/.php-cs-fixer.cache
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
