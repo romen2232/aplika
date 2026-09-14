@@ -7,6 +7,7 @@ namespace App\Auth\Infrastructure\Security;
 use App\Auth\Domain\Exception\InvalidTokenException;
 use App\Auth\Domain\TokenUserExtractor;
 use App\Auth\Domain\TokenValidator;
+use App\Auth\Domain\UserRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +24,7 @@ class JwtAuthenticator extends AbstractAuthenticator
     public function __construct(
         private readonly TokenValidator $tokenValidator,
         private readonly TokenUserExtractor $userExtractor,
+        private readonly UserRepository $userRepository,
     ) {
     }
 
@@ -47,7 +49,13 @@ class JwtAuthenticator extends AbstractAuthenticator
 
             return new SelfValidatingPassport(
                 new UserBadge($userInfo['email'], function () use ($userInfo) {
-                    return new User($userInfo['id'], $userInfo['email'], $userInfo['roles']);
+                    $domainUser = $this->userRepository->findById($userInfo['id']);
+
+                    if (null === $domainUser) {
+                        throw new CustomUserMessageAuthenticationException('User not found');
+                    }
+
+                    return User::fromDomain($domainUser);
                 })
             );
         } catch (InvalidTokenException $e) {
