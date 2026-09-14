@@ -7,3 +7,13 @@ api_me:
     path: /api/me
     controller: App\Auth\Infrastructure\Controller\MeController
     methods: [GET]
+
+api_register:
+    path: /api/auth/register
+    controller: App\Auth\Infrastructure\Controller\RegisterController
+    methods: [POST]
+
+api_login:
+    path: /api/auth/login
+    controller: App\Auth\Infrastructure\Controller\LoginController
+    methods: [POST]
