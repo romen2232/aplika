@@ -35,7 +35,7 @@ class RateLimitSubscriber implements EventSubscriberInterface
         }
 
         // Only enable rate limiting in production environment
-        if ($this->environment !== 'prod') {
+        if ('prod' !== $this->environment) {
             return;
         }
 
@@ -50,7 +50,7 @@ class RateLimitSubscriber implements EventSubscriberInterface
 
         if (!$limit->isAccepted()) {
             $retryAfter = $limit->getRetryAfter()->getTimestamp() - time();
-            
+
             $response = new JsonResponse(
                 ['error' => 'Too Many Requests'],
                 JsonResponse::HTTP_TOO_MANY_REQUESTS,
