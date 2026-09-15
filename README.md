@@ -81,7 +81,7 @@ make hosts
 Or manually add this line to `/etc/hosts`:
 
 ```text
-127.0.0.1 aplika.dev api.aplika.dev
+127.0.0.1 aplika.test api.aplika.test
 ```
 
 Start the development environment:
@@ -101,8 +101,8 @@ Once finished, the application is available at:
 
 | Service  | URL                          |
 | -------- | ---------------------------- |
-| Frontend | <http://aplika.dev>          |
-| API      | <http://api.aplika.dev>      |
+| Frontend | <http://aplika.test>         |
+| API      | <http://api.aplika.test>     |
 
 ## Common commands
 

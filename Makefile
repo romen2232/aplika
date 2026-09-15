@@ -39,24 +39,24 @@ init: up install hooks db ## First-time project setup: start containers, install
 	@echo ""
 	@echo "✅ Aplika is ready!"
 	@echo ""
-	@echo "  Frontend → http://aplika.dev"
-	@echo "  API      → http://api.aplika.dev"
+	@echo "  Frontend → http://aplika.test"
+	@echo "  API      → http://api.aplika.test"
 	@echo ""
-	@if ! grep -q "aplika.dev" /etc/hosts 2>/dev/null; then \
+	@if ! grep -q "aplika.test" /etc/hosts 2>/dev/null; then \
 		echo "⚠️  Add the following line to /etc/hosts:"; \
 		echo ""; \
-		echo "  127.0.0.1 aplika.dev api.aplika.dev"; \
+		echo "  127.0.0.1 aplika.test api.aplika.test"; \
 		echo ""; \
-		echo "  Run: sudo sh -c 'echo \"127.0.0.1 aplika.dev api.aplika.dev\" >> /etc/hosts'"; \
+		echo "  Run: sudo sh -c 'echo \"127.0.0.1 aplika.test api.aplika.test\" >> /etc/hosts'"; \
 	fi
 
 .PHONY: hosts
-hosts: ## Add aplika.dev domains to /etc/hosts (requires sudo)
-	@if grep -q "aplika.dev" /etc/hosts 2>/dev/null; then \
-		echo "✅ aplika.dev already in /etc/hosts"; \
+hosts: ## Add aplika.test domains to /etc/hosts (requires sudo)
+	@if grep -q "aplika.test" /etc/hosts 2>/dev/null; then \
+		echo "✅ aplika.test already in /etc/hosts"; \
 	else \
-		sudo sh -c 'echo "127.0.0.1 aplika.dev api.aplika.dev" >> /etc/hosts'; \
-		echo "✅ Added aplika.dev and api.aplika.dev to /etc/hosts"; \
+		sudo sh -c 'echo "127.0.0.1 aplika.test api.aplika.test" >> /etc/hosts'; \
+		echo "✅ Added aplika.test and api.aplika.test to /etc/hosts"; \
 	fi
 
 .PHONY: hooks
