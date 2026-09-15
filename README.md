@@ -64,6 +64,7 @@ For example, when looking at a particular position, Aplika should help answer:
 * Docker Compose
 * Git
 * Make
+* mkcert (for HTTPS)
 
 Clone the repository:
 
@@ -84,6 +85,21 @@ Or manually add this line to `/etc/hosts`:
 127.0.0.1 aplika.test api.aplika.test
 ```
 
+### HTTPS Setup (one-time)
+
+The local environment uses HTTPS with locally-trusted certificates. Install `mkcert` and generate the certificates:
+
+```bash
+# Install mkcert (Ubuntu/Debian)
+sudo apt install mkcert libnss3-tools
+
+# Install the local CA (makes your browser trust mkcert certificates)
+mkcert -install
+
+# Generate certificates for *.aplika.test
+make certs
+```
+
 Start the development environment:
 
 ```bash
@@ -99,10 +115,10 @@ This will:
 
 Once finished, the application is available at:
 
-| Service  | URL                          |
-| -------- | ---------------------------- |
-| Frontend | <http://aplika.test>         |
-| API      | <http://api.aplika.test>     |
+| Service  | URL                           |
+| -------- | ----------------------------- |
+| Frontend | <https://aplika.test>         |
+| API      | <https://api.aplika.test>     |
 
 ## Common commands
 
@@ -116,6 +132,8 @@ make check           # Run tests, lint, and type-check
 make logs            # Tail service logs
 make shell-api       # Open a shell in the API container
 make shell-frontend  # Open a shell in the frontend container
+make certs           # Generate HTTPS certificates (requires mkcert)
+make certs-check     # Check if HTTPS certificates exist
 ```
 
 ---
