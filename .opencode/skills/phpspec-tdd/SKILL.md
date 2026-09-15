@@ -1,6 +1,6 @@
 ---
 name: phpspec-tdd
-description: "Trigger: phpspec, phpspec spec file, TDD, domain test, backend unit test, red green refactor. Drive backend domain behavior with PHPSpec first and pick the correct Joblog test level."
+description: "Trigger: phpspec, phpspec spec file, TDD, domain test, backend unit test, red green refactor. Drive backend domain behavior with PHPSpec first and pick the correct Aplika test level."
 license: Apache-2.0
 metadata:
   author: "romen2232"

@@ -7,6 +7,6 @@ describe('Home page', () => {
   it('renders the product name', () => {
     render(<Home />);
 
-    expect(screen.getByRole('heading', { name: 'Joblog' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Aplika' })).toBeInTheDocument();
   });
 });

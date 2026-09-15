@@ -12,7 +12,7 @@ Feature: User registration
       """
 
   Scenario: Registration fails with duplicate email
-    When I register with email "test@joblog.com" and password "AnotherPass456"
+    When I register with email "test@aplika.com" and password "AnotherPass456"
     Then the response status code should be 409
     And the response should contain JSON:
       """

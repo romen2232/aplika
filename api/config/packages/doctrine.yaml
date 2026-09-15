@@ -17,12 +17,12 @@ doctrine:
         # of the default `src/Entity`. Domain classes stay free of ORM attributes.
         auto_mapping: false
         mappings:
-            Joblog:
+            Aplika:
                 type: attribute
                 is_bundle: false
                 dir: '%kernel.project_dir%/src'
                 prefix: 'App'
-                alias: Joblog
+                alias: Aplika
 
 when@prod:
     doctrine:

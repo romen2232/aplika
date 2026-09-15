@@ -1,24 +1,24 @@
-# Joblog
+# Aplika
 
 > A personal job-search management platform built to make the entire job-search process easier to organize, understand, and improve.
 
-Joblog is a full-stack application designed around a simple problem:
+Aplika is a full-stack application designed around a simple problem:
 
 **Finding a job is not just about finding job listings.**
 
 A serious job search involves discovering opportunities, evaluating them, preparing applications, managing different CV versions, tracking conversations, preparing for interviews, following up, and learning from the results.
 
-Joblog brings those activities together in one place.
+Aplika brings those activities together in one place.
 
-We are building Joblog as a real product for our own job search while using it as an opportunity to practice and demonstrate professional software engineering: **Domain-Driven Design, CQRS, Screaming Architecture, TDD, clean boundaries, automated testing, CI/CD, and cloud infrastructure.**
+We are building Aplika as a real product for our own job search while using it as an opportunity to practice and demonstrate professional software engineering: **Domain-Driven Design, CQRS, Screaming Architecture, TDD, clean boundaries, automated testing, CI/CD, and cloud infrastructure.**
 
 ---
 
-## What is Joblog?
+## What is Aplika?
 
-Joblog is a **job-search operating system**.
+Aplika is a **job-search operating system**.
 
-Instead of treating a job application as a single record with a status, Joblog models the journey around it.
+Instead of treating a job application as a single record with a status, Aplika models the journey around it.
 
 ```text
 Discover
@@ -40,7 +40,7 @@ Learn
 
 The goal is to give us a complete picture of our job search.
 
-For example, when looking at a particular position, Joblog should help answer:
+For example, when looking at a particular position, Aplika should help answer:
 
 * What is this job?
 * Where did we find it?
@@ -68,8 +68,8 @@ For example, when looking at a particular position, Joblog should help answer:
 Clone the repository:
 
 ```bash
-git clone git@github.com:romen2232/joblog.git
-cd joblog
+git clone git@github.com:romen2232/aplika.git
+cd aplika
 ```
 
 Add the local domains to your hosts file (one-time setup):
@@ -81,7 +81,7 @@ make hosts
 Or manually add this line to `/etc/hosts`:
 
 ```text
-127.0.0.1 joblog.dev api.joblog.dev
+127.0.0.1 aplika.dev api.aplika.dev
 ```
 
 Start the development environment:
@@ -101,8 +101,8 @@ Once finished, the application is available at:
 
 | Service  | URL                          |
 | -------- | ---------------------------- |
-| Frontend | <http://joblog.dev>          |
-| API      | <http://api.joblog.dev>      |
+| Frontend | <http://aplika.dev>          |
+| API      | <http://api.aplika.dev>      |
 
 ## Common commands
 
@@ -178,7 +178,7 @@ Expired
 
 The important part is that the current status is only one part of the story.
 
-Joblog also maintains an **application history** so we can understand what happened over time.
+Aplika also maintains an **application history** so we can understand what happened over time.
 
 For example:
 
@@ -204,7 +204,7 @@ Offer received
 
 # Application Timeline
 
-Instead of overwriting important information, Joblog records meaningful events.
+Instead of overwriting important information, Aplika records meaningful events.
 
 Examples:
 
@@ -230,7 +230,7 @@ It also gives us an interesting domain problem to model and test.
 
 Job searches often require different versions of a CV.
 
-Joblog allows us to manage multiple versions rather than constantly replacing the same document.
+Aplika allows us to manage multiple versions rather than constantly replacing the same document.
 
 For example:
 
@@ -256,7 +256,7 @@ and:
 
 # AI-Assisted Features
 
-AI is intentionally **not the center of Joblog**.
+AI is intentionally **not the center of Aplika**.
 
 The product should still be useful without AI.
 
@@ -266,7 +266,7 @@ Potential examples include:
 
 ### Job Analysis
 
-Given a job description, Joblog can identify:
+Given a job description, Aplika can identify:
 
 * Required skills
 * Preferred skills
@@ -309,7 +309,7 @@ The user remains in control.
 
 ### Interview Preparation
 
-Based on the job and company, Joblog can help generate:
+Based on the job and company, Aplika can help generate:
 
 * Technical questions
 * Behavioral questions
@@ -369,7 +369,7 @@ This avoids treating every job posting as an isolated entity.
 
 Job searching often involves people, not just applications.
 
-Joblog can associate contacts with companies and applications.
+Aplika can associate contacts with companies and applications.
 
 For example:
 
@@ -423,7 +423,7 @@ It's to help improve the job search.
 
 # Architecture
 
-Joblog is designed around the domain rather than around technical infrastructure.
+Aplika is designed around the domain rather than around technical infrastructure.
 
 The architecture follows:
 
@@ -508,7 +508,7 @@ This makes the code easier to reason about and allows the domain to be tested in
 
 # CQRS
 
-Joblog uses **Command Query Responsibility Segregation** where it provides meaningful value.
+Aplika uses **Command Query Responsibility Segregation** where it provides meaningful value.
 
 Commands represent actions that change the system.
 
@@ -805,7 +805,7 @@ This keeps long-running work away from normal HTTP requests.
 
 # AWS
 
-Joblog is designed to run in AWS using managed services where they provide a clear operational benefit.
+Aplika is designed to run in AWS using managed services where they provide a clear operational benefit.
 
 Potential infrastructure includes:
 
@@ -912,7 +912,7 @@ Areas we care about include:
 * Rate limiting
 * Secure handling of third-party API credentials
 
-Joblog contains personal career information, so protecting that information is especially important.
+Aplika contains personal career information, so protecting that information is especially important.
 
 ---
 
@@ -950,7 +950,7 @@ Use complexity only when it solves a real problem.
 
 ### Build for the real user
 
-Joblog exists because we actually have the problem it solves.
+Aplika exists because we actually have the problem it solves.
 
 ---
 
@@ -986,7 +986,7 @@ This lets us continuously validate both the product and the architecture.
 
 # Collaboration
 
-Joblog is being developed by two developers:
+Aplika is being developed by two developers:
 
 ### @romen2232
 
@@ -1106,9 +1106,9 @@ Architecture is expected to evolve as we learn more from the actual application.
 
 ---
 
-# Why We Are Building Joblog
+# Why We Are Building Aplika
 
-Joblog started from a practical problem.
+Aplika started from a practical problem.
 
 We are looking for jobs, and managing that process involves a surprising amount of information.
 
@@ -1130,7 +1130,7 @@ But none of these tools necessarily provide a coherent picture of the entire pro
 
 We wanted to build something that does.
 
-At the same time, Joblog gives us a realistic environment in which to practice software engineering beyond isolated tutorials and small coding exercises.
+At the same time, Aplika gives us a realistic environment in which to practice software engineering beyond isolated tutorials and small coding exercises.
 
 The project gives us opportunities to work with:
 
@@ -1156,7 +1156,7 @@ That means product decisions can be driven by real problems rather than hypothet
 
 # Project Philosophy
 
-Joblog is not intended to be the biggest job platform.
+Aplika is not intended to be the biggest job platform.
 
 It is not intended to replace LinkedIn, Indeed, or other job boards.
 
@@ -1195,7 +1195,7 @@ That feedback loop is at the heart of the project.
 At a high level:
 
 ```text
-joblog/
+aplika/
 ├── api/
 │   ├── src/
 │   ├── tests/

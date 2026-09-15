@@ -91,7 +91,7 @@ final class FixtureContext implements Context
             }
 
             $columns = array_keys($row);
-            $placeholders = array_map(fn ($col) => ':'.$col, $columns);
+            $placeholders = array_map(fn($col) => ':' . $col, $columns);
 
             $sql = \sprintf(
                 'INSERT INTO %s (%s) VALUES (%s)',
@@ -103,7 +103,7 @@ final class FixtureContext implements Context
             try {
                 $stmt = $pdo->prepare($sql);
                 foreach ($row as $column => $value) {
-                    $stmt->bindValue(':'.$column, $value);
+                    $stmt->bindValue(':' . $column, $value);
                 }
                 $stmt->execute();
             } catch (PDOException $e) {
@@ -152,7 +152,7 @@ final class FixtureContext implements Context
             return $entity;
         }
 
-        return $entity.'s';
+        return $entity . 's';
     }
 
     /**
@@ -190,8 +190,8 @@ final class FixtureContext implements Context
                 $dbName
             );
 
-            $user = $parsed['user'] ?? 'joblog';
-            $pass = $parsed['pass'] ?? 'joblog';
+            $user = $parsed['user'] ?? 'aplika';
+            $pass = $parsed['pass'] ?? 'aplika';
 
             $pdo = new PDO($dsn, $user, $pass);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

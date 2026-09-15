@@ -32,8 +32,8 @@ final class DatabaseSnapshot
         $this->databaseName = ltrim($parsed['path'], '/');
         $this->databaseHost = $parsed['host'];
         $this->databasePort = (string) ($parsed['port'] ?? 5432);
-        $this->databaseUser = $parsed['user'] ?? 'joblog';
-        $this->databasePassword = $parsed['pass'] ?? 'joblog';
+        $this->databaseUser = $parsed['user'] ?? 'aplika';
+        $this->databasePassword = $parsed['pass'] ?? 'aplika';
     }
 
     /**

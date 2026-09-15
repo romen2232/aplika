@@ -1,6 +1,6 @@
-# Joblog — Agent Instructions
+# Aplika — Agent Instructions
 
-Joblog is a job-search management platform: PHP/Symfony API + Next.js/TypeScript frontend + PostgreSQL, built with DDD, CQRS, Screaming Architecture, and TDD. `README.md` is the source of truth for product and engineering conventions.
+Aplika is a job-search management platform: PHP/Symfony API + Next.js/TypeScript frontend + PostgreSQL, built with DDD, CQRS, Screaming Architecture, and TDD. `README.md` is the source of truth for product and engineering conventions.
 
 ## Hard rule
 
