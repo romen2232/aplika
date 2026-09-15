@@ -23,16 +23,16 @@ class RateLimitDecider
         $token = $this->tokenStorage->getToken();
         $user = $token?->getUser();
 
-        if ($user !== null) {
+        if (null !== $user) {
             return [
-                'key' => 'user_' . $user->getUserIdentifier(),
+                'key' => 'user_'.$user->getUserIdentifier(),
                 'limit' => self::AUTHENTICATED_LIMIT,
                 'interval' => self::INTERVAL_SECONDS,
             ];
         }
 
         return [
-            'key' => 'ip_' . $request->getClientIp(),
+            'key' => 'ip_'.$request->getClientIp(),
             'limit' => self::PUBLIC_LIMIT,
             'interval' => self::INTERVAL_SECONDS,
         ];
