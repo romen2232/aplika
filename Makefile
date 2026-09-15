@@ -1,6 +1,6 @@
 DOCKER_COMPOSE ?= docker compose
-API            := $(DOCKER_COMPOSE) exec api
-FRONTEND       := $(DOCKER_COMPOSE) exec frontend
+API            := $(DOCKER_COMPOSE) exec -T api
+FRONTEND       := $(DOCKER_COMPOSE) exec -T frontend
 
 .DEFAULT_GOAL := help
 
