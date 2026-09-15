@@ -94,7 +94,7 @@ services:
     command: npm run ${FRONTEND_SCRIPT:-dev}
     environment:
       NODE_ENV: development
-      NEXT_PUBLIC_API_URL: "http://${API_DOMAIN:-api.aplika.dev}"
+      NEXT_PUBLIC_API_URL: "http://${API_DOMAIN:-api.aplika.test}"
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
       - "${FRONTEND_DEBUG_PORT:-9229}:9229"
