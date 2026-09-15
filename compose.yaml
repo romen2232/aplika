@@ -89,5 +89,19 @@ services:
     depends_on:
       - web
 
+  locust:
+    image: locustio/locust:latest
+    profiles:
+      - load-test
+    ports:
+      - "${LOCUST_PORT:-8089}:8089"
+    volumes:
+      - ./api/locust:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --host=http://web:80
+    depends_on:
+      - web
+    environment:
+      - LOCUST_MODE_MASTER=false
+
 volumes:
   database_data:
