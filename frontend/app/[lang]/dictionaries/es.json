@@ -1,9 +1,9 @@
 {
   "common": {
-    "appName": "Joblog"
+    "appName": "Aplika"
   },
   "home": {
-    "title": "Joblog",
+    "title": "Aplika",
     "subtitle": "Tu sistema operativo para la búsqueda de empleo."
   }
 }

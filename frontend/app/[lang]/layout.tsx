@@ -7,7 +7,7 @@ export async function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
-  title: 'Joblog',
+  title: 'Aplika',
   description: 'A personal job-search management platform.',
 };
 

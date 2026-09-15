@@ -1,18 +1,18 @@
-name: joblog
+name: aplika
 
 services:
   database:
     image: postgres:16-alpine
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-joblog}
-      POSTGRES_USER: ${POSTGRES_USER:-joblog}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-joblog}
+      POSTGRES_DB: ${POSTGRES_DB:-aplika}
+      POSTGRES_USER: ${POSTGRES_USER:-aplika}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-aplika}
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - database_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-joblog} -d ${POSTGRES_DB:-joblog}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-aplika} -d ${POSTGRES_DB:-aplika}"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -41,7 +41,7 @@ services:
       HOME: /tmp
       COMPOSER_ALLOW_SUPERUSER: "1"
       COMPOSER_HOME: /tmp/composer
-      DATABASE_URL: "postgresql://${POSTGRES_USER:-joblog}:${POSTGRES_PASSWORD:-joblog}@database:5432/${POSTGRES_DB:-joblog}?serverVersion=16&charset=utf8"
+      DATABASE_URL: "postgresql://${POSTGRES_USER:-aplika}:${POSTGRES_PASSWORD:-aplika}@database:5432/${POSTGRES_DB:-aplika}?serverVersion=16&charset=utf8"
       REDIS_URL: "redis://redis:6379"
       XDEBUG_MODE: ${XDEBUG_MODE:-off}
     extra_hosts:
@@ -65,7 +65,7 @@ services:
     command: php bin/console messenger:consume async --time-limit=3600 --memory-limit=128M
     environment:
       HOME: /tmp
-      DATABASE_URL: "postgresql://${POSTGRES_USER:-joblog}:${POSTGRES_PASSWORD:-joblog}@database:5432/${POSTGRES_DB:-joblog}?serverVersion=16&charset=utf8"
+      DATABASE_URL: "postgresql://${POSTGRES_USER:-aplika}:${POSTGRES_PASSWORD:-aplika}@database:5432/${POSTGRES_DB:-aplika}?serverVersion=16&charset=utf8"
     volumes:
       - ./api:/app
     depends_on:
@@ -94,7 +94,7 @@ services:
     command: npm run ${FRONTEND_SCRIPT:-dev}
     environment:
       NODE_ENV: development
-      NEXT_PUBLIC_API_URL: "http://${API_DOMAIN:-api.joblog.dev}"
+      NEXT_PUBLIC_API_URL: "http://${API_DOMAIN:-api.aplika.dev}"
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
       - "${FRONTEND_DEBUG_PORT:-9229}:9229"

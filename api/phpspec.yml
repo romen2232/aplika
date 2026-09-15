@@ -3,7 +3,7 @@
 # Specs mirror the source path relative to the `App` namespace root:
 #   src/Job/Domain/Job.php  ->  spec/Job/Domain/JobSpec.php
 suites:
-    joblog:
+    aplika:
         namespace: App
         psr4_prefix: App
         src_path: src

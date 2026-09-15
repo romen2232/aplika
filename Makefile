@@ -37,26 +37,26 @@ build: ## Build the Docker images
 .PHONY: init
 init: up install hooks db ## First-time project setup: start containers, install deps, configure git hooks, run migrations
 	@echo ""
-	@echo "✅ Joblog is ready!"
+	@echo "✅ Aplika is ready!"
 	@echo ""
-	@echo "  Frontend → http://joblog.dev"
-	@echo "  API      → http://api.joblog.dev"
+	@echo "  Frontend → http://aplika.dev"
+	@echo "  API      → http://api.aplika.dev"
 	@echo ""
-	@if ! grep -q "joblog.dev" /etc/hosts 2>/dev/null; then \
+	@if ! grep -q "aplika.dev" /etc/hosts 2>/dev/null; then \
 		echo "⚠️  Add the following line to /etc/hosts:"; \
 		echo ""; \
-		echo "  127.0.0.1 joblog.dev api.joblog.dev"; \
+		echo "  127.0.0.1 aplika.dev api.aplika.dev"; \
 		echo ""; \
-		echo "  Run: sudo sh -c 'echo \"127.0.0.1 joblog.dev api.joblog.dev\" >> /etc/hosts'"; \
+		echo "  Run: sudo sh -c 'echo \"127.0.0.1 aplika.dev api.aplika.dev\" >> /etc/hosts'"; \
 	fi
 
 .PHONY: hosts
-hosts: ## Add joblog.dev domains to /etc/hosts (requires sudo)
-	@if grep -q "joblog.dev" /etc/hosts 2>/dev/null; then \
-		echo "✅ joblog.dev already in /etc/hosts"; \
+hosts: ## Add aplika.dev domains to /etc/hosts (requires sudo)
+	@if grep -q "aplika.dev" /etc/hosts 2>/dev/null; then \
+		echo "✅ aplika.dev already in /etc/hosts"; \
 	else \
-		sudo sh -c 'echo "127.0.0.1 joblog.dev api.joblog.dev" >> /etc/hosts'; \
-		echo "✅ Added joblog.dev and api.joblog.dev to /etc/hosts"; \
+		sudo sh -c 'echo "127.0.0.1 aplika.dev api.aplika.dev" >> /etc/hosts'; \
+		echo "✅ Added aplika.dev and api.aplika.dev to /etc/hosts"; \
 	fi
 
 .PHONY: hooks

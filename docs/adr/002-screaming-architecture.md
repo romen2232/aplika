@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-The Joblog frontend is a Next.js/React/TypeScript application that must reflect the same domain clarity as the backend. The frontend needs to handle job management, application tracking, interview workflows, CV versioning, dashboards, and analytics.
+The Aplika frontend is a Next.js/React/TypeScript application that must reflect the same domain clarity as the backend. The frontend needs to handle job management, application tracking, interview workflows, CV versioning, dashboards, and analytics.
 
 A common frontend anti-pattern is organizing code by technical role:
 
@@ -80,7 +80,7 @@ Each feature module is self-contained: it owns its components, hooks, API calls,
 Key principles:
 
 - **Feature-first**: all code for "jobs" lives in `features/jobs/`, not scattered across `components/`, `hooks/`, `services/`.
-- **Screaming intent**: opening the `features/` directory immediately communicates what Joblog does — jobs, applications, interviews, CVs, companies, dashboard.
+- **Screaming intent**: opening the `features/` directory immediately communicates what Aplika does — jobs, applications, interviews, CVs, companies, dashboard.
 - **Shared is small**: `shared/` contains only reusable UI primitives and cross-cutting utilities, not business logic.
 - **Barrel exports**: each feature exposes a public API through `index.ts`, hiding internal implementation details.
 
@@ -111,5 +111,5 @@ Key principles:
 ## References
 
 - Robert C. Martin — *Screaming Architecture* (https://blog.cleancoder.com/uncle-bob/2011/09/30/Screaming-Architecture.html)
-- [Joblog readme — Architecture section](../readme.md#architecture)
-- [Joblog readme — Engineering Principles](../readme.md#engineering-principles)
+- [Aplika readme — Architecture section](../readme.md#architecture)
+- [Aplika readme — Engineering Principles](../readme.md#engineering-principles)
