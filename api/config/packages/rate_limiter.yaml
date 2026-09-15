@@ -1,0 +1,13 @@
+framework:
+    rate_limiter:
+        api_public:
+            policy: 'sliding_window'
+            limit: 15
+            interval: '1 minute'
+            cache_pool: 'cache.redis'
+        
+        api_authenticated:
+            policy: 'sliding_window'
+            limit: 50
+            interval: '1 minute'
+            cache_pool: 'cache.redis'
