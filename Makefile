@@ -105,6 +105,9 @@ shell-frontend: ## Open a shell in the frontend container
 .PHONY: test
 test: test-backend test-frontend ## Run backend and frontend test suites
 
+.PHONY: test-all
+test-all: test-backend test-frontend test-e2e  test-load ## Run all test suites (Specs, Behat, frontend unit tests, Playwright e2e tests, and Locust load tests)
+
 .PHONY: test-backend
 test-backend: test-phpspec test-behat ## Run backend test suites
 
@@ -123,6 +126,31 @@ test-frontend: ## Run frontend unit tests
 .PHONY: test-e2e
 test-e2e: ## Run Playwright end-to-end tests
 	$(FRONTEND) npm run test:e2e
+
+.PHONY: test-load
+test-load: ## Run Locust load tests (automatically switches to prod mode)
+	@echo "Switching API to production mode for load testing..."
+	$(DOCKER_COMPOSE) stop api
+	APP_ENV=prod $(DOCKER_COMPOSE) up -d api
+	@echo "Waiting for API to be ready..."
+	@sleep 3
+	@echo "Starting load test..."
+	$(DOCKER_COMPOSE) up -d locust
+	@sleep 2
+	$(DOCKER_COMPOSE) exec locust locust \
+		-f /mnt/locust/locustfile.py \
+		--headless \
+		--users 10 \
+		--spawn-rate 2 \
+		--run-time 30s \
+		--host http://web:80 \
+		--only-summary
+	$(DOCKER_COMPOSE) stop locust
+	@echo ""
+	@echo "Switching API back to development mode..."
+	$(DOCKER_COMPOSE) stop api
+	$(DOCKER_COMPOSE) up -d api
+	@echo "Load test complete!"
 
 # -----------------------------------------------------------------------------
 # Quality
