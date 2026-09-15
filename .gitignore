@@ -24,3 +24,8 @@ sdd/
 .idea/
 .vscode/
 *.log
+
+# Generated files
+*.pyc
+__pycache__/
+docker/web/certs
