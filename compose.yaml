@@ -43,6 +43,7 @@ services:
       COMPOSER_HOME: /tmp/composer
       DATABASE_URL: "postgresql://${POSTGRES_USER:-aplika}:${POSTGRES_PASSWORD:-aplika}@database:5432/${POSTGRES_DB:-aplika}?serverVersion=16&charset=utf8"
       REDIS_URL: "redis://redis:6379"
+      MAILER_DSN: "${MAILER_DSN:-smtp://mailer:1025}"
       XDEBUG_MODE: ${XDEBUG_MODE:-off}
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -66,6 +67,7 @@ services:
     environment:
       HOME: /tmp
       DATABASE_URL: "postgresql://${POSTGRES_USER:-aplika}:${POSTGRES_PASSWORD:-aplika}@database:5432/${POSTGRES_DB:-aplika}?serverVersion=16&charset=utf8"
+      MAILER_DSN: "${MAILER_DSN:-smtp://mailer:1025}"
     volumes:
       - ./api:/app
     depends_on:
@@ -104,6 +106,12 @@ services:
       - ./frontend:/app
     depends_on:
       - web
+
+  mailer:
+    image: axllent/mailpit:latest
+    ports:
+      - "${MAILER_WEB_PORT:-8025}:8025"
+      - "${MAILER_SMTP_PORT:-1025}:1025"
 
   locust:
     image: locustio/locust:latest
