@@ -39,8 +39,8 @@ init: up install hooks db ## First-time project setup: start containers, install
 	@echo ""
 	@echo "✅ Aplika is ready!"
 	@echo ""
-	@echo "  Frontend → http://aplika.test"
-	@echo "  API      → http://api.aplika.test"
+	@echo "  Frontend → https://aplika.test"
+	@echo "  API      → https://api.aplika.test"
 	@echo ""
 	@if ! grep -q "aplika.test" /etc/hosts 2>/dev/null; then \
 		echo "⚠️  Add the following line to /etc/hosts:"; \
@@ -57,6 +57,18 @@ hosts: ## Add aplika.test domains to /etc/hosts (requires sudo)
 	else \
 		sudo sh -c 'echo "127.0.0.1 aplika.test api.aplika.test" >> /etc/hosts'; \
 		echo "✅ Added aplika.test and api.aplika.test to /etc/hosts"; \
+	fi
+
+.PHONY: certs
+certs: ## Generate locally-trusted TLS certificates for HTTPS (requires mkcert)
+	@./docker/web/mkcert.sh
+
+.PHONY: certs-check
+certs-check: ## Check if TLS certificates exist
+	@if [ -f "docker/web/certs/_wildcard.aplika.test.pem" ]; then \
+		echo "✅ TLS certificates found in docker/web/certs/"; \
+	else \
+		echo "❌ No TLS certificates found. Run: make certs"; \
 	fi
 
 .PHONY: hooks
