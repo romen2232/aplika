@@ -18,6 +18,17 @@ services:
       retries: 10
       start_period: 5s
 
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
   api:
     build:
       context: ./docker/api
@@ -31,6 +42,7 @@ services:
       COMPOSER_ALLOW_SUPERUSER: "1"
       COMPOSER_HOME: /tmp/composer
       DATABASE_URL: "postgresql://${POSTGRES_USER:-joblog}:${POSTGRES_PASSWORD:-joblog}@database:5432/${POSTGRES_DB:-joblog}?serverVersion=16&charset=utf8"
+      REDIS_URL: "redis://redis:6379"
       XDEBUG_MODE: ${XDEBUG_MODE:-off}
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -38,6 +50,8 @@ services:
       - ./api:/app
     depends_on:
       database:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
   worker:
@@ -105,3 +119,4 @@ services:
 
 volumes:
   database_data:
+  redis_data:

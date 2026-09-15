@@ -13,8 +13,8 @@ RUN apt-get update \
         libzip-dev \
         postgresql-client \
     && docker-php-ext-install -j"$(nproc)" intl pdo_pgsql zip opcache \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
+    && pecl install redis xdebug \
+    && docker-php-ext-enable redis xdebug \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
