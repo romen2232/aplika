@@ -24,6 +24,12 @@ services:
     App\Auth\Domain\UserRepository:
         alias: App\Auth\Infrastructure\Persistence\DoctrineUserRepository
 
+    App\Shared\Infrastructure\EventSubscriber\RateLimitSubscriber:
+        arguments:
+            $apiPublicLimiter: '@limiter.api_public'
+            $apiAuthenticatedLimiter: '@limiter.api_authenticated'
+            $environment: '%kernel.environment%'
+
 when@test:
     services:
         App\Tests\Behat\FeatureContext:
