@@ -32,7 +32,7 @@ final class DoctrineMeReadRepository implements MeReadRepositoryInterface
         return new MeReadModel(
             id: $row['id'],
             email: $row['email'],
-            roles: \is_string($row['roles']) ? \json_decode($row['roles'], true) : $row['roles'],
+            roles: \is_string($row['roles']) ? json_decode($row['roles'], true) : $row['roles'],
         );
     }
 }
