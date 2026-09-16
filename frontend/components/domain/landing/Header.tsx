@@ -12,7 +12,7 @@ export function Header() {
     <header className="bg-neutral p-3">
       {/* Mobile/Tablet layout - below 1100px */}
       <div className="flex min-[1100px]:hidden justify-between items-center w-full px-10">
-        <Logo jobColor="tertiary" logColor="primary" />
+        <Logo firstColor="tertiary" secondColor="primary" />
         <button className="text-sm bg-primary text-neutral px-4 py-2 rounded hover:bg-primary/90 font-semibold">
           {t('nav.signIn')}
         </button>
@@ -30,7 +30,7 @@ export function Header() {
         </div>
 
         <div className="flex flex-col items-center justify-center text-center">
-          <Logo jobColor="tertiary" logColor="primary" />
+          <Logo firstColor="tertiary" secondColor="primary" />
           <span className="mt-1 text-xs text-gray-500">{t('nav.findAJob')}</span>
         </div>
 
