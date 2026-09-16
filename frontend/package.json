@@ -12,6 +12,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "codegen": "openapi-typescript http://web:80/api/openapi.json -o src/api/generated/types.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
@@ -39,6 +40,7 @@
     "eslint-config-next": "16.3.4",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "jsdom": "^30.0.1",
+    "openapi-typescript": "^7.13.0",
     "prettier": "^3.9.6",
     "tailwindcss": "^4",
     "typescript": "^5",

@@ -5,5 +5,44 @@
   "home": {
     "title": "Aplika",
     "subtitle": "Your job-search operating system."
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "submitting": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "registerLink": "Create one"
+    },
+    "register": {
+      "title": "Create your account",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "submit": "Create account",
+      "submitting": "Creating account...",
+      "passwordMismatch": "Passwords do not match",
+      "haveAccount": "Already have an account?",
+      "loginLink": "Sign in"
+    },
+    "validation": {
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email format",
+      "passwordRequired": "Password is required",
+      "passwordMin": "Password must be at least 8 characters"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "welcome": "Signed in as",
+      "logout": "Sign out",
+      "loading": "Loading..."
+    },
+    "errors": {
+      "network": "Unable to reach the server. Please try again.",
+      "generic": "Something went wrong. Please try again.",
+      "sessionExpired": "Your session expired. Please sign in again."
+    }
   }
 }

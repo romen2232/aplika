@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { locales, defaultLocale } from '@/i18n/config';
+import { AuthProvider } from '@/src/contexts/AuthContext';
 import '../globals.css';
 
 export async function generateStaticParams() {
@@ -17,7 +18,9 @@ export default async function RootLayout({ children, params }: LayoutProps<'/[la
 
   return (
     <html lang={htmlLang}>
-      <body>{children}</body>
+      <body>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }
