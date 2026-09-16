@@ -1,4 +1,3 @@
-import { getTextClass } from '@/lib/colors';
 import type { ThemeColor } from '../types';
 
 interface LogoProps {
@@ -9,9 +8,9 @@ interface LogoProps {
 export function Logo({ firstColor, secondColor }: LogoProps) {
   return (
     <span className="text-3xl font-bold">
-      <span className={getTextClass(firstColor)}>Apli</span>
-      <span className={getTextClass(secondColor)}>k</span>
-      <span className={getTextClass(firstColor)}>a</span>
+      <span className={`text-${firstColor}`}>Apli</span>
+      <span className={`text-${secondColor}`}>k</span>
+      <span className={`text-${firstColor}`}>a</span>
     </span>
   );
 }

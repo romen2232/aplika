@@ -1,4 +1,3 @@
-import { colorToHex } from '@/lib/colors';
 import type { ThemeColor } from '../types';
 
 interface Gradient {
@@ -31,7 +30,7 @@ export function Button({
 
   const style: React.CSSProperties = gradient
     ? {
-        backgroundImage: `linear-gradient(to right, ${colorToHex[gradient.from]}, ${colorToHex[gradient.to]})`,
+        backgroundImage: `linear-gradient(to right, var(--color-${gradient.from}), var(--color-${gradient.to}))`,
       }
     : {};
 
