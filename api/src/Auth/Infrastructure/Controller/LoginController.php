@@ -6,6 +6,8 @@ namespace App\Auth\Infrastructure\Controller;
 
 use App\Auth\Application\Command\AuthenticateUser\AuthenticateUserCommand;
 use App\Auth\Domain\Exception\InvalidCredentialsException;
+use App\Auth\Infrastructure\Cookie\CookieHelper;
+use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,9 +23,37 @@ class LoginController extends AbstractController
     public function __construct(
         private readonly MessageBusInterface $messageBus,
         private readonly ValidatorInterface $validator,
+        private readonly CookieHelper $cookieHelper,
     ) {
     }
 
+    #[OA\Post(
+        path: '/api/auth/login',
+        summary: 'Authenticate with email and password',
+        security: [],
+        tags: ['Auth'],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ['email', 'password'],
+                properties: [
+                    new OA\Property(property: 'email', type: 'string', format: 'email', example: 'user@aplika.test'),
+                    new OA\Property(property: 'password', type: 'string', example: 'password123'),
+                ],
+            ),
+        ),
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Authenticated. Sets host-only httpOnly access_token and refresh_token cookies.',
+                content: new OA\JsonContent(
+                    properties: [new OA\Property(property: 'message', type: 'string', example: 'Authenticated')],
+                ),
+            ),
+            new OA\Response(response: 400, description: 'Email or password missing.'),
+            new OA\Response(response: 401, description: 'Invalid credentials.'),
+        ],
+    )]
     #[Route('/api/auth/login', name: 'auth_login', methods: ['POST'])]
     public function __invoke(Request $request): JsonResponse
     {
@@ -40,9 +70,12 @@ class LoginController extends AbstractController
         try {
             $envelope = $this->messageBus->dispatch($command);
             $handledStamp = $envelope->last(HandledStamp::class);
-            $token = $handledStamp->getResult();
+            $result = $handledStamp->getResult();
 
-            return new JsonResponse(['token' => $token], Response::HTTP_OK);
+            $response = new JsonResponse(['message' => 'Authenticated'], Response::HTTP_OK);
+            $this->cookieHelper->setAuthCookies($response, $result['accessToken'], $result['refreshToken']);
+
+            return $response;
         } catch (HandlerFailedException $e) {
             $previous = $e->getPrevious();
             if ($previous instanceof InvalidCredentialsException) {

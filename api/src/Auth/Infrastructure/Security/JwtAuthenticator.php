@@ -25,19 +25,24 @@ class JwtAuthenticator extends AbstractAuthenticator
         private readonly JwtTokenValidator $tokenValidator,
         private readonly JwtTokenUserExtractor $userExtractor,
         private readonly UserRepository $userRepository,
+        private readonly string $accessCookieName = 'access_token',
     ) {
     }
 
     public function supports(Request $request): ?bool
     {
-        return $request->headers->has('Authorization')
-            && str_starts_with($request->headers->get('Authorization', ''), 'Bearer ');
+        // Header-first (for future API consumers), cookie fallback
+        if ($request->headers->has('Authorization')
+            && str_starts_with($request->headers->get('Authorization', ''), 'Bearer ')) {
+            return true;
+        }
+
+        return $request->cookies->has($this->accessCookieName);
     }
 
     public function authenticate(Request $request): Passport
     {
-        $authHeader = $request->headers->get('Authorization', '');
-        $token = substr($authHeader, 7);
+        $token = $this->extractToken($request);
 
         if (empty($token)) {
             throw new CustomUserMessageAuthenticationException('No JWT token provided');
@@ -74,5 +79,16 @@ class JwtAuthenticator extends AbstractAuthenticator
             ['error' => strtr($exception->getMessageKey(), $exception->getMessageData())],
             Response::HTTP_UNAUTHORIZED
         );
+    }
+
+    private function extractToken(Request $request): string
+    {
+        // Priority: Authorization header > cookie
+        if ($request->headers->has('Authorization')
+            && str_starts_with($request->headers->get('Authorization', ''), 'Bearer ')) {
+            return substr($request->headers->get('Authorization', ''), 7);
+        }
+
+        return $request->cookies->get($this->accessCookieName, '');
     }
 }

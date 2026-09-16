@@ -1,17 +1,13 @@
 Feature: User login
 
   Scenario: Successful login with valid credentials
-    Given I login with email "test@aplika.com" and password "password123"
+    When I login with email "test@aplika.com" and password "password123"
     Then the response status code should be 200
-    And the response should contain JSON:
-      """
-      {
-      "token": "@string@"
-      }
-      """
+    And the response should have a cookie named "access_token"
+    And the response should have a cookie named "refresh_token"
 
   Scenario: Login fails with incorrect password
-    Given I login with email "test@aplika.com" and password "WrongPass"
+    When I login with email "test@aplika.com" and password "WrongPass"
     Then the response status code should be 401
     And the response should contain JSON:
       """
@@ -50,7 +46,7 @@ Feature: User login
       }
       """
 
-  Scenario: JWT token from login authenticates subsequent requests
+  Scenario: Cookie-authenticated user can access protected endpoint
     When I login with email "test@aplika.com" and password "password123"
     Then the response status code should be 200
     When I request "GET" "/api/me"

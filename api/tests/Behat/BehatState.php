@@ -20,6 +20,7 @@ final class BehatState
     private ?KernelBrowser $client = null;
     private ?Response $response = null;
     private bool $fixturesLoaded = false;
+    private ?string $lastRefreshToken = null;
 
     public function addUser(string $email, array $userData): void
     {
@@ -39,6 +40,16 @@ final class BehatState
     public function getCurrentToken(): ?string
     {
         return $this->currentToken;
+    }
+
+    public function setLastRefreshToken(?string $token): void
+    {
+        $this->lastRefreshToken = $token;
+    }
+
+    public function getLastRefreshToken(): ?string
+    {
+        return $this->lastRefreshToken;
     }
 
     public function setClient(?KernelBrowser $client): void
@@ -77,6 +88,7 @@ final class BehatState
         $this->currentToken = null;
         $this->client = null;
         $this->response = null;
+        $this->lastRefreshToken = null;
         // Note: fixturesLoaded is intentionally NOT reset here.
         // Fixtures are loaded once per suite (BeforeSuite), not per scenario.
     }
