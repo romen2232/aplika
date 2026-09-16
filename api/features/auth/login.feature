@@ -40,6 +40,16 @@ Feature: User login
       }
       """
 
+  Scenario: Login fails with invalid email format
+    When I login with email "not-an-email" and password "password123"
+    Then the response status code should be 400
+    And the response should contain JSON:
+      """
+      {
+      "error": "Invalid email format"
+      }
+      """
+
   Scenario: JWT token from login authenticates subsequent requests
     When I login with email "test@aplika.com" and password "password123"
     Then the response status code should be 200
