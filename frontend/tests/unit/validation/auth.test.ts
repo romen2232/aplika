@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
 
-import { MIN_PASSWORD_LENGTH, loginSchema, registerSchema } from '@/lib/validation/auth';
+import {
+  MIN_PASSWORD_LENGTH,
+  createLoginSchema,
+  createRegisterSchema,
+  loginSchema,
+  registerSchema,
+} from '@/lib/validation/auth';
 
 type ParseResult = { success: true } | { success: false; error: { issues: { message: string }[] } };
 
@@ -75,6 +81,37 @@ describe('registerSchema', () => {
     });
 
     expect(result.success).toBe(true);
+  });
+});
+
+describe('localized schemas', () => {
+  const messages = {
+    emailRequired: 'Email obligatorio',
+    emailInvalid: 'Email inválido',
+    passwordRequired: 'Contraseña obligatoria',
+    passwordMin: 'Contraseña demasiado corta',
+  };
+
+  it('uses the provided messages for the register schema', () => {
+    const schema = createRegisterSchema(messages);
+
+    expect(issueMessages(schema.safeParse({ email: '', password: 'SecurePass123' }))).toEqual([
+      'Email obligatorio',
+    ]);
+    expect(
+      issueMessages(schema.safeParse({ email: 'user@example.com', password: 'short' })),
+    ).toEqual(['Contraseña demasiado corta']);
+  });
+
+  it('uses the provided messages for the login schema', () => {
+    const schema = createLoginSchema(messages);
+
+    expect(issueMessages(schema.safeParse({ email: 'nope', password: 'x' }))).toEqual([
+      'Email inválido',
+    ]);
+    expect(issueMessages(schema.safeParse({ email: '', password: 'x' }))).toEqual([
+      'Email obligatorio',
+    ]);
   });
 });
 
