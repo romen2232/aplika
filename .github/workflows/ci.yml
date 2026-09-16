@@ -155,6 +155,24 @@ jobs:
         run: docker compose run --rm --no-deps -T frontend npm install
 
       # -------------------------------------------------------------------
+      # TLS certificates
+      # -------------------------------------------------------------------
+      # `docker/web/certs/` is gitignored (it is generated locally with
+      # mkcert), so a fresh CI checkout has none. Nginx (`web`) references
+      # those files in its 443 listeners and exits with "cannot load
+      # certificate" when they are missing, which takes down the `/api`
+      # rewrite proxy the e2e suite depends on. The browser talks to
+      # http://localhost:3000, so a throwaway self-signed cert is enough.
+      - name: Generate self-signed TLS certificates
+        run: |
+          mkdir -p docker/web/certs
+          openssl req -x509 -nodes -newkey rsa:2048 -days 1 \
+            -keyout docker/web/certs/_wildcard.aplika.test-key.pem \
+            -out docker/web/certs/_wildcard.aplika.test.pem \
+            -subj "/CN=*.aplika.test" \
+            -addext "subjectAltName=DNS:*.aplika.test,DNS:aplika.test"
+
+      # -------------------------------------------------------------------
       # Start frontend & wait for the dev server
       # -------------------------------------------------------------------
       - name: Start frontend and web services
