@@ -12,3 +12,13 @@ api_login:
     path: /api/auth/login
     controller: App\Auth\Infrastructure\Controller\LoginController
     methods: [POST]
+
+api_refresh:
+    path: /api/auth/refresh
+    controller: App\Auth\Infrastructure\Controller\RefreshController
+    methods: [POST]
+
+api_logout:
+    path: /api/auth/logout
+    controller: App\Auth\Infrastructure\Controller\LogoutController
+    methods: [POST]
