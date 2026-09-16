@@ -80,6 +80,7 @@ const steps: Step[] = [
 export function InfoPanel() {
   const { t } = useTranslation();
 
+  // TODO: change the infopannel and infopannel data as the app develops
   return (
     <section className="h-full flex flex-col justify-between bg-neutral/99 p-12">
       <div className="mx-auto flex w-full max-w-4xl flex-col">
