@@ -1,0 +1,17 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Aplika API
+            description: Job-search management platform API
+            version: 1.0.0
+        components:
+            securitySchemes:
+                cookieAuth:
+                    type: apiKey
+                    in: cookie
+                    name: access_token
+        security:
+            - cookieAuth: []
+    areas:
+        path_patterns:
+            - ^/api(?!/docs$|/openapi\.json$)
