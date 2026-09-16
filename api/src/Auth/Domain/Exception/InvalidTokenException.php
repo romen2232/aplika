@@ -8,4 +8,8 @@ use InvalidArgumentException;
 
 class InvalidTokenException extends InvalidArgumentException
 {
+    public static function invalid(): self
+    {
+        return new self('Invalid or missing token.');
+    }
 }
