@@ -140,105 +140,105 @@ make certs-check     # Check if HTTPS certificates exist
 
 # Core Features
 
-## Job Management
+## Onboarding
 
-Save and organize interesting job opportunities.
+After registration, users complete an onboarding form to set up their job search preferences:
 
-A job can contain information such as:
+* Target roles (e.g., "Backend Developer", "Full Stack")
+* Target locations (e.g., "Barcelona", "Remote", "Berlin")
+* Salary range (optional)
+* Work mode preferences (Remote / Hybrid / On-site)
+* Employment type preferences (Full-time / Contract / Part-time)
 
-* Position
-* Company
+The onboarding is **skippable** — users can defer completion and return to it later. This information personalizes the experience and provides context for future features.
+
+---
+
+## Job Pipeline (Kanban Board)
+
+The Job Pipeline is a Kanban board that gives users a visual overview of their job search. Each job offer is represented as a card that can be moved between columns, opened into a detail panel, and acted upon.
+
+### Board Columns
+
+```text
+Saved → Applied → Interview → Offer → Closed
+```
+
+Closed jobs can be reopened (Closed → Saved).
+
+### Job Card
+
+Visible at a glance:
+
+* Job title and company
 * Location
-* Remote / hybrid / on-site
-* Salary
-* Employment type
-* Experience requirements
-* Required skills
-* Job description
-* Source
-* Original URL
-* Date discovered
-* Application deadline
+* Days since last activity
+* Next action label + due date (red if overdue)
+* CV attached indicator
 
-Jobs can be imported from a URL so that users don't have to manually enter every piece of information.
+Cards can be **dragged and dropped** between columns to change status, or clicked to open the detail panel.
 
----
+### Job Detail Panel
 
-## Application Tracking
+Opens as a slide-in panel from the right (preserves board context). Sections include:
 
-Every application has its own lifecycle.
+* **Header**: Title, company, status badge, external link to original offer
+* **Job Info**: Location, salary, employment type, skills, description
+* **Recruiter**: Name, email, phone (editable inline)
+* **Next Action**: Rule-based suggestion (editable), due date
+* **Notes**: Free-form notes
+* **Tasks**: Checklist with optional due dates
+* **Timeline**: Chronological feed of auto-generated and user-written events
+* **CV**: Which CV was sent for this application
 
-Example:
+### Adding Jobs
 
-```text
-Interested
-    ↓
-Preparing
-    ↓
-Applied
-    ↓
-Screening
-    ↓
-Interview
-    ↓
-Final Round
-    ↓
-Offer
-```
+Three methods:
 
-An application can also end in states such as:
+1. **URL Import**: Paste a URL → system extracts meta tags (title, description, image) → user confirms/edits
+2. **Manual Form**: Traditional form with all fields
+3. **Quick Add**: Minimal form (title + company + URL) → saved to "Saved" column
 
-```text
-Rejected
-Withdrawn
-Expired
-```
+### Filters
 
-The important part is that the current status is only one part of the story.
+Filter the board by:
 
-Aplika also maintains an **application history** so we can understand what happened over time.
+* Company/title (text search)
+* Location
+* Date range
+* Overdue next actions
+* CV attached
 
-For example:
+### Next Action Rules
 
-```text
-Job saved
-    ↓
-CV prepared
-    ↓
-Application submitted
-    ↓
-Recruiter contacted us
-    ↓
-Technical interview scheduled
-    ↓
-Technical interview completed
-    ↓
-Follow-up sent
-    ↓
-Offer received
-```
+The system suggests next actions based on job state (user can edit or dismiss):
+
+| Condition | Suggestion |
+|-----------|-----------|
+| Saved > 7 days, not applied | "Apply to this position" |
+| Applied > 14 days, no response | "Follow up with recruiter" |
+| Interview scheduled | "Prepare for interview" |
+| Offer received | "Review offer details" |
 
 ---
 
-# Application Timeline
+## Application Timeline
 
 Instead of overwriting important information, Aplika records meaningful events.
 
-Examples:
+**Auto-generated events**:
 
-* Job saved
-* Application created
-* CV selected
-* Application submitted
-* Recruiter contacted
-* Interview scheduled
-* Interview completed
-* Follow-up sent
-* Status changed
-* Rejection received
-* Offer received
+* Status changed (e.g., "Status changed to Interview")
+* Task completed
+* CV associated
 
-This gives every application a timeline that can be used to understand the complete journey.
+**User-written events**:
+
+* "Talked to recruiter"
+* "Sent follow-up email"
+* "Completed technical interview"
+
+This gives every job offer a timeline that can be used to understand the complete journey.
 
 It also gives us an interesting domain problem to model and test.
 
@@ -463,14 +463,14 @@ src/
 │   │   └── Query/
 │   └── Infrastructure/
 │
-├── Application/
+├── Candidate/
 │   ├── Domain/
 │   ├── Application/
 │   │   ├── Command/
 │   │   └── Query/
 │   └── Infrastructure/
 │
-├── Candidate/
+├── Cv/
 │   ├── Domain/
 │   ├── Application/
 │   │   ├── Command/
@@ -533,15 +533,18 @@ Commands represent actions that change the system.
 Examples:
 
 ```text
-CreateJob
-ImportJob
-CreateApplication
-SubmitApplication
-ChangeApplicationStatus
+CompleteOnboarding
+CreateJobOffer
+ImportJobFromUrl
+UpdateJobOfferStatus
+AddNote
+AddTask
+CompleteTask
+SetNextAction
+AssociateCv
 ScheduleInterview
 CompleteInterview
-AddInterviewNote
-CreateResumeVersion
+UploadCv
 ```
 
 Queries retrieve information without changing state.
@@ -549,14 +552,12 @@ Queries retrieve information without changing state.
 Examples:
 
 ```text
-GetJob
-GetJobDetails
-ListJobs
-GetApplication
-ListApplications
-GetApplicationTimeline
-GetDashboard
+GetCandidateProfile
+GetJobOfferBoard
+GetJobOfferDetail
+ListCvs
 GetUpcomingInterviews
+GetDashboard
 GetJobSearchStatistics
 ```
 
@@ -1044,39 +1045,39 @@ The project is being developed incrementally.
 
 ## Phase 1 — Foundation
 
-* [ ] Docker environment
-* [ ] Symfony API
-* [ ] Next.js application
-* [ ] PostgreSQL
-* [ ] Authentication
-* [ ] CI pipeline
-* [ ] Initial domain structure
+* [x] Docker environment
+* [x] Symfony API
+* [x] Next.js application
+* [x] PostgreSQL
+* [x] Authentication
+* [x] CI pipeline
+* [x] Initial domain structure
 
-## Phase 2 — Jobs
+## Phase 2 — Onboarding
 
-* [ ] Create job
-* [ ] Edit job
-* [ ] Save job URL
-* [ ] Import job information
-* [ ] Job details
-* [ ] Job search/listing
+* [ ] Candidate profile domain model
+* [ ] Complete onboarding command
+* [ ] Onboarding page and form
+* [ ] Redirect logic for incomplete onboarding
+* [ ] Update GetMe to include onboarding status
 
-## Phase 3 — Applications
+## Phase 3 — Job Pipeline (Kanban)
 
-* [ ] Create application
-* [ ] Application statuses
-* [ ] Application timeline
-* [ ] Notes
-* [ ] Follow-up dates
-* [ ] Application dashboard
+* [ ] JobOffer aggregate and domain model
+* [ ] Status transitions (Saved → Applied → Interview → Offer → Closed)
+* [ ] Kanban board UI with drag-and-drop
+* [ ] Job detail panel (notes, tasks, timeline, next action)
+* [ ] URL import (meta-tag extraction)
+* [ ] Manual job creation form
+* [ ] Board filters
+* [ ] Next action rule engine
 
 ## Phase 4 — CV Management
 
-* [ ] Upload CV
-* [ ] CV versions
-* [ ] Associate CV with application
-* [ ] CV comparison
-* [ ] AI-assisted CV analysis
+* [ ] Upload CV (local storage for dev, S3 for production)
+* [ ] CV versions with labels
+* [ ] Associate CV with job offer
+* [ ] CV list and management UI
 
 ## Phase 5 — Interviews
 
@@ -1092,6 +1093,7 @@ The project is being developed incrementally.
 * [ ] Application insights
 * [ ] Search analytics
 * [ ] AI-assisted interview preparation
+* [ ] AI-powered URL extraction
 
 ## Phase 7 — Integrations
 
@@ -1099,6 +1101,7 @@ The project is being developed incrementally.
 * [ ] Calendar integration
 * [ ] Browser extension
 * [ ] External job sources
+* [ ] Cover letter generation
 
 ---
 
@@ -1114,13 +1117,23 @@ docs/
     ├── 001-domain-driven-design.md
     ├── 002-screaming-architecture.md
     ├── 003-cqrs.md
-    ├── 004-postgresql.md
+    ├── 004-commit-and-branch-conventions.md
+    ├── 005-job-offer-unified-aggregate.md
     └── ...
 ```
 
 This allows us to document not only **what** we decided, but **why**.
 
 Architecture is expected to evolve as we learn more from the actual application.
+
+Feature specifications are documented in `docs/specs/`:
+
+```text
+docs/
+└── specs/
+    ├── onboarding.md
+    └── job-pipeline.md
+```
 
 ---
 
