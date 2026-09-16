@@ -4,7 +4,7 @@ import { RegisterPageContent } from './RegisterPageContent';
 
 export default async function RegisterPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  const dict = await getDictionary(lang);
+  const dict = await getDictionary();
 
   return (
     <Suspense fallback={<main />}>

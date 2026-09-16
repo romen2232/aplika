@@ -3,7 +3,7 @@ import { DashboardContent } from './DashboardContent';
 
 export default async function DashboardPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  const dict = await getDictionary(lang);
+  const dict = await getDictionary();
 
   return (
     <DashboardContent

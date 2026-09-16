@@ -4,7 +4,7 @@ import { LoginPageContent } from './LoginPageContent';
 
 export default async function LoginPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  const dict = await getDictionary(lang);
+  const dict = await getDictionary();
 
   return (
     <Suspense fallback={<main />}>

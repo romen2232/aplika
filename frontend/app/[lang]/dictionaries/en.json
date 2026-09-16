@@ -34,7 +34,44 @@
     "termsOfService": "Terms of Service",
     "privacyPolicy": "Privacy Policy",
     "tabSignIn": "Sign in",
-    "tabSignUp": "Sign up"
+    "tabSignUp": "Sign up",
+    "login": {
+      "title": "Welcome back",
+      "noAccount": "Don't have an account?",
+      "registerLink": "Create one",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "submitting": "Signing in..."
+    },
+    "register": {
+      "title": "Create your account",
+      "haveAccount": "Already have an account?",
+      "loginLink": "Sign in",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "submit": "Create account",
+      "submitting": "Creating account...",
+      "passwordMismatch": "Passwords do not match"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "welcome": "Welcome,",
+      "logout": "Log out",
+      "loading": "Loading..."
+    },
+    "errors": {
+      "sessionExpired": "Your session has expired. Please sign in again.",
+      "network": "Network error. Please try again.",
+      "generic": "Something went wrong. Please try again."
+    },
+    "validation": {
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email format",
+      "passwordRequired": "Password is required",
+      "passwordMin": "Password must be at least 8 characters"
+    }
   },
   "hero": {
     "titleMain": "Your entire job search,",
