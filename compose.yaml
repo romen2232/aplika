@@ -99,6 +99,7 @@ services:
     environment:
       NODE_ENV: development
       NEXT_PUBLIC_API_URL: "https://${API_DOMAIN:-api.aplika.test}"
+      API_UPSTREAM: "http://web:80"
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
       - "${FRONTEND_DEBUG_PORT:-9229}:9229"
