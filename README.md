@@ -82,7 +82,7 @@ make hosts
 Or manually add this line to `/etc/hosts`:
 
 ```text
-127.0.0.1 aplika.test api.aplika.test
+127.0.0.1 app.aplika.test api.aplika.test
 ```
 
 ### HTTPS Setup (one-time)
@@ -117,7 +117,7 @@ Once finished, the application is available at:
 
 | Service  | URL                           |
 | -------- | ----------------------------- |
-| Frontend | <https://aplika.test>         |
+| Frontend | <https://app.aplika.test>     |
 | API      | <https://api.aplika.test>     |
 
 ## Common commands

@@ -14,7 +14,7 @@
 set -euo pipefail
 
 CERTS_DIR="$(cd "$(dirname "$0")" && pwd)/certs"
-DOMAINS="aplika.test *.aplika.test"
+DOMAINS="app.aplika.test api.aplika.test *.aplika.test"
 
 # Check if mkcert is installed
 if ! command -v mkcert &>/dev/null; then
