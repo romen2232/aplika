@@ -22,8 +22,9 @@ export default async function RootLayout({ children, params }: LayoutProps<'/[la
   return (
     <html lang={htmlLang}>
       <body>
-        <AuthProvider>{children}</AuthProvider>
-        <DictionaryProvider dictionary={dictionary}>{children}</DictionaryProvider>
+        <AuthProvider>
+          <DictionaryProvider dictionary={dictionary}>{children}</DictionaryProvider>
+        </AuthProvider>
       </body>
     </html>
   );
