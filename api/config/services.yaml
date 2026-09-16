@@ -26,6 +26,19 @@ services:
 
     App\Auth\Application\Query\GetMe\MeReadRepositoryInterface:
         alias: App\Auth\Infrastructure\Persistence\DoctrineMeReadRepository
+    App\Auth\Infrastructure\Cookie\CookieHelper:
+        arguments:
+            $accessTokenTtl: '%env(int:AUTH_ACCESS_TOKEN_TTL)%'
+            $refreshTokenTtl: '%env(int:AUTH_REFRESH_TOKEN_TTL)%'
+            $accessCookieName: '%env(AUTH_COOKIE_NAME_ACCESS)%'
+            $refreshCookieName: '%env(AUTH_COOKIE_NAME_REFRESH)%'
+
+    App\Auth\Infrastructure\Security\JwtAuthenticator:
+        arguments:
+            $accessCookieName: '%env(AUTH_COOKIE_NAME_ACCESS)%'
+
+    App\Auth\Domain\RefreshTokenRepository:
+        alias: App\Auth\Infrastructure\Persistence\DoctrineRefreshTokenRepository
 
     App\Shared\Infrastructure\EventSubscriber\RateLimitSubscriber:
         arguments:

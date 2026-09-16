@@ -94,6 +94,40 @@ final class FeatureContext implements Context
         }
     }
 
+    #[Then('the response should have a cookie named :cookieName')]
+    public function theResponseShouldHaveACookieNamed(string $cookieName): void
+    {
+        $response = $this->state->getResponse();
+        if (null === $response) {
+            throw new RuntimeException('No response available. Make a request first.');
+        }
+
+        $cookies = $response->headers->getCookies();
+        foreach ($cookies as $cookie) {
+            if ($cookie->getName() === $cookieName) {
+                return;
+            }
+        }
+
+        throw new RuntimeException(\sprintf('Response does not contain a cookie named "%s".', $cookieName));
+    }
+
+    #[Then('the response should not have a cookie named :cookieName with a value')]
+    public function theResponseShouldNotHaveACookieNamedWithValue(string $cookieName): void
+    {
+        $response = $this->state->getResponse();
+        if (null === $response) {
+            throw new RuntimeException('No response available. Make a request first.');
+        }
+
+        $cookies = $response->headers->getCookies();
+        foreach ($cookies as $cookie) {
+            if ($cookie->getName() === $cookieName && !empty($cookie->getValue()) && $cookie->getExpiresTime() > time()) {
+                throw new RuntimeException(\sprintf('Response has a cookie named "%s" with a non-empty, non-expired value.', $cookieName));
+            }
+        }
+    }
+
     private function getClient(): KernelBrowser
     {
         $client = $this->state->getClient();

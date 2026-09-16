@@ -10,6 +10,8 @@ Feature: User registration
       "email": "newuser@example.com"
       }
       """
+    And the response should have a cookie named "access_token"
+    And the response should have a cookie named "refresh_token"
 
   Scenario: Registration fails with duplicate email
     When I register with email "test@aplika.com" and password "AnotherPass456"
