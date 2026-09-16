@@ -1,4 +1,3 @@
-import { getBgClass, getTextClass, getBorderClass } from '@/lib/colors';
 import type { ThemeColor } from '../types';
 
 interface TabOption {
@@ -37,16 +36,7 @@ export function TabsSelector({
     <div className="flex gap-2">
       {options.map((option) => {
         const isActive = option.value === currentValue;
-        const tabClasses = [
-          'px-4 py-2 rounded cursor-pointer border',
-          isActive ? getBgClass(activeBgColor) : getBgClass(inactiveBgColor),
-          isActive ? getTextClass(activeTextColor) : getTextClass(inactiveTextColor),
-          getBorderClass(borderColor),
-          isActive ? activeClassName : inactiveClassName,
-          className,
-        ]
-          .filter(Boolean)
-          .join(' ');
+        const tabClasses = `px-4 py-2 rounded cursor-pointer border bg-${isActive ? activeBgColor : inactiveBgColor} text-${isActive ? activeTextColor : inactiveTextColor} border-${borderColor} ${isActive ? activeClassName : inactiveClassName} ${className}`;
 
         return (
           <button

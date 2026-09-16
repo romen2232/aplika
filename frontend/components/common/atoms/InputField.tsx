@@ -1,4 +1,3 @@
-import { getBgClass, getTextClass, getBorderClass } from '@/lib/colors';
 import type { ThemeColor } from '../types';
 
 interface InputFieldProps {
@@ -27,15 +26,7 @@ export function InputField({
   className = '',
 }: InputFieldProps) {
   const inputId = `input-${label.toLowerCase().replace(/\s+/g, '-')}`;
-  const inputClasses = [
-    'w-full px-4 py-2 rounded-md border',
-    getBgClass(bgColor),
-    getTextClass(textColor),
-    getBorderClass(borderColor),
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const inputClasses = `w-full px-4 py-2 rounded-md border bg-${bgColor} text-${textColor} border-${borderColor} ${className}`;
 
   return (
     <div className="flex flex-col gap-2">

@@ -1,4 +1,3 @@
-import { getBgClass, getTextClass, getBorderClass } from '@/lib/colors';
 import type { ThemeColor } from '../types';
 
 interface CheckboxFieldProps {
@@ -21,16 +20,9 @@ export function CheckboxField({
   className = '',
 }: CheckboxFieldProps) {
   const inputId = `checkbox-${label.toLowerCase().replace(/\s+/g, '-')}`;
-  const checkboxClasses = [
-    'w-4 h-4 rounded border cursor-pointer',
-    getBgClass(bgColor),
-    getBorderClass(borderColor),
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const checkboxClasses = `w-4 h-4 rounded border cursor-pointer bg-${bgColor} border-${borderColor} ${className}`;
 
-  const labelClasses = ['cursor-pointer', getTextClass(textColor)].filter(Boolean).join(' ');
+  const labelClasses = `cursor-pointer text-${textColor}`;
 
   return (
     <label htmlFor={inputId} className="flex items-center gap-2 cursor-pointer">
