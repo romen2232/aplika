@@ -16,11 +16,13 @@ use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RegisterController extends AbstractController
 {
     public function __construct(
         private readonly MessageBusInterface $messageBus,
+        private readonly ValidatorInterface $validator,
     ) {
     }
 
@@ -28,17 +30,16 @@ class RegisterController extends AbstractController
     public function __invoke(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
+        $data = \is_array($data) ? $data : [];
 
-        if (empty($data['email'])) {
-            return new JsonResponse(['error' => 'Email is required'], Response::HTTP_BAD_REQUEST);
-        }
+        $command = new RegisterUserCommand($data['email'] ?? '', $data['password'] ?? '');
 
-        if (empty($data['password'])) {
-            return new JsonResponse(['error' => 'Password is required'], Response::HTTP_BAD_REQUEST);
+        $violations = $this->validator->validate($command);
+        if ($violations->count() > 0) {
+            return new JsonResponse(['error' => $violations->get(0)->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
         try {
-            $command = new RegisterUserCommand($data['email'], $data['password']);
             $envelope = $this->messageBus->dispatch($command);
             $handledStamp = $envelope->last(HandledStamp::class);
             $user = $handledStamp->getResult();

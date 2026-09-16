@@ -50,3 +50,13 @@ Feature: User registration
       "error": "Email is required"
       }
       """
+
+  Scenario: Registration fails with missing password
+    When I register with email "user@example.com" and password ""
+    Then the response status code should be 400
+    And the response should contain JSON:
+      """
+      {
+      "error": "Password is required"
+      }
+      """
