@@ -40,11 +40,9 @@ function passwordField(messages: ValidationMessages) {
 }
 
 function passwordComplexityCheck(messages: ValidationMessages) {
-  return z
-    .string()
-    .refine((val) => /[a-zA-Z]/.test(val) && /[0-9]/.test(val), {
-      message: messages.passwordComplexity,
-    });
+  return z.string().refine((val) => /[a-zA-Z]/.test(val) && /[0-9]/.test(val), {
+    message: messages.passwordComplexity,
+  });
 }
 
 export function createRegisterSchema(messages: ValidationMessages = defaultValidationMessages) {

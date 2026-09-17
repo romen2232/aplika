@@ -154,9 +154,7 @@ describe('localized schemas', () => {
       ),
     ).toEqual(['Nombre completo obligatorio']);
     expect(
-      issueMessages(
-        schema.safeParse({ fullName: 'Jane', email: '', password: 'SecurePass123' }),
-      ),
+      issueMessages(schema.safeParse({ fullName: 'Jane', email: '', password: 'SecurePass123' })),
     ).toEqual(['Email obligatorio']);
     expect(
       issueMessages(
