@@ -3,6 +3,7 @@ import { z } from 'zod';
 export const MIN_PASSWORD_LENGTH = 8;
 
 export interface ValidationMessages {
+  fullNameRequired: string;
   emailRequired: string;
   emailInvalid: string;
   passwordRequired: string;
@@ -10,11 +11,18 @@ export interface ValidationMessages {
 }
 
 export const defaultValidationMessages: ValidationMessages = {
+  fullNameRequired: 'Full name is required',
   emailRequired: 'Email is required',
   emailInvalid: 'Invalid email format',
   passwordRequired: 'Password is required',
   passwordMin: `Password must be at least ${MIN_PASSWORD_LENGTH} characters`,
 };
+
+function fullNameField(messages: ValidationMessages) {
+  return z
+    .string({ error: messages.fullNameRequired })
+    .min(1, { error: messages.fullNameRequired });
+}
 
 function emailField(messages: ValidationMessages) {
   return z
@@ -31,6 +39,7 @@ function passwordField(messages: ValidationMessages) {
 
 export function createRegisterSchema(messages: ValidationMessages = defaultValidationMessages) {
   return z.object({
+    fullName: fullNameField(messages),
     email: emailField(messages),
     password: passwordField(messages).pipe(
       z.string().min(MIN_PASSWORD_LENGTH, { error: messages.passwordMin }),

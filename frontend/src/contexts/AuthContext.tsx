@@ -36,7 +36,7 @@ export function authReducer(state: AuthState, action: AuthAction): AuthState {
 
 export interface AuthContextValue extends AuthState {
   login: (email: string, password: string) => Promise<User>;
-  register: (email: string, password: string) => Promise<User>;
+  register: (email: string, fullName: string, password: string) => Promise<User>;
   logout: () => Promise<void>;
 }
 
@@ -69,9 +69,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return user;
   }, []);
 
-  const register = useCallback(async (email: string, password: string) => {
+  const register = useCallback(async (email: string, fullName: string, password: string) => {
     dispatch({ type: 'loading' });
-    const user = await apiClient.register(email, password);
+    const user = await apiClient.register(email, fullName, password);
     dispatch({ type: 'authenticated', user });
     return user;
   }, []);

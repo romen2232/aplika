@@ -67,6 +67,7 @@
       "generic": "Something went wrong. Please try again."
     },
     "validation": {
+      "fullNameRequired": "Full name is required",
       "emailRequired": "Email is required",
       "emailInvalid": "Invalid email format",
       "passwordRequired": "Password is required",

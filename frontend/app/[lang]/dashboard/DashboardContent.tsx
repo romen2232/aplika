@@ -27,14 +27,13 @@ export function DashboardContent({ lang, labels }: DashboardContentProps) {
 
   useEffect(() => {
     if (!isLoading && !user) {
-      const returnUrl = encodeURIComponent(`/${lang}/dashboard`);
-      router.replace(`/${lang}/login?expired=1&returnUrl=${returnUrl}`);
+      router.replace(`/${lang}`);
     }
   }, [isLoading, user, router, lang]);
 
   async function handleLogout() {
     await logout();
-    router.replace(`/${lang}/login`);
+    router.replace(`/${lang}`);
   }
 
   if (isLoading) {
