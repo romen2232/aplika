@@ -8,6 +8,7 @@ export interface ValidationMessages {
   emailInvalid: string;
   passwordRequired: string;
   passwordMin: string;
+  passwordComplexity: string;
 }
 
 export const defaultValidationMessages: ValidationMessages = {
@@ -16,6 +17,7 @@ export const defaultValidationMessages: ValidationMessages = {
   emailInvalid: 'Invalid email format',
   passwordRequired: 'Password is required',
   passwordMin: `Password must be at least ${MIN_PASSWORD_LENGTH} characters`,
+  passwordComplexity: 'Password must contain both letters and numbers',
 };
 
 function fullNameField(messages: ValidationMessages) {
@@ -37,13 +39,21 @@ function passwordField(messages: ValidationMessages) {
     .min(1, { error: messages.passwordRequired });
 }
 
+function passwordComplexityCheck(messages: ValidationMessages) {
+  return z
+    .string()
+    .refine((val) => /[a-zA-Z]/.test(val) && /[0-9]/.test(val), {
+      message: messages.passwordComplexity,
+    });
+}
+
 export function createRegisterSchema(messages: ValidationMessages = defaultValidationMessages) {
   return z.object({
     fullName: fullNameField(messages),
     email: emailField(messages),
-    password: passwordField(messages).pipe(
-      z.string().min(MIN_PASSWORD_LENGTH, { error: messages.passwordMin }),
-    ),
+    password: passwordField(messages)
+      .pipe(z.string().min(MIN_PASSWORD_LENGTH, { error: messages.passwordMin }))
+      .pipe(passwordComplexityCheck(messages)),
   });
 }
 
