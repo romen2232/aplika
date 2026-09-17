@@ -20,6 +20,10 @@ final class Password
             throw WeakPasswordException::tooShort(self::MIN_LENGTH);
         }
 
+        if (!preg_match('/[a-zA-Z]/', $plainText) || !preg_match('/[0-9]/', $plainText)) {
+            throw WeakPasswordException::missingLettersAndNumbers();
+        }
+
         return new self($plainText);
     }
 

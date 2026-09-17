@@ -12,4 +12,9 @@ class WeakPasswordException extends DomainException
     {
         return new self(\sprintf('Password must be at least %d characters', $minLength));
     }
+
+    public static function missingLettersAndNumbers(): self
+    {
+        return new self('Password must contain both letters and numbers');
+    }
 }
