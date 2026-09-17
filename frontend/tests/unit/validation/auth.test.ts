@@ -104,14 +104,34 @@ describe('registerSchema', () => {
     ]);
   });
 
-  it('accepts a password at the minimum length', () => {
+  it('accepts a password at the minimum length with letters and numbers', () => {
     const result = registerSchema.safeParse({
       fullName: 'Jane Doe',
       email: 'user@example.com',
-      password: 'a'.repeat(MIN_PASSWORD_LENGTH),
+      password: 'abcdefg1',
     });
 
     expect(result.success).toBe(true);
+  });
+
+  it('rejects a password without numbers', () => {
+    const result = registerSchema.safeParse({
+      fullName: 'Jane Doe',
+      email: 'user@example.com',
+      password: 'abcdefgh',
+    });
+
+    expect(issueMessages(result)).toEqual(['Password must contain both letters and numbers']);
+  });
+
+  it('rejects a password without letters', () => {
+    const result = registerSchema.safeParse({
+      fullName: 'Jane Doe',
+      email: 'user@example.com',
+      password: '12345678',
+    });
+
+    expect(issueMessages(result)).toEqual(['Password must contain both letters and numbers']);
   });
 });
 
@@ -122,6 +142,7 @@ describe('localized schemas', () => {
     emailInvalid: 'Email inválido',
     passwordRequired: 'Contraseña obligatoria',
     passwordMin: 'Contraseña demasiado corta',
+    passwordComplexity: 'La contraseña debe contener letras y números',
   };
 
   it('uses the provided messages for the register schema', () => {
@@ -142,6 +163,11 @@ describe('localized schemas', () => {
         schema.safeParse({ fullName: 'Jane', email: 'user@example.com', password: 'short' }),
       ),
     ).toEqual(['Contraseña demasiado corta']);
+    expect(
+      issueMessages(
+        schema.safeParse({ fullName: 'Jane', email: 'user@example.com', password: 'abcdefgh' }),
+      ),
+    ).toEqual(['La contraseña debe contener letras y números']);
   });
 
   it('uses the provided messages for the login schema', () => {
