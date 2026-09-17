@@ -35,7 +35,7 @@ class RegisterUserHandler
         $hashedPassword = $this->passwordHasher->hashPassword($adapter, $password->plainText());
 
         $userId = Uuid::v4()->toRfc4122();
-        $user = User::register($userId, $command->email, $hashedPassword);
+        $user = User::register($userId, $command->email, $command->fullName, $hashedPassword);
 
         $this->repository->save($user);
 

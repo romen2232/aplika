@@ -11,6 +11,7 @@ final class User
     private function __construct(
         private readonly string $id,
         private readonly Email $email,
+        private readonly string $fullName,
         private readonly string $hashedPassword,
         private readonly array $roles,
     ) {
@@ -19,11 +20,16 @@ final class User
     public static function register(
         string $id,
         string $email,
+        string $fullName,
         string $hashedPassword,
         array $roles = ['ROLE_USER'],
     ): self {
         if (empty($id)) {
             throw new InvalidArgumentException('User ID cannot be empty');
+        }
+
+        if (empty($fullName)) {
+            throw new InvalidArgumentException('Full name cannot be empty');
         }
 
         if (empty($hashedPassword)) {
@@ -32,7 +38,7 @@ final class User
 
         $emailVo = Email::fromString($email);
 
-        return new self($id, $emailVo, $hashedPassword, $roles);
+        return new self($id, $emailVo, $fullName, $hashedPassword, $roles);
     }
 
     public function id(): string
@@ -43,6 +49,11 @@ final class User
     public function email(): string
     {
         return $this->email->value();
+    }
+
+    public function fullName(): string
+    {
+        return $this->fullName;
     }
 
     public function hashedPassword(): string

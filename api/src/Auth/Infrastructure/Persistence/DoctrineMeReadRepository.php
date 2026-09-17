@@ -18,7 +18,7 @@ final class DoctrineMeReadRepository implements MeReadRepositoryInterface
     public function findMeById(string $id): ?MeReadModel
     {
         $sql = <<<'SQL'
-            SELECT id, email, roles
+            SELECT id, email, full_name, roles
             FROM users
             WHERE id = :id
         SQL;
@@ -32,6 +32,7 @@ final class DoctrineMeReadRepository implements MeReadRepositoryInterface
         return new MeReadModel(
             id: $row['id'],
             email: $row['email'],
+            fullName: $row['full_name'],
             roles: \is_string($row['roles']) ? json_decode($row['roles'], true) : $row['roles'],
         );
     }
