@@ -21,15 +21,15 @@ class PasswordSpec extends ObjectBehavior
         $this->plainText()->shouldReturn('SecurePass123');
     }
 
-    function it_accepts_password_at_minimum_length()
+    function it_accepts_password_at_minimum_length_with_letters_and_numbers()
     {
-        $this->beConstructedThrough('fromPlainText', [str_repeat('a', Password::MIN_LENGTH)]);
-        $this->plainText()->shouldReturn(str_repeat('a', Password::MIN_LENGTH));
+        $this->beConstructedThrough('fromPlainText', ['abcdefg1']);
+        $this->plainText()->shouldReturn('abcdefg1');
     }
 
     function it_rejects_password_shorter_than_minimum_length()
     {
-        $this->beConstructedThrough('fromPlainText', [str_repeat('a', Password::MIN_LENGTH - 1)]);
+        $this->beConstructedThrough('fromPlainText', ['abcde1']);
         $this->shouldThrow(WeakPasswordException::class)->duringInstantiation();
     }
 
@@ -37,5 +37,23 @@ class PasswordSpec extends ObjectBehavior
     {
         $this->beConstructedThrough('fromPlainText', ['']);
         $this->shouldThrow(WeakPasswordException::class)->duringInstantiation();
+    }
+
+    function it_rejects_password_without_letters()
+    {
+        $this->beConstructedThrough('fromPlainText', ['12345678']);
+        $this->shouldThrow(WeakPasswordException::class)->duringInstantiation();
+    }
+
+    function it_rejects_password_without_numbers()
+    {
+        $this->beConstructedThrough('fromPlainText', ['abcdefgh']);
+        $this->shouldThrow(WeakPasswordException::class)->duringInstantiation();
+    }
+
+    function it_accepts_password_with_letters_and_numbers()
+    {
+        $this->beConstructedThrough('fromPlainText', ['SecurePass123']);
+        $this->plainText()->shouldReturn('SecurePass123');
     }
 }
