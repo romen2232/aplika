@@ -71,7 +71,8 @@
       "emailRequired": "El correo electrónico es obligatorio",
       "emailInvalid": "Formato de correo electrónico no válido",
       "passwordRequired": "La contraseña es obligatoria",
-      "passwordMin": "La contraseña debe tener al menos 8 caracteres"
+      "passwordMin": "La contraseña debe tener al menos 8 caracteres",
+      "passwordComplexity": "La contraseña debe contener letras y números"
     }
   },
   "hero": {

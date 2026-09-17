@@ -71,7 +71,8 @@
       "emailRequired": "Email is required",
       "emailInvalid": "Invalid email format",
       "passwordRequired": "Password is required",
-      "passwordMin": "Password must be at least 8 characters"
+      "passwordMin": "Password must be at least 8 characters",
+      "passwordComplexity": "Password must contain both letters and numbers"
     }
   },
   "hero": {

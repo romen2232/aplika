@@ -30,6 +30,7 @@ export function SignUpForm() {
       emailInvalid: t('auth.validation.emailInvalid'),
       passwordRequired: t('auth.validation.passwordRequired'),
       passwordMin: t('auth.validation.passwordMin'),
+      passwordComplexity: t('auth.validation.passwordComplexity'),
     }),
     [t],
   );
