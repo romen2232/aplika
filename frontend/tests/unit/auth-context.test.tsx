@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { authReducer, initialAuthState, type AuthState } from '@/src/contexts/AuthContext';
 
-const user = { id: 'u1', email: 'user@aplika.test', roles: ['ROLE_USER'] };
+const user = { id: 'u1', email: 'user@aplika.test', fullName: 'Jane Doe', roles: ['ROLE_USER'] };
 
 describe('authReducer', () => {
   it('starts in a loading state without a user', () => {

@@ -4,47 +4,66 @@ function uniqueEmail(): string {
   return `e2e-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@aplika.test`;
 }
 
-async function registerThroughUi(page: import('@playwright/test').Page, email: string) {
-  await page.goto('/en/register');
+async function registerThroughLanding(
+  page: import('@playwright/test').Page,
+  fullName: string,
+  email: string,
+) {
+  await page.goto('/en');
+  await page.getByRole('button', { name: 'Sign up' }).click();
+  await page.getByLabel('Full name').fill(fullName);
   await page.getByLabel('Email').fill(email);
   await page.getByLabel('Password', { exact: true }).fill('password123');
-  await page.getByLabel('Confirm password').fill('password123');
   await page.getByRole('button', { name: 'Create account' }).click();
 }
 
-test.describe('auth flow', () => {
-  test('unauthenticated visitor is redirected from the dashboard to login', async ({ page }) => {
-    await page.goto('/en/dashboard');
+test.describe('landing page auth flow', () => {
+  test('landing page shows sign in and sign up tabs', async ({ page }) => {
+    await page.goto('/en');
 
-    await expect(page).toHaveURL(/\/en\/login\?returnUrl=/);
-    await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Sign in' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Sign up' })).toBeVisible();
   });
 
-  test('register, land on the dashboard, then logout', async ({ page }) => {
+  test('register from the landing page, land on the dashboard, then logout', async ({ page }) => {
     const email = uniqueEmail();
 
-    await registerThroughUi(page, email);
+    await registerThroughLanding(page, 'Jane Doe', email);
 
     await expect(page).toHaveURL(/\/en\/dashboard/);
     await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
     await expect(page.getByText(email)).toBeVisible();
 
-    await page.getByRole('button', { name: 'Sign out' }).click();
+    await page.getByRole('button', { name: 'Log out' }).click();
 
-    await expect(page).toHaveURL(/\/en\/login/);
-    await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible();
+    await expect(page).toHaveURL(/\/en/);
   });
 
-  test('invalid credentials surface an error and keep the user on the login page', async ({
+  test('invalid credentials surface an error on the landing page sign in tab', async ({
     page,
   }) => {
-    await page.goto('/en/login');
+    await page.goto('/en');
     await page.getByLabel('Email').fill('missing@aplika.test');
-    await page.getByLabel('Password').fill('wrong-password');
+    await page.getByLabel('Password', { exact: true }).fill('wrong-password');
     await page.getByRole('button', { name: 'Sign in' }).click();
 
-    await expect(page.getByTestId('login-error')).toContainText('Invalid credentials');
-    await expect(page).toHaveURL(/\/en\/login/);
+    await expect(page.getByTestId('signin-error')).toContainText('Invalid credentials');
+  });
+
+  test('unauthenticated visitor is redirected from the dashboard to the landing page', async ({
+    page,
+  }) => {
+    await page.goto('/en/dashboard');
+
+    await expect(page).toHaveURL(/\/en/);
+  });
+
+  test('register requires full name, email and password', async ({ page }) => {
+    await page.goto('/en');
+    await page.getByRole('button', { name: 'Sign up' }).click();
+    await page.getByRole('button', { name: 'Create account' }).click();
+
+    await expect(page.getByTestId('signup-error')).toContainText('Full name is required');
   });
 
   test('login sets host-only first-party cookies through the rewrite proxy', async ({
@@ -53,7 +72,7 @@ test.describe('auth flow', () => {
   }) => {
     const email = uniqueEmail();
 
-    await registerThroughUi(page, email);
+    await registerThroughLanding(page, 'Jane Doe', email);
     await expect(page).toHaveURL(/\/en\/dashboard/);
 
     const cookies = await context.cookies();
@@ -65,7 +84,6 @@ test.describe('auth flow', () => {
     expect(accessToken?.httpOnly).toBe(true);
     expect(accessToken?.sameSite).toBe('Lax');
 
-    // A full page load proves the cookie round-trips back through the proxy.
     await page.goto('/en/dashboard');
     await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
     await expect(page.getByText(email)).toBeVisible();
