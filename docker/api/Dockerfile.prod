@@ -1,0 +1,40 @@
+# docker/api/Dockerfile.prod
+# Multi-stage build: composer install in builder, copy to runtime.
+# Stage 1: Composer dependencies
+FROM composer:2 AS builder
+WORKDIR /app
+COPY api/composer.json api/composer.lock ./
+RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist
+COPY api/ .
+RUN composer dump-autoload --optimize --classmap-authoritative
+
+# Stage 2: Production runtime
+FROM php:8.4-fpm-alpine AS runtime
+
+# Install nginx, php extensions, and supervisor
+RUN apk add --no-cache nginx supervisor \
+    icu-dev postgresql-dev libzip-dev \
+    && docker-php-ext-install intl pdo_pgsql zip opcache
+
+# OPcache production settings
+COPY docker/api/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+
+# nginx config
+COPY docker/api/nginx.conf /etc/nginx/http.d/default.conf
+
+# Supervisor config (starts php-fpm + nginx)
+COPY docker/api/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Copy application
+COPY --from=builder /app /app
+WORKDIR /app
+
+# Ensure storage directories are writable
+RUN mkdir -p var/cache var/log var/share \
+    && chown -R www-data:www-data var
+
+USER www-data
+
+EXPOSE 8080
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
