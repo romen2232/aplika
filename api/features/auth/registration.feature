@@ -7,7 +7,8 @@ Feature: User registration
       """
       {
       "id": "@string@",
-      "email": "newuser@example.com"
+      "email": "newuser@example.com",
+      "fullName": "Test User"
       }
       """
     And the response should have a cookie named "access_token"

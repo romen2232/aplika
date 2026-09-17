@@ -49,7 +49,7 @@ class RefreshTokenHandlerSpec extends ObjectBehavior
             new DateTimeImmutable('+7 days'),
         );
 
-        $user = User::register($userId, 'user@example.com', '$2y$13$hashedpassword');
+        $user = User::register($userId, 'user@example.com', 'Jane Doe', '$2y$13$hashedpassword');
 
         $refreshTokenRepository->findByTokenHash($tokenHash)->willReturn($existingToken);
         $userRepository->findById($userId)->willReturn($user);

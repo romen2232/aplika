@@ -41,6 +41,7 @@ final class AuthContext implements Context
             'CONTENT_TYPE' => 'application/json',
         ], json_encode([
             'email' => $email,
+            'fullName' => 'Test User',
             'password' => $password,
         ]));
 
@@ -96,6 +97,7 @@ final class AuthContext implements Context
             'CONTENT_TYPE' => 'application/json',
         ], json_encode([
             'email' => $email,
+            'fullName' => 'Test User',
             'password' => $password,
         ]));
         $this->state->setResponse($client->getResponse());

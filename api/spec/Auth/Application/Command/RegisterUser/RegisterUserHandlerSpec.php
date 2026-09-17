@@ -32,7 +32,7 @@ class RegisterUserHandlerSpec extends ObjectBehavior
         UserRepository $repository,
         UserPasswordHasherInterface $passwordHasher
     ) {
-        $command = new RegisterUserCommand('user@example.com', 'SecurePass123');
+        $command = new RegisterUserCommand('user@example.com', 'Jane Doe', 'SecurePass123');
         
         $repository->findByEmail('user@example.com')->willReturn(null);
         $passwordHasher->hashPassword(
@@ -45,15 +45,16 @@ class RegisterUserHandlerSpec extends ObjectBehavior
         
         $user->shouldBeAnInstanceOf(User::class);
         $user->email()->shouldReturn('user@example.com');
+        $user->fullName()->shouldReturn('Jane Doe');
     }
 
     function it_rejects_duplicate_email(
         UserRepository $repository,
         UserPasswordHasherInterface $passwordHasher
     ) {
-        $command = new RegisterUserCommand('user@example.com', 'SecurePass123');
+        $command = new RegisterUserCommand('user@example.com', 'Jane Doe', 'SecurePass123');
         
-        $existingUser = User::register('existing-id', 'user@example.com', 'hashed');
+        $existingUser = User::register('existing-id', 'user@example.com', 'Jane Doe', 'hashed');
         $repository->findByEmail('user@example.com')->willReturn($existingUser);
 
         $this->shouldThrow(DuplicateEmailException::class)->during('__invoke', [$command]);
@@ -68,7 +69,7 @@ class RegisterUserHandlerSpec extends ObjectBehavior
         UserRepository $repository,
         UserPasswordHasherInterface $passwordHasher
     ) {
-        $command = new RegisterUserCommand('user@example.com', 'short');
+        $command = new RegisterUserCommand('user@example.com', 'Jane Doe', 'short');
         
         $repository->findByEmail('user@example.com')->willReturn(null);
 

@@ -29,7 +29,7 @@ class JwtTokenGeneratorSpec extends ObjectBehavior
 
     function it_generates_jwt_token_for_user()
     {
-        $user = User::register(self::USER_ID, self::USER_EMAIL, self::USER_PASSWORD);
+        $user = User::register(self::USER_ID, self::USER_EMAIL, 'Jane Doe', self::USER_PASSWORD);
         
         $token = $this->generate($user);
         $token->shouldBeString();
@@ -38,7 +38,7 @@ class JwtTokenGeneratorSpec extends ObjectBehavior
 
     function it_generates_token_with_correct_claims()
     {
-        $user = User::register(self::USER_ID, self::USER_EMAIL, self::USER_PASSWORD);
+        $user = User::register(self::USER_ID, self::USER_EMAIL, 'Jane Doe', self::USER_PASSWORD);
         
         $token = $this->generate($user)->getWrappedObject();
         
@@ -64,7 +64,7 @@ class JwtTokenGeneratorSpec extends ObjectBehavior
 
     function it_generates_token_with_expiration()
     {
-        $user = User::register(self::USER_ID, self::USER_EMAIL, self::USER_PASSWORD);
+        $user = User::register(self::USER_ID, self::USER_EMAIL, 'Jane Doe', self::USER_PASSWORD);
         
         $token = $this->generate($user)->getWrappedObject();
         $decoded = JWT::decode($token, new Key(self::SECRET_KEY, 'HS256'));
@@ -78,7 +78,7 @@ class JwtTokenGeneratorSpec extends ObjectBehavior
 
     function it_generates_token_with_hs256_algorithm()
     {
-        $user = User::register(self::USER_ID, self::USER_EMAIL, self::USER_PASSWORD);
+        $user = User::register(self::USER_ID, self::USER_EMAIL, 'Jane Doe', self::USER_PASSWORD);
         
         $token = $this->generate($user)->getWrappedObject();
         

@@ -40,7 +40,7 @@ class AuthenticateUserHandlerSpec extends ObjectBehavior
     ) {
         $command = new AuthenticateUserCommand('user@example.com', 'SecurePass123');
 
-        $user = User::register('user-id', 'user@example.com', '$2y$13$hashedpassword');
+        $user = User::register('user-id', 'user@example.com', 'Jane Doe', '$2y$13$hashedpassword');
         $repository->findByEmail('user@example.com')->willReturn($user);
         $passwordHasher->isPasswordValid(
             \Prophecy\Argument::type(PasswordHasherAdapter::class),
@@ -64,7 +64,7 @@ class AuthenticateUserHandlerSpec extends ObjectBehavior
     ) {
         $command = new AuthenticateUserCommand('user@example.com', 'WrongPass');
 
-        $user = User::register('user-id', 'user@example.com', '$2y$13$hashedpassword');
+        $user = User::register('user-id', 'user@example.com', 'Jane Doe', '$2y$13$hashedpassword');
         $repository->findByEmail('user@example.com')->willReturn($user);
         $passwordHasher->isPasswordValid(
             \Prophecy\Argument::type(PasswordHasherAdapter::class),
