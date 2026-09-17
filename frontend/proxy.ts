@@ -49,8 +49,7 @@ export function proxy(request: NextRequest) {
 
     if (!hasSession) {
       const url = request.nextUrl.clone();
-      url.pathname = `/${locale}/login`;
-      url.search = `?returnUrl=${encodeURIComponent(pathname)}`;
+      url.pathname = `/${locale}`;
       return NextResponse.redirect(url);
     }
   }

@@ -127,6 +127,7 @@ export interface operations {
             id?: string;
             /** Format: email */
             email?: string;
+            fullName?: string;
             roles?: string[];
           };
         };
@@ -155,6 +156,8 @@ export interface operations {
            * @example new-user@aplika.test
            */
           email: string;
+          /** @example Jane Doe */
+          fullName: string;
           /** @example password123 */
           password: string;
         };
@@ -172,6 +175,7 @@ export interface operations {
             id?: string;
             /** Format: email */
             email?: string;
+            fullName?: string;
           };
         };
       };

@@ -2,7 +2,7 @@ import type { operations } from './generated/types';
 
 type MeResponse = operations['get_api_me']['responses'][200]['content']['application/json'];
 
-export type User = Required<Pick<MeResponse, 'id' | 'email' | 'roles'>>;
+export type User = Required<Pick<MeResponse, 'id' | 'email' | 'fullName' | 'roles'>>;
 
 interface ErrorEnvelope {
   error?: string | { code?: string; message?: string };
@@ -109,10 +109,10 @@ export class ApiClient {
     return this.me();
   }
 
-  async register(email: string, password: string): Promise<User> {
+  async register(email: string, fullName: string, password: string): Promise<User> {
     await this.request<void>(
       '/api/auth/register',
-      { method: 'POST', body: JSON.stringify({ email, password }) },
+      { method: 'POST', body: JSON.stringify({ email, fullName, password }) },
       false,
     );
 

@@ -67,6 +67,7 @@
       "generic": "Algo salió mal. Inténtalo de nuevo."
     },
     "validation": {
+      "fullNameRequired": "El nombre completo es obligatorio",
       "emailRequired": "El correo electrónico es obligatorio",
       "emailInvalid": "Formato de correo electrónico no válido",
       "passwordRequired": "La contraseña es obligatoria",
