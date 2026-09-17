@@ -15,16 +15,14 @@ describe('ApiClient', () => {
   });
 
   it('sends credentialed same-origin requests and returns typed data', async () => {
-    const fetchMock = vi
-      .fn()
-      .mockResolvedValue(
-        jsonResponse({
-          id: 'u1',
-          email: 'user@aplika.test',
-          fullName: 'Jane Doe',
-          roles: ['ROLE_USER'],
-        }),
-      );
+    const fetchMock = vi.fn().mockResolvedValue(
+      jsonResponse({
+        id: 'u1',
+        email: 'user@aplika.test',
+        fullName: 'Jane Doe',
+        roles: ['ROLE_USER'],
+      }),
+    );
     vi.stubGlobal('fetch', fetchMock);
 
     const client = new ApiClient();
