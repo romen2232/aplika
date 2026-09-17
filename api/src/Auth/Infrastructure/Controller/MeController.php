@@ -35,6 +35,7 @@ class MeController extends AbstractController
                     properties: [
                         new OA\Property(property: 'id', type: 'string', format: 'uuid'),
                         new OA\Property(property: 'email', type: 'string', format: 'email'),
+                        new OA\Property(property: 'fullName', type: 'string', example: 'Jane Doe'),
                         new OA\Property(
                             property: 'roles',
                             type: 'array',

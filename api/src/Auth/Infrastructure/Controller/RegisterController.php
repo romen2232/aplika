@@ -38,9 +38,10 @@ class RegisterController extends AbstractController
         requestBody: new OA\RequestBody(
             required: true,
             content: new OA\JsonContent(
-                required: ['email', 'password'],
+                required: ['email', 'fullName', 'password'],
                 properties: [
                     new OA\Property(property: 'email', type: 'string', format: 'email', example: 'new-user@aplika.test'),
+                    new OA\Property(property: 'fullName', type: 'string', example: 'Jane Doe'),
                     new OA\Property(property: 'password', type: 'string', minLength: 8, example: 'password123'),
                 ],
             ),
@@ -66,7 +67,7 @@ class RegisterController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $data = \is_array($data) ? $data : [];
 
-        $command = new RegisterUserCommand($data['email'] ?? '', $data['password'] ?? '');
+        $command = new RegisterUserCommand($data['email'] ?? '', $data['fullName'] ?? '', $data['password'] ?? '');
 
         $violations = $this->validator->validate($command);
         if ($violations->count() > 0) {
@@ -85,7 +86,7 @@ class RegisterController extends AbstractController
             $tokens = $loginStamp->getResult();
 
             $response = new JsonResponse(
-                ['id' => $user->id(), 'email' => $user->email()],
+                ['id' => $user->id(), 'email' => $user->email(), 'fullName' => $user->fullName()],
                 Response::HTTP_CREATED,
             );
             $this->cookieHelper->setAuthCookies($response, $tokens['accessToken'], $tokens['refreshToken']);

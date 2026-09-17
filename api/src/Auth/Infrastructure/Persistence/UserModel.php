@@ -20,6 +20,9 @@ class UserModel
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     private string $email;
 
+    #[ORM\Column(name: 'full_name', type: 'string', length: 255)]
+    private string $fullName;
+
     #[ORM\Column(type: 'string', length: 255)]
     private string $password;
 
@@ -35,11 +38,13 @@ class UserModel
     public function __construct(
         string $id,
         string $email,
+        string $fullName,
         string $password,
         array $roles = ['ROLE_USER'],
     ) {
         $this->id = $id;
         $this->email = $email;
+        $this->fullName = $fullName;
         $this->password = $password;
         $this->roles = $roles;
         $this->createdAt = new DateTimeImmutable();
@@ -54,6 +59,11 @@ class UserModel
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    public function getFullName(): string
+    {
+        return $this->fullName;
     }
 
     public function getPassword(): string
@@ -78,7 +88,7 @@ class UserModel
 
     public function toDomain(): User
     {
-        return User::register($this->id, $this->email, $this->password, $this->roles);
+        return User::register($this->id, $this->email, $this->fullName, $this->password, $this->roles);
     }
 
     public static function fromDomain(User $user): self
@@ -86,6 +96,7 @@ class UserModel
         return new self(
             $user->id(),
             $user->email(),
+            $user->fullName(),
             $user->hashedPassword(),
             $user->roles()
         );
