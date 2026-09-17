@@ -39,9 +39,7 @@ test.describe('landing page auth flow', () => {
     await expect(page).toHaveURL(/\/en/);
   });
 
-  test('invalid credentials surface an error on the landing page sign in tab', async ({
-    page,
-  }) => {
+  test('invalid credentials surface an error on the landing page sign in tab', async ({ page }) => {
     await page.goto('/en');
     await page.getByLabel('Email').fill('missing@aplika.test');
     await page.getByLabel('Password', { exact: true }).fill('wrong-password');

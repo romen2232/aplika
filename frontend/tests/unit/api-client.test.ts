@@ -18,14 +18,24 @@ describe('ApiClient', () => {
     const fetchMock = vi
       .fn()
       .mockResolvedValue(
-        jsonResponse({ id: 'u1', email: 'user@aplika.test', fullName: 'Jane Doe', roles: ['ROLE_USER'] }),
+        jsonResponse({
+          id: 'u1',
+          email: 'user@aplika.test',
+          fullName: 'Jane Doe',
+          roles: ['ROLE_USER'],
+        }),
       );
     vi.stubGlobal('fetch', fetchMock);
 
     const client = new ApiClient();
     const user = await client.me();
 
-    expect(user).toEqual({ id: 'u1', email: 'user@aplika.test', fullName: 'Jane Doe', roles: ['ROLE_USER'] });
+    expect(user).toEqual({
+      id: 'u1',
+      email: 'user@aplika.test',
+      fullName: 'Jane Doe',
+      roles: ['ROLE_USER'],
+    });
     expect(fetchMock).toHaveBeenCalledWith(
       '/api/me',
       expect.objectContaining({ credentials: 'include' }),
@@ -75,7 +85,10 @@ describe('ApiClient', () => {
       .mockResolvedValueOnce(jsonResponse({ error: 'Unauthorized' }, 401))
       .mockResolvedValueOnce(jsonResponse({ message: 'Tokens refreshed' }, 200))
       .mockResolvedValueOnce(
-        jsonResponse({ id: 'u1', email: 'user@aplika.test', fullName: 'Jane Doe', roles: ['ROLE_USER'] }, 200),
+        jsonResponse(
+          { id: 'u1', email: 'user@aplika.test', fullName: 'Jane Doe', roles: ['ROLE_USER'] },
+          200,
+        ),
       );
     vi.stubGlobal('fetch', fetchMock);
 
